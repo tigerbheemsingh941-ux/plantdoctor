@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PlantDetailScreen extends StatefulWidget {
   final Map<String, dynamic> plant;
@@ -101,7 +100,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                           children: [
                             Text(
                               widget.plant['name'] ?? '',
-                              style: GoogleFonts.outfit(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
@@ -111,7 +110,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                             if (widget.plant['scientific'] != null)
                               Text(
                                 widget.plant['scientific'],
-                                style: GoogleFonts.outfit(
+                                style: TextStyle(
                                   color: Colors.white.withValues(alpha: 0.95),
                                   fontSize: 15,
                                   fontStyle: FontStyle.italic,
@@ -357,7 +356,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     Expanded(
                       child: Text(
                         "Common Issues",
-                        style: GoogleFonts.outfit(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           letterSpacing: -0.2,
@@ -437,7 +436,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
       padding: const EdgeInsets.all(12),
       child: Text(
         text,
-        style: GoogleFonts.outfit(
+        style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
           color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
@@ -455,7 +454,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
       padding: const EdgeInsets.all(12),
       child: Text(
         text,
-        style: GoogleFonts.outfit(
+        style: TextStyle(
           fontSize: 14,
           height: 1.4,
           fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
@@ -551,7 +550,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                       Expanded(
                         child: Text(
                           title,
-                          style: GoogleFonts.outfit(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             letterSpacing: -0.2,
@@ -602,7 +601,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                               Expanded(
                                 child: Text(
                                   item,
-                                  style: GoogleFonts.outfit(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     height: 1.5,
                                     color: Theme.of(context)

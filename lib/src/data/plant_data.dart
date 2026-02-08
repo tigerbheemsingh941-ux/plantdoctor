@@ -61,7 +61,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_support": "Usually self-supporting.",
       "maintenance_pruning": "Remove any mushy or yellow leaves at the base.",
       "troubleshooting":
-          "Mushy Leaves: Overwatering (Let it dry out completely).\nWrinkled Leaves: Thirsty (Give it a good drink).\nBrown Tips: Inconsistent watering or cold drafts.",
+          "Mushy Leaves: Overwatering (Let it dry out completely).\nWrinkled Leaves: Thirsty (Give it a good drink).\nBrown Tips: Inconsistent watering or cold drafts (Water consistently and keep warm).",
       "warning_note": "Toxic to cats and dogs if ingested.",
     },
   },
@@ -91,7 +91,7 @@ List<Map<String, dynamic>> get demoPlants => [
           "Generally upright, stems may lean if searching for light.",
       "maintenance_pruning": "Remove yellow leaves near the base.",
       "troubleshooting":
-          "Yellow Leaves: Overwatering is the most common cause.\nDrooping: Can be overwatering or extreme underwatering.\nBrown Tips: Dry air or direct sun.",
+          "Yellow Leaves: Overwatering (Allow soil to dry completely).\nDrooping: Watering issues (Check soil moisture and adjust watering).\nBrown Tips: Dry air or direct sun (Increase humidity; Move to shade).",
       "warning_note":
           "All parts of the plant are poisonous if ingested. Keep away from pets and children.",
     },
@@ -124,7 +124,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_pruning":
           "Prune to control size or remove damaged leaves. Air roots can be tucked into the soil.",
       "troubleshooting":
-          "Yellowing Leaves: Overwatering or lack of nutrients.\nBrown Tips: Low humidity or dry soil.\nNo Splits: Not enough light.",
+          "Yellowing Leaves: Overwatering or lack of nutrients (Adjust watering; Apply fertilizer).\nBrown Tips: Low humidity or dry soil (Mist leaves; Water if dry).\nNo Splits: Not enough light (Move to brighter location).",
       "warning_note": "Toxic to pets and humans if ingested.",
     },
   },
@@ -153,7 +153,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_pruning":
           "Trim brown tips if needed. Cut off plantlets to propagate.",
       "troubleshooting":
-          "Brown Tips: Fluoride in water or dry air.\nFading Color: Needs more light.\nLimp Leaves: Thirsty or too hot.",
+          "Brown Tips: Fluoride in water or dry air (Use distilled water; Mist plant).\nFading Color: Needs more light (Move to brighter spot).\nLimp Leaves: Thirsty or too hot (Water plant; Move to cooler spot).",
       "warning_note":
           "Non-toxic and safe for pets (though cats may try to eat it like grass).",
     },
@@ -183,7 +183,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_pruning":
           "Cut off spent flowers at the base to encourage new blooms. Remove yellow leaves.",
       "troubleshooting":
-          "Drooping: Needs water.\nBrown Tips: Low humidity, over-fertilizing, or tap water chemicals.\nNo Flowers: Needs more light.",
+          "Drooping: Needs water (Water immediately).\nBrown Tips: Low humidity, over-fertilizing, or tap water (Mist leaves; Flush soil; Use filtered water).\nNo Flowers: Needs more light (Move to brighter indirect light).",
       "warning_note": "Mildly toxic to pets and humans. Keep out of reach.",
     },
   },
@@ -210,7 +210,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_pruning":
           "Prune top for bushier growth. Remove damaged leaves.",
       "troubleshooting":
-          "Dropping Leaves: Drafts, moving the plant, or watering issues.\nBrown Spots: Root rot (overwatering) or dry patches (underwatering).\nSlow Growth: Needs more light or fertilizer.",
+          "Dropping Leaves: Environmental stress (Avoid drafts and moving the plant).\nBrown Spots: Root rot or irregular watering (Ensure drainage; Water consistently).\nSlow Growth: Low light or nutrients (Increase light; Fertilize monthly).",
       "warning_note": "Toxic to dogs and cats if ingested.",
     },
   },
@@ -235,7 +235,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_pruning":
           "Harvest outer leaves for gel as needed. Remove dried lower leaves.",
       "troubleshooting":
-          "Mushy Leaves: Overwatering (deadly).\nBrown Tips: Underwatered or sunburn.\nThin Leaves: Needs nmore water or light.",
+          "Mushy Leaves: Overwatering (Stop watering; Allow soil to dry).\nBrown Tips: Sunburn or underwatering (Move to shade; Water deeply).\nThin Leaves: Insufficient water or light (Water more often; Increase light).",
       "warning_note":
           "Gel is safe externally, but skin can be toxic if ingested by pets.",
     },
@@ -263,7 +263,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_pruning":
           "Prune top to encourage branching. Watch out for milky sap.",
       "troubleshooting":
-          "Yellow Leaves: Overwatering.\nLeaf Drop: Changes in light or temperature, or drafts.\nCurling Leaves: Underwatering.",
+          "Yellow Leaves: Overwatering (Reduce watering frequency).\nLeaf Drop: Shock or drafts (Keep environment stable).\nCurling Leaves: Underwatering or heat (Water deeply; Check temperature).",
       "warning_note":
           "Sap is toxic and can irritate skin. Toxic to pets if ingested.",
     },
@@ -291,7 +291,7 @@ List<Map<String, dynamic>> get demoPlants => [
       "maintenance_support": "None usually needed.",
       "maintenance_pruning": "Trim leggy tops and replant them to propagate.",
       "troubleshooting":
-          "Mushy/Black: Root rot from overwatering.\nStretching: Not enough light.\nShriveled: Underwatered.",
+          "Mushy/Black: Root rot from overwatering (Cut rot; Replant in dry soil).\nStretching: Low light (Move to direct sunlight).\nShriveled: Underwatered (Water deeply).",
       "warning_note":
           "Toxicity varies by species; research specific types for pets.",
     },

@@ -67,10 +67,13 @@ class AppTheme {
         backgroundColor: AppColors.surfaceLight,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
-      textTheme: GoogleFonts.nunitoTextTheme(ThemeData.light().textTheme).apply(
-        bodyColor: AppColors.textLight,
-        displayColor: AppColors.textLight,
-      ),
+      textTheme:
+          GoogleFonts.mPlusRounded1cTextTheme(
+            ThemeData.light().textTheme,
+          ).apply(
+            bodyColor: AppColors.textLight,
+            displayColor: AppColors.textLight,
+          ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.backgroundLight,
         elevation: 0,
@@ -126,7 +129,7 @@ class AppTheme {
         backgroundColor: AppColors.surfaceDark,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
-      textTheme: GoogleFonts.nunitoTextTheme(
+      textTheme: GoogleFonts.mPlusRounded1cTextTheme(
         ThemeData.dark().textTheme,
       ).apply(bodyColor: AppColors.textDark, displayColor: AppColors.textDark),
       appBarTheme: const AppBarTheme(

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,7 @@ class _ScannerScreenState extends State<ScannerScreen>
   CameraController? _cameraController;
   bool _isCameraInitialized = false;
   bool _isScanning = false;
+  File? _capturedImage; // To store the image being analyzed
   final ImagePicker _picker = ImagePicker();
   final DiagnosisService _diagnosisService = DiagnosisService();
 
@@ -109,6 +111,9 @@ class _ScannerScreenState extends State<ScannerScreen>
 
     try {
       final XFile image = await _cameraController!.takePicture();
+      setState(() {
+        _capturedImage = File(image.path);
+      });
       _processImage(image.path);
     } catch (e) {
       debugPrint("Error taking picture: $e");
@@ -119,6 +124,9 @@ class _ScannerScreenState extends State<ScannerScreen>
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
+        setState(() {
+          _capturedImage = File(image.path);
+        });
         _processImage(image.path);
       }
     } catch (e) {
@@ -177,6 +185,7 @@ class _ScannerScreenState extends State<ScannerScreen>
       if (mounted) {
         setState(() {
           _isScanning = false;
+          _capturedImage = null; // Reset image after scanning
         });
       }
     }
@@ -209,8 +218,12 @@ class _ScannerScreenState extends State<ScannerScreen>
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. Camera Preview
-          if (_isCameraInitialized && _cameraController != null)
+          // 1. Camera Preview or Captured Image
+          if (_capturedImage != null)
+            Positioned.fill(
+              child: Image.file(_capturedImage!, fit: BoxFit.cover),
+            )
+          else if (_isCameraInitialized && _cameraController != null)
             Positioned.fill(child: CameraPreview(_cameraController!))
           else
             // Fallback/Loading black screen
@@ -258,7 +271,7 @@ class _ScannerScreenState extends State<ScannerScreen>
                   _buildCorner(bottom: 0, right: 0),
 
                   // Scanning Beam
-                  if (!_isScanning) // Only animate when idle? Or always? Let's keep scanning efffect.
+                  if (_isScanning) // Only animate when scanning (processing image)
                     AnimatedBuilder(
                       animation: _animation,
                       builder: (context, child) {
@@ -299,12 +312,8 @@ class _ScannerScreenState extends State<ScannerScreen>
                     ),
 
                   // Scanning Indicator Widget if processing
-                  if (_isScanning)
-                    const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                      ),
-                    ),
+                  // Removed CircularProgressIndicator to show pure scanning animation
+                  if (_isScanning) const SizedBox.shrink(),
                 ],
               ),
             ),

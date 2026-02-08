@@ -110,7 +110,10 @@ Rules:
         id: _uuid.v4(),
         // Use the resized image path which we know is a valid standard JPG
         imagePath: resizedImage.path,
-        plantName: diagnosisData['plant_name'] ?? 'Unknown Plant',
+        plantName: (diagnosisData['plant_name'] ?? 'Unknown Plant')
+            .replaceAll(RegExp(r'\s*\([Nn]/?A\)', caseSensitive: false), '')
+            .replaceAll(RegExp(r'\s*\(\s*\)'), '')
+            .trim(),
         problem: problem,
         solution: diagnosisData['advice'] ?? 'No advice available.',
         timestamp: DateTime.now(),

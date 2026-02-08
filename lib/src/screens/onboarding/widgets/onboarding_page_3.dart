@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_theme.dart';
 
 class OnboardingPage3 extends StatelessWidget {
@@ -96,8 +95,7 @@ class OnboardingPage3 extends StatelessWidget {
                                         const SizedBox(width: 6),
                                         Text(
                                           "HEALTHY",
-                                          style: GoogleFonts.nunito(
-                                            // Changed to Nunito
+                                          style: TextStyle(
                                             color: const Color(0xFF1A2211),
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
@@ -120,8 +118,7 @@ class OnboardingPage3 extends StatelessWidget {
                               children: [
                                 Text(
                                   "DIAGNOSIS RESULT",
-                                  style: GoogleFonts.nunito(
-                                    // Changed to Nunito
+                                  style: TextStyle(
                                     color: AppColors
                                         .onboardingAccent, // Light Sage for contrast
                                     fontSize: 11, // Slightly smaller
@@ -132,8 +129,7 @@ class OnboardingPage3 extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   "Lush Monstera",
-                                  style: GoogleFonts.nunito(
-                                    // Info header can be stylistic
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w800,
@@ -143,8 +139,7 @@ class OnboardingPage3 extends StatelessWidget {
                                 const SizedBox(height: 12),
                                 Text(
                                   "No pests or diseases detected. Your plant is thriving in its current environment.",
-                                  style: GoogleFonts.nunito(
-                                    // Changed to Nunito
+                                  style: TextStyle(
                                     color: textAccentColor,
                                     fontSize: 14,
                                     height: 1.5,
@@ -185,8 +180,7 @@ class OnboardingPage3 extends StatelessWidget {
                                       ),
                                       child: Text(
                                         "View Guide",
-                                        style: GoogleFonts.nunito(
-                                          // Changed to Nunito
+                                        style: TextStyle(
                                           color: const Color(
                                             0xFF1A2211,
                                           ), // Dark text for contrast
@@ -224,8 +218,7 @@ class OnboardingPage3 extends StatelessWidget {
                     Text(
                       "Instant Diagnosis",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.nunito(
-                        // Changed to Nunito
+                      style: TextStyle(
                         color: Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.black,
@@ -241,8 +234,7 @@ class OnboardingPage3 extends StatelessWidget {
                       child: Text(
                         "Get clear, simple advice to keep your plants happy and healthy every day.",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.nunito(
-                          // Changed to Nunito
+                        style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? textAccentColor
                               : const Color(

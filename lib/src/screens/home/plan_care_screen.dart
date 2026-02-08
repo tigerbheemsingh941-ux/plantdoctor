@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_theme.dart';
 
 import 'plant_detail_screen.dart';
 import '../../data/plant_data.dart';
@@ -74,33 +75,9 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(
-          "Plan Care",
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
-        ),
-        leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
-              ),
-            ),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              size: 20,
-              color: Theme.of(context).iconTheme.color,
-            ),
-          ),
-        ),
+        title: const Text("Plan Care"),
         centerTitle: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Column(
@@ -132,163 +109,174 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: filteredPlants.isEmpty && _searchController.text.isEmpty
-                  ? SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (_recentSearches.isNotEmpty) ...[
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ? LayoutBuilder(
+                      builder: (context, constraints) {
+                        return SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: constraints.maxHeight,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: _recentSearches.isEmpty
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Recent Searches",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
+                                if (_recentSearches.isNotEmpty) ...[
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Recent Searches",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.color,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await _recentSearchService
+                                              .clearRecentSearches();
+                                          _loadRecentSearches();
+                                        },
+                                        child: const Text(
+                                          "Clear History",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await _recentSearchService
-                                        .clearRecentSearches();
-                                    _loadRecentSearches();
-                                  },
-                                  child: const Text(
-                                    "Clear History",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
+                                  const SizedBox(height: 10),
+                                  Wrap(
+                                    spacing: 8.0,
+                                    runSpacing: 4.0,
+                                    children: _recentSearches.map((search) {
+                                      return ActionChip(
+                                        label: Text(search),
+                                        avatar: const Icon(
+                                          Icons.history,
+                                          size: 16,
+                                        ),
+                                        onPressed: () {
+                                          try {
+                                            final plant = allPlants.firstWhere(
+                                              (p) => p['name'] == search,
+                                            );
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PlantDetailScreen(
+                                                      plant: plant,
+                                                    ),
+                                              ),
+                                            );
+                                          } catch (e) {
+                                            _searchController.text = search;
+                                            _onSearchChanged();
+                                          }
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+                                  const SizedBox(height: 30),
+                                ],
+                                Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // Gradient Card with Icon
+                                        Container(
+                                          width: 140,
+                                          height: 140,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                AppColors.primary,
+                                                AppColors.primary.withValues(
+                                                  alpha: 0.7,
+                                                ),
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            ),
+                                            shape: BoxShape.circle,
+                                            boxShadow: AppShadows.card,
+                                          ),
+                                          child: const Icon(
+                                            Icons.eco_outlined,
+                                            size: 70,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 32),
+                                        // Title
+                                        Text(
+                                          "Discover Plant Care",
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodyLarge?.color,
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: -0.5,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+                                        // Subtitle
+                                        Text(
+                                          "Search for any plant to learn about\nwatering, sunlight, and care tips",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.grey[500],
+                                            fontSize: 16,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 40),
+                                        // Feature Cards
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            _buildFeatureCard(
+                                              icon: Icons.water_drop_outlined,
+                                              label: "Water\nSchedule",
+                                            ),
+                                            _buildFeatureCard(
+                                              icon: Icons.wb_sunny_outlined,
+                                              label: "Sunlight\nNeeds",
+                                            ),
+                                            _buildFeatureCard(
+                                              icon: Icons.spa_outlined,
+                                              label: "Care\nTips",
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 24),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10),
-                            Wrap(
-                              spacing: 8.0,
-                              runSpacing: 4.0,
-                              children: _recentSearches.map((search) {
-                                return ActionChip(
-                                  label: Text(search),
-                                  avatar: const Icon(Icons.history, size: 16),
-                                  onPressed: () {
-                                    try {
-                                      final plant = allPlants.firstWhere(
-                                        (p) => p['name'] == search,
-                                      );
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PlantDetailScreen(plant: plant),
-                                        ),
-                                      );
-                                    } catch (e) {
-                                      _searchController.text = search;
-                                      _onSearchChanged();
-                                    }
-                                  },
-                                );
-                              }).toList(),
-                            ),
-                            const SizedBox(height: 30),
-                          ],
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24.0,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Gradient Card with Icon
-                                  Container(
-                                    width: 140,
-                                    height: 140,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Colors.green.shade400,
-                                          Colors.teal.shade400,
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      ),
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.green.withValues(
-                                            alpha: 0.3,
-                                          ),
-                                          blurRadius: 20,
-                                          offset: const Offset(0, 10),
-                                        ),
-                                      ],
-                                    ),
-                                    child: const Icon(
-                                      Icons.eco_outlined,
-                                      size: 70,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 32),
-                                  // Title
-                                  Text(
-                                    "Discover Plant Care",
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge?.color,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: -0.5,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  // Subtitle
-                                  Text(
-                                    "Search for any plant to learn about\nwatering, sunlight, and care tips",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.grey[500],
-                                      fontSize: 16,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 40),
-                                  // Feature Cards
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      _buildFeatureCard(
-                                        icon: Icons.water_drop_outlined,
-                                        label: "Water\nSchedule",
-                                        color: Colors.blue,
-                                      ),
-                                      _buildFeatureCard(
-                                        icon: Icons.wb_sunny_outlined,
-                                        label: "Sunlight\nNeeds",
-                                        color: Colors.orange,
-                                      ),
-                                      _buildFeatureCard(
-                                        icon: Icons.spa_outlined,
-                                        label: "Care\nTips",
-                                        color: Colors.green,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 24),
-                                ],
-                              ),
-                            ),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     )
                   : ListView.builder(
                       padding: const EdgeInsets.only(top: 8, bottom: 20),
@@ -300,13 +288,7 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.05),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
+                            boxShadow: AppShadows.card,
                           ),
                           child: ListTile(
                             contentPadding: const EdgeInsets.symmetric(
@@ -360,28 +342,27 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
     );
   }
 
-  Widget _buildFeatureCard({
-    required IconData icon,
-    required String label,
-    required Color color,
-  }) {
+  Widget _buildFeatureCard({required IconData icon, required String label}) {
     return Container(
       width: 96,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: AppColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+        border: Border.all(
+          color: AppColors.primary.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
       ),
       child: Column(
         children: [
-          Icon(icon, size: 36, color: color),
+          Icon(icon, size: 36, color: AppColors.primary),
           const SizedBox(height: 8),
           Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: color,
+            style: const TextStyle(
+              color: AppColors.primary,
               fontSize: 12,
               fontWeight: FontWeight.w600,
               height: 1.2,

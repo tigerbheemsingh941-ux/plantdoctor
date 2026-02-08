@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../services/weather_service.dart';
+import '../../../theme/app_theme.dart';
 
 class WeatherWidget extends StatefulWidget {
   const WeatherWidget({super.key});
@@ -118,7 +119,7 @@ class _WeatherWidgetState extends State<WeatherWidget> {
             Icon(
               _getWeatherIcon(_weatherCode),
               size: 64,
-              color: Colors.orangeAccent,
+              color: AppColors.primary,
             ),
             const SizedBox(height: 8),
             Text(
@@ -143,19 +144,16 @@ class _WeatherWidgetState extends State<WeatherWidget> {
                   Icons.water_drop_rounded,
                   "${_humidity ?? '--'}%",
                   "Humidity",
-                  Colors.blueAccent,
                 ),
                 _buildDetailItem(
                   Icons.air_rounded,
                   "${_windSpeed ?? '--'} km/h",
                   "Wind",
-                  Colors.grey,
                 ),
                 _buildDetailItem(
                   Icons.thermostat_rounded,
                   "${_maxTemp ?? '--'}° / ${_minTemp ?? '--'}°",
                   "High/Low",
-                  Colors.redAccent,
                 ),
               ],
             ),
@@ -166,21 +164,16 @@ class _WeatherWidgetState extends State<WeatherWidget> {
     );
   }
 
-  Widget _buildDetailItem(
-    IconData icon,
-    String value,
-    String label,
-    Color iconColor,
-  ) {
+  Widget _buildDetailItem(IconData icon, String value, String label) {
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: iconColor.withValues(alpha: 0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: iconColor, size: 24),
+          child: Icon(icon, color: AppColors.primary, size: 24),
         ),
         const SizedBox(height: 8),
         Text(

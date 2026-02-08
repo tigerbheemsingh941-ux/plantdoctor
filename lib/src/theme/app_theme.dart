@@ -148,3 +148,37 @@ class AppTheme {
     );
   }
 }
+
+class AppShadows {
+  static const List<BoxShadow> card = [
+    BoxShadow(
+      color: Color(0x0D000000), // Black with ~5% opacity
+      blurRadius: 10,
+      offset: Offset(0, 4),
+    ),
+  ];
+
+  static const List<BoxShadow> floating = [
+    BoxShadow(
+      color: Color(0x1A000000), // Black with ~10% opacity
+      blurRadius: 20,
+      offset: Offset(0, 10),
+    ),
+  ];
+
+  static const List<BoxShadow> button = [
+    BoxShadow(
+      color: Color(0x338A9A5B), // Primary color with ~20% opacity
+      blurRadius: 12,
+      offset: Offset(0, 4),
+    ),
+  ];
+
+  static const List<BoxShadow> glass = [
+    BoxShadow(
+      color: Color(0x1F000000), // Black with ~12% opacity
+      blurRadius: 30,
+      offset: Offset(0, 8),
+    ),
+  ];
+}

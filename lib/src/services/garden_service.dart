@@ -41,7 +41,6 @@ class GardenService {
       solution: scan.solution,
       timestamp: scan.timestamp,
       confidence: scan.confidence,
-      healthStatus: scan.healthStatus,
     );
 
     // 4. Save to Shared Preferences

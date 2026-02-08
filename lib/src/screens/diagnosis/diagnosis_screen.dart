@@ -62,13 +62,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(32),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 30,
-                    offset: const Offset(0, -10),
-                    color: Colors.black.withValues(alpha: 0.2),
-                  ),
-                ],
+                boxShadow: AppShadows.glass,
               ),
               child: SingleChildScrollView(
                 child: Padding(
@@ -97,13 +91,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(color: Colors.white, width: 4),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 20,
-                                  color: Colors.black.withValues(alpha: 0.2),
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
+                              boxShadow: AppShadows.floating,
                             ),
                             child: ClipOval(
                               child:
@@ -128,19 +116,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                                   context,
                                 ).scaffoldBackgroundColor,
                                 shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 8,
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                  ),
-                                ],
+                                boxShadow: AppShadows.card,
                               ),
                               child: Icon(
-                                _getSeverityIcon(
-                                  widget.scanResult.healthStatus,
-                                ),
+                                _getSeverityIcon(widget.scanResult.problem),
                                 color: _getSeverityColor(
-                                  widget.scanResult.healthStatus,
+                                  widget.scanResult.problem,
                                 ),
                                 size: 32,
                               ),
@@ -173,12 +154,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                         ),
                         decoration: BoxDecoration(
                           color: _getSeverityColor(
-                            widget.scanResult.healthStatus,
+                            widget.scanResult.problem,
                           ).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(
                             color: _getSeverityColor(
-                              widget.scanResult.healthStatus,
+                              widget.scanResult.problem,
                             ).withValues(alpha: 0.3),
                             width: 1.5,
                           ),
@@ -189,7 +170,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                             Icon(
                               Icons.medical_services_rounded,
                               color: _getSeverityColor(
-                                widget.scanResult.healthStatus,
+                                widget.scanResult.problem,
                               ),
                               size: 18,
                             ),
@@ -200,7 +181,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: _getSeverityColor(
-                                    widget.scanResult.healthStatus,
+                                    widget.scanResult.problem,
                                   ),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13,
@@ -220,17 +201,11 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardTheme.color,
                           borderRadius: BorderRadius.circular(28),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 20,
-                              color: Colors.black.withValues(alpha: 0.08),
-                              offset: const Offset(0, 5),
-                            ),
-                          ],
+                          boxShadow: AppShadows.card,
                           border: Border(
                             left: BorderSide(
                               color: _getSeverityColor(
-                                widget.scanResult.healthStatus,
+                                widget.scanResult.problem,
                               ),
                               width: 6,
                             ),
@@ -446,7 +421,6 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                                 confidence: widget.scanResult.confidence,
                                 wateringFrequency: _selectedFrequency,
                                 nextWateringDate: nextWatering,
-                                healthStatus: widget.scanResult.healthStatus,
                               );
 
                               // 2. Save to Garden
@@ -559,28 +533,15 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     );
   }
 
-  IconData _getSeverityIcon(String status) {
-    switch (status.toLowerCase()) {
-      case 'healthy':
-        return Icons.check_circle_rounded;
-      case 'critical':
-        return Icons.report_problem_rounded;
-      case 'needs attention':
-      default:
-        return Icons.warning_amber_rounded;
-    }
+  IconData _getSeverityIcon(String problem) {
+    if (problem.toLowerCase().contains('healthy')) return Icons.check_circle;
+    return Icons.warning_amber_rounded;
   }
 
-  Color _getSeverityColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'healthy':
-        return Colors.green;
-      case 'critical':
-        return Colors.red;
-      case 'needs attention':
-      default:
-        return AppColors.accent; // Orange/Warning
-    }
+  Color _getSeverityColor(String problem) {
+    if (problem.toLowerCase().contains('healthy')) return Colors.green;
+    if (problem.toLowerCase().contains('critical')) return Colors.red;
+    return AppColors.accent; // Orange/Warning
   }
 
   Color _getConfidenceColor(double confidence) {

@@ -75,9 +75,9 @@ class _GardenScreenState extends State<GardenScreen> {
                   Text(
                     "Add your first plant",
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -321,12 +321,12 @@ class _GardenScreenState extends State<GardenScreen> {
   }
 
   IconData _getSeverityIcon(String problem) {
-    if (problem.toLowerCase() == 'healthy') return Icons.check_circle;
+    if (problem.toLowerCase().contains('healthy')) return Icons.check_circle;
     return Icons.warning_amber_rounded;
   }
 
   Color _getSeverityColor(String problem) {
-    if (problem.toLowerCase() == 'healthy') return Colors.green;
+    if (problem.toLowerCase().contains('healthy')) return Colors.green;
     return AppColors.accent;
   }
 }

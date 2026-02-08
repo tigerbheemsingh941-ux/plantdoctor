@@ -10,7 +10,6 @@ import '../profile/profile_screen.dart';
 import '../../providers/garden_provider.dart';
 
 import '../../models/plant.dart';
-import '../../models/scan_result.dart';
 import '../diagnosis/diagnosis_screen.dart';
 import 'plan_care_screen.dart';
 
@@ -64,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final matchesSearch = name.contains(query);
 
       if (_selectedStatusFilter != null) {
-        final status = _mapToPlantStatus(plant);
+        final status = _mapProblemToStatus(plant.problem);
         return matchesSearch && status == _selectedStatusFilter;
       }
       return matchesSearch;
@@ -141,13 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
+                      boxShadow: AppShadows.card,
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
@@ -306,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         name: displayName,
                         scientificName: displayScientific,
                         imageUrl: plant.imagePath,
-                        status: _mapToPlantStatus(plant),
+                        status: _mapProblemToStatus(plant.problem),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -364,13 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: const Color(0xFF282A22), // Dark charcoal/slate
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 20,
-                    offset: Offset(0, 10),
-                  ),
-                ],
+                boxShadow: AppShadows.floating,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -621,21 +608,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  PlantStatus _mapToPlantStatus(ScanResult plant) {
-    // 1. Check explicit health status
-    final statusLower = plant.healthStatus.toLowerCase();
-    if (statusLower == 'healthy') return PlantStatus.healthy;
-
-    // 2. Check keywords in diagnosis for "Thirsty"
-    final problemLower = plant.problem.toLowerCase();
-    if (problemLower.contains('thirsty') ||
-        problemLower.contains('water') ||
-        problemLower.contains('dry') ||
-        problemLower.contains('dehydrated')) {
+  PlantStatus _mapProblemToStatus(String problem) {
+    final lower = problem.toLowerCase();
+    if (lower.contains('healthy')) return PlantStatus.healthy;
+    if (lower.contains('thirsty') ||
+        lower.contains('water') ||
+        lower.contains('dry') ||
+        lower.contains('dehydrated')) {
       return PlantStatus.thirsty;
     }
-
-    // 3. Default to Action Needed for Needs Attention/Critical/Error
     return PlantStatus.actionNeeded;
   }
 }

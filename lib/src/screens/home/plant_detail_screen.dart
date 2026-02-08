@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../theme/app_theme.dart';
 
 class PlantDetailScreen extends StatefulWidget {
   final Map<String, dynamic> plant;
@@ -91,7 +92,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     if (details['light_low'] != null) details['light_low'],
                     if (details['light_avoid'] != null) details['light_avoid'],
                   ],
-                  categoryColor: Colors.amber,
+                  categoryColor: AppColors.primary,
                 ),
 
               // Water Section
@@ -112,7 +113,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     if (details['water_frequency'] != null)
                       details['water_frequency'],
                   ],
-                  categoryColor: Colors.blue,
+                  categoryColor: AppColors.primary,
                 ),
 
               // Soil Section
@@ -125,7 +126,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     if (details['soil_type'] != null) details['soil_type'],
                     if (details['pot_type'] != null) details['pot_type'],
                   ],
-                  categoryColor: Colors.brown,
+                  categoryColor: AppColors.primary,
                 ),
 
               // Maintenance
@@ -146,7 +147,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     if (details['maintenance_pruning'] != null)
                       details['maintenance_pruning'],
                   ],
-                  categoryColor: Colors.purple,
+                  categoryColor: AppColors.primary,
                 ),
 
               // Common Issues Section (Structured Table)
@@ -281,13 +282,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
         border: Border.all(
           color: Theme.of(context).dividerColor.withValues(alpha: 0.08),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: Material(
         color: Colors.transparent,
@@ -304,12 +299,12 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.teal.withValues(alpha: 0.15),
+                        color: AppColors.primary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Icon(
                         Icons.pest_control_rounded,
-                        color: Colors.tealAccent,
+                        color: AppColors.primary,
                         size: 24,
                       ),
                     ),
@@ -339,7 +334,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                 Container(
                   height: 1,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
-                  color: Colors.teal.withValues(alpha: 0.15),
+                  color: AppColors.primary.withValues(alpha: 0.15),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -350,7 +345,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                       ).scaffoldBackgroundColor.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: Colors.teal.withValues(alpha: 0.1),
+                        color: AppColors.primary.withValues(alpha: 0.1),
                       ),
                     ),
                     child: Table(
@@ -478,13 +473,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
       decoration: BoxDecoration(
         color: Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 15,
-            offset: const Offset(0, 6),
-          ),
-        ],
+        boxShadow: AppShadows.card,
         border: Border.all(
           color: Theme.of(context).dividerColor.withValues(alpha: 0.08),
         ),

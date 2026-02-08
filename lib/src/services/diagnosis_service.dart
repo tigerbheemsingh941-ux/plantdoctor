@@ -36,37 +36,24 @@ class DiagnosisService {
           responseSchema: Schema.object(
             properties: {
               "plant_name": Schema.string(),
-              "health_status": Schema.string(),
               "diagnosis": Schema.string(),
-              "advice": Schema.string(),
+              "treatment": Schema.string(),
+              "confidence": Schema.number(),
             },
             requiredProperties: [
               "plant_name",
-              "health_status",
               "diagnosis",
-              "advice",
+              "treatment",
+              "confidence",
             ],
           ),
         ),
       );
 
       // 3. Generate Content
-      final prompt = TextPart("""
-You are a precise botanical diagnostic engine. Your only job is to analyze the provided image and output a raw JSON object.
-Do not include markdown formatting (like ```json), conversational filler, or intro text.
-Output Structure:
-{
-  "plant_name": "Common Name (Scientific Name)",
-  "health_status": "Healthy" OR "Needs Attention" OR "Critical",
-  "diagnosis": "A 3-word summary of the issue (e.g., 'Root Rot Detected' or 'Perfect Condition')",
-  "advice": "Exactly one sentence under 20 words on how to fix it."
-}
-
-Rules:
-1. If the image is NOT a plant, set "health_status" to "Error" and "advice" to "Please upload a clear photo of a plant."
-2. Keep "advice" extremely actionable (e.g., "Water immediately and move to shade.").
-3. Strictly adhere to the JSON format.
-""");
+      final prompt = TextPart(
+        "Identify this plant health issue. Return JSON only: { 'plant_name': 'Common Name', 'diagnosis': 'Issue (max 3 words)', 'treatment': '1 sentence max', 'confidence': 0.0-1.0 }.",
+      );
 
       final imagePart = DataPart('image/jpeg', bytes);
       final response = await model.generateContent([
@@ -98,10 +85,11 @@ Rules:
             .replaceAll(RegExp(r'\s*\(\s*\)'), '')
             .trim(),
         problem: diagnosisData['diagnosis'] ?? 'Unknown Issue',
-        solution: diagnosisData['advice'] ?? 'No advice available.',
+        solution: diagnosisData['treatment'] ?? 'No advice available.',
         timestamp: DateTime.now(),
-        healthStatus: diagnosisData['health_status'] ?? 'Unknown',
-        confidence: 0.8, // Confidence not provided in strict mode
+        confidence: (diagnosisData['confidence'] is num)
+            ? (diagnosisData['confidence'] as num).toDouble()
+            : 0.8,
       );
     } on SocketException {
       throw Exception("Network Error: Please check your internet connection.");

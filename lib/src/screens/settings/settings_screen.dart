@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../theme/app_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../providers/app_state.dart';
-import '../../theme/app_theme.dart';
 import '../profile/profile_screen.dart';
 import 'privacy_policy_screen.dart';
 
@@ -50,13 +50,7 @@ class SettingsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AppShadows.card,
         ),
         child: IconButton(
           icon: Icon(
@@ -87,13 +81,7 @@ class SettingsScreen extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        boxShadow: AppShadows.floating,
       ),
       child: Row(
         children: [
@@ -179,7 +167,7 @@ class SettingsScreen extends StatelessWidget {
         _buildListTile(
           context,
           icon: Icons.workspace_premium,
-          iconColor: Colors.amber,
+          iconColor: AppColors.primary,
           title: "Subscription",
           trailing: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -215,7 +203,7 @@ class SettingsScreen extends StatelessWidget {
             return _buildListTile(
               context,
               icon: isDark ? Icons.dark_mode : Icons.light_mode,
-              iconColor: Colors.deepPurpleAccent,
+              iconColor: AppColors.primary,
               title: "Dark Mode",
               trailing: Switch.adaptive(
                 value: isDark,
@@ -234,7 +222,7 @@ class SettingsScreen extends StatelessWidget {
               return _buildListTile(
                 context,
                 icon: Icons.water_drop,
-                iconColor: Colors.teal,
+                iconColor: AppColors.primary,
                 title: "Watering Reminders",
                 subtitle: "Daily morning alerts",
                 trailing: Switch.adaptive(
@@ -251,12 +239,12 @@ class SettingsScreen extends StatelessWidget {
               leading: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.teal.withValues(alpha: 0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
                   Icons.water_drop,
-                  color: Colors.teal,
+                  color: AppColors.primary,
                   size: 22,
                 ),
               ),
@@ -307,7 +295,7 @@ class SettingsScreen extends StatelessWidget {
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Colors.teal.withValues(alpha: 0.2),
+                          color: AppColors.primary.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -345,7 +333,7 @@ class SettingsScreen extends StatelessWidget {
         _buildListTile(
           context,
           icon: Icons.language,
-          iconColor: Colors.teal,
+          iconColor: AppColors.primary,
           title: "Language",
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -377,7 +365,7 @@ class SettingsScreen extends StatelessWidget {
         _buildListTile(
           context,
           icon: Icons.help_outline,
-          iconColor: Colors.orangeAccent,
+          iconColor: AppColors.primary,
           title: "Help Center",
           showChevron: true,
           onTap: () {},
@@ -386,7 +374,7 @@ class SettingsScreen extends StatelessWidget {
         _buildListTile(
           context,
           icon: Icons.privacy_tip_outlined,
-          iconColor: Colors.green,
+          iconColor: AppColors.primary,
           title: "Privacy Policy",
           showChevron: true,
           onTap: () {
@@ -410,13 +398,7 @@ class SettingsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: Column(children: children),
     );

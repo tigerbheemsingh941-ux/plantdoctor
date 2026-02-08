@@ -8,6 +8,7 @@ import '../diagnosis/diagnosis_screen.dart';
 import '../../../main.dart'; // To access the global 'cameras' list
 import '../../services/diagnosis_service.dart';
 import '../garden/garden_screen.dart';
+import '../../widgets/growing_plant_loader.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});
@@ -57,7 +58,7 @@ class _ScannerScreenState extends State<ScannerScreen>
 
     _cameraController = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.medium,
       enableAudio: false,
     );
 
@@ -122,7 +123,12 @@ class _ScannerScreenState extends State<ScannerScreen>
 
   Future<void> _pickFromGallery() async {
     try {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 512,
+        maxHeight: 512,
+        imageQuality: 80,
+      );
       if (image != null) {
         setState(() {
           _capturedImage = File(image.path);
@@ -177,9 +183,29 @@ class _ScannerScreenState extends State<ScannerScreen>
       );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text("Error analyzing plant: $e")));
+        String errorMessage = e.toString();
+        // Remove "Exception: " prefix for cleaner display
+        if (errorMessage.startsWith("Exception: ")) {
+          errorMessage = errorMessage.substring(11);
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white),
+                const SizedBox(width: 12),
+                Expanded(child: Text(errorMessage)),
+              ],
+            ),
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.all(16),
+          ),
+        );
       }
     } finally {
       if (mounted) {
@@ -313,47 +339,55 @@ class _ScannerScreenState extends State<ScannerScreen>
 
                   // Scanning Indicator Widget if processing
                   // Removed CircularProgressIndicator to show pure scanning animation
-                  if (_isScanning) const SizedBox.shrink(),
+                  if (_isScanning)
+                    const Center(
+                      child: GrowingPlantLoader(size: 80, color: Colors.white),
+                    ),
                 ],
               ),
             ),
           ),
 
           // 4. Status Text
-          Positioned(
-            bottom: 180,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black54,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.3),
+          if (_isScanning)
+            Positioned(
+              bottom: 180,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
                   ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.radar, color: AppColors.primary, size: 18),
-                    const SizedBox(width: 8),
-                    Text(
-                      _isScanning ? "Analyzing..." : "Scanning...",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.3),
                     ),
-                  ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.radar,
+                        color: AppColors.primary,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "Scanning...",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
           // 5. Bottom Controls
           Positioned(

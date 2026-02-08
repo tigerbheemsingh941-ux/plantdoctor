@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../providers/app_state.dart';
 import '../../theme/app_theme.dart';
 import '../profile/profile_screen.dart';
+import 'privacy_policy_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -388,7 +389,14 @@ class SettingsScreen extends StatelessWidget {
           iconColor: Colors.green,
           title: "Privacy Policy",
           showChevron: true,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PrivacyPolicyScreen(),
+              ),
+            );
+          },
         ),
       ],
     );

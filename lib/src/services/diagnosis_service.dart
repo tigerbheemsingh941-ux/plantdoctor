@@ -4,19 +4,25 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image/image.dart';
-
-import '../models/scan_result.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../models/scan_result.dart';
 
 class DiagnosisService {
   final _uuid = const Uuid();
 
-  // API Endpoint not needed for SDK
   String get _apiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
 
   Future<ScanResult> analyzeImage(String imagePath) async {
     try {
+      // Validate API key
+      if (_apiKey.isEmpty) {
+        throw Exception(
+          "API Error: API key not configured. Please check your .env file.",
+        );
+      }
+
       // 1. Resize Image
       final File resizedImage = await resizeImage(imagePath);
       final bytes = await resizedImage.readAsBytes();
@@ -30,26 +36,15 @@ class DiagnosisService {
           responseSchema: Schema.object(
             properties: {
               "plant_name": Schema.string(),
-              "health_status": Schema.string(
-                description: "Healthy, Needs Attention, Critical, or Error",
-              ),
-              "diagnosis": Schema.string(
-                description: "A 3-word summary of the issue",
-              ),
-              "advice": Schema.string(
-                description:
-                    "Exactly one sentence under 20 words on how to fix it.",
-              ),
-              "confidence": Schema.number(
-                description: "Confidence score between 0.0 and 1.0",
-              ),
+              "health_status": Schema.string(),
+              "diagnosis": Schema.string(),
+              "advice": Schema.string(),
             },
             requiredProperties: [
               "plant_name",
               "health_status",
               "diagnosis",
               "advice",
-              "confidence",
             ],
           ),
         ),
@@ -64,8 +59,7 @@ Output Structure:
   "plant_name": "Common Name (Scientific Name)",
   "health_status": "Healthy" OR "Needs Attention" OR "Critical",
   "diagnosis": "A 3-word summary of the issue (e.g., 'Root Rot Detected' or 'Perfect Condition')",
-  "advice": "Exactly one sentence under 20 words on how to fix it.",
-  "confidence": 0.95 (A float between 0.0 and 1.0 indicating certainty)
+  "advice": "Exactly one sentence under 20 words on how to fix it."
 }
 
 Rules:
@@ -95,45 +89,30 @@ Rules:
       }
 
       // 5. Map to ScanResult
-      String problem = diagnosisData['diagnosis'] ?? 'Unknown Issue';
-      String healthStatus = diagnosisData['health_status'] ?? 'Unknown';
-
-      // Alignment Logic
-      if (healthStatus.toLowerCase() == 'healthy') {
-        problem = 'Healthy';
-      } else if (healthStatus.toLowerCase() == 'critical') {
-        if (!problem.toLowerCase().contains('critical')) {
-          problem = "Critical: $problem";
-        }
-      }
-
       return ScanResult(
         id: _uuid.v4(),
-        // Use the resized image path which we know is a valid standard JPG
+        // Use the resized image path
         imagePath: resizedImage.path,
         plantName: (diagnosisData['plant_name'] ?? 'Unknown Plant')
             .replaceAll(RegExp(r'\s*\([Nn]/?A\)', caseSensitive: false), '')
             .replaceAll(RegExp(r'\s*\(\s*\)'), '')
             .trim(),
-        problem: problem,
+        problem: diagnosisData['diagnosis'] ?? 'Unknown Issue',
         solution: diagnosisData['advice'] ?? 'No advice available.',
         timestamp: DateTime.now(),
-        confidence: (diagnosisData['confidence'] is num)
-            ? (diagnosisData['confidence'] as num).toDouble()
-            : 0.95,
+        healthStatus: diagnosisData['health_status'] ?? 'Unknown',
+        confidence: 0.8, // Confidence not provided in strict mode
+      );
+    } on SocketException {
+      throw Exception("Network Error: Please check your internet connection.");
+    } on GenerativeAIException catch (e) {
+      debugPrint("Gemini API Error: ${e.message}");
+      throw Exception(
+        "API Error: Diagnosis service is currently unavailable. Please check your API key.",
       );
     } catch (e) {
       debugPrint("Analysis failed: $e");
-      return ScanResult(
-        id: _uuid.v4(),
-        imagePath: imagePath,
-        plantName: "Error",
-        problem: "Could not analyze",
-        solution:
-            "Please check your internet connection and try again. (Error: $e)",
-        timestamp: DateTime.now(),
-        confidence: 0.0,
-      );
+      throw Exception("Failed to analyze image: $e");
     }
   }
 
@@ -145,7 +124,7 @@ Rules:
 
     if (img == null) throw Exception("Could not decode image");
 
-    // Resize to max 512x512 if larger
+    // Strictly resize to 512x512 for API token cost content
     if (img.width > 512 || img.height > 512) {
       final resized = copyResize(
         img,
@@ -157,10 +136,11 @@ Rules:
       final resizedBytes = encodeJpg(resized, quality: 85);
 
       final lastIndex = path.lastIndexOf('.');
-      // Avoid accumulating _out_out_out.jpg if re-running on same file
       String outPath = path;
       if (lastIndex != -1) {
-        outPath = "${path.substring(0, lastIndex)}_resized.jpg";
+        if (!path.endsWith('_resized.jpg')) {
+          outPath = "${path.substring(0, lastIndex)}_resized.jpg";
+        }
       } else {
         outPath = "${path}_resized.jpg";
       }
@@ -170,6 +150,6 @@ Rules:
       return outFile;
     }
 
-    return imageFile; // Return original if small enough
+    return imageFile; // Return original if dimensions are small enough
   }
 }

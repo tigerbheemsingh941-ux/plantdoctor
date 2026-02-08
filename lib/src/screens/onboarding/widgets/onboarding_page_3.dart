@@ -1,248 +1,122 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class OnboardingPage3 extends StatelessWidget {
   const OnboardingPage3({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // User requested Organic Tech Theme: Primary Sage Green (#8A9A5B)
-    const primaryColor = AppColors.primary;
-    const cardBgColor = Color(0xFF26321A);
-    const textAccentColor = AppColors.onboardingAccent;
+    const sageGreen = Color(0xFF88a67e);
+    const sageDark = Color(0xFF3a4734);
+    const healthyGreen = Color(0xFF66b814);
+    const charcoal = Color(0xFF121412);
 
-    return Column(
-      children: [
-        // Main Content Wrapper (matches Page 1/2 structure)
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Plant Image with Status Badge
+          Stack(
             children: [
-              // Visual Hero Section (Mock Diagnosis Card)
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                  child: Center(
-                    child: Container(
-                      constraints: const BoxConstraints(
-                        minHeight: 360,
-                        maxHeight: 500, // Matches Page 1/2 constraints
-                      ),
-                      decoration: BoxDecoration(
-                        color: cardBgColor,
-                        borderRadius: BorderRadius.circular(
-                          24,
-                        ), // Organic rounded
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.5),
-                            blurRadius: 25,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Image Area
-                          Expanded(
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        "https://lh3.googleusercontent.com/aida-public/AB6AXuCa9arjBsf_4U-p8TFRNW4qTXanLPpDkDYc_bSmFp7RUGvmjcaCUVcP2cU0udnB6yhoycL6gUcQspTJQx4mZbp2gm4u5aqMKGHPO4Fnjb9cBAX0anDl5sFhOrgtPJaVI7ejShdAHZnKv-VpP99f1CK_qUAg45z6l3f2UsPLDsawRCVlWpfMMLyp1qx7WP-BHpuCxuYDX_7BeVzeWQ3pcKMWoYDcAESpC65rz3ZnQ5gupjT-1YNOKwI7xW0ReB1TdWFk8sgcysdmpnw",
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                // Healthy Badge
-                                Positioned(
-                                  top: 16,
-                                  right: 16,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      borderRadius: BorderRadius.circular(
-                                        999,
-                                      ), // rounded-full
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withValues(
-                                            alpha: 0.2,
-                                          ),
-                                          blurRadius: 10,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.check_circle,
-                                          color: Color(0xFF1A2211),
-                                          size: 16,
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Text(
-                                          "HEALTHY",
-                                          style: GoogleFonts.mPlusRounded1c(
-                                            color: const Color(0xFF1A2211),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 0.5, // wider
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // Card Content
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "DIAGNOSIS RESULT",
-                                  style: GoogleFonts.mPlusRounded1c(
-                                    color: AppColors
-                                        .onboardingAccent, // Light Sage for contrast
-                                    fontSize: 11, // Slightly smaller
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.5,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  "Lush Monstera",
-                                  style: GoogleFonts.mPlusRounded1c(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: -0.015,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  "No pests or diseases detected. Your plant is thriving in its current environment.",
-                                  style: GoogleFonts.mPlusRounded1c(
-                                    color: textAccentColor,
-                                    fontSize: 14,
-                                    height: 1.5,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Divider(color: Colors.white10),
-                                const SizedBox(height: 12),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        _buildIconBadge(
-                                          Icons.light_mode,
-                                          primaryColor,
-                                        ),
-                                        Transform.translate(
-                                          offset: const Offset(-8, 0),
-                                          child: _buildIconBadge(
-                                            Icons.water_drop,
-                                            primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    TextButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        backgroundColor:
-                                            primaryColor, // Solid color for visibility
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 8,
-                                        ),
-                                      ),
-                                      child: Text(
-                                        "View Guide",
-                                        style: GoogleFonts.mPlusRounded1c(
-                                          color: const Color(
-                                            0xFF1A2211,
-                                          ), // Dark text for contrast
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Text Content Area
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.only(
-                  left: 24,
-                  right: 24,
-                  bottom: 32,
-                  top: 8,
+                height: 400,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
                 ),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-                ),
-                child: Column(
+                clipBehavior: Clip.antiAlias,
+                child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    Text(
-                      "Instant Diagnosis",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.mPlusRounded1c(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w800,
-                        height: 1.1,
+                    CachedNetworkImage(
+                      imageUrl:
+                          "https://lh3.googleusercontent.com/aida-public/AB6AXuCa9arjBsf_4U-p8TFRNW4qTXanLPpDkDYc_bSmFp7RUGvmjcaCUVcP2cU0udnB6yhoycL6gUcQspTJQx4mZbp2gm4u5aqMKGHPO4Fnjb9cBAX0anDl5sFhOrgtPJaVI7ejShdAHZnKv-VpP99f1CK_qUAg45z6l3f2UsPLDsawRCVlWpfMMLyp1qx7WP-BHpuCxuYDX_7BeVzeWQ3pcKMWoYDcAESpC65rz3ZnQ5gupjT-1YNOKwI7xW0ReB1TdWFk8sgcysdmpnw",
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(color: sageDark),
+                    ),
+                    // Gradient overlay
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            charcoal,
+                            charcoal.withValues(alpha: 0.5),
+                            Colors.transparent,
+                          ],
+                          stops: const [0.0, 0.3, 1.0],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12), // Adjusted spacing
-                    SizedBox(
-                      width:
-                          280, // Constrain width for better readability like Page 1
-                      child: Text(
-                        "Get clear, simple advice to keep your plants happy and healthy every day.",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.mPlusRounded1c(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? textAccentColor
-                              : const Color(0xFF4B5563),
-                          fontSize: 16,
-                          height: 1.625,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    // Plant Info
+                    Positioned(
+                      bottom: 24,
+                      left: 24,
+                      right: 24,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: healthyGreen,
+                              borderRadius: BorderRadius.circular(999),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.3),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.check_circle,
+                                  color: charcoal,
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  "Healthy",
+                                  style: GoogleFonts.manrope(
+                                    color: charcoal,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            "Lush Monstera",
+                            style: GoogleFonts.manrope(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                          Text(
+                            "Monstera Deliciosa",
+                            style: GoogleFonts.manrope(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFadc893),
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -250,24 +124,301 @@ class OnboardingPage3 extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ],
+
+          // Plant Stats Section
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "PLANT STATS",
+                  style: GoogleFonts.manrope(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFadc893),
+                    letterSpacing: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildStatCard(
+                        icon: Icons.light_mode,
+                        label: "Sunlight",
+                        value: "Indirect",
+                        sageDark: sageDark,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _buildStatCard(
+                        icon: Icons.water_drop,
+                        label: "Water",
+                        value: "Weekly",
+                        sageDark: sageDark,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _buildStatCard(
+                        icon: Icons.water,
+                        label: "Humidity",
+                        value: "High",
+                        sageDark: sageDark,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 32),
+
+                // Care Log Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "CARE LOG",
+                      style: GoogleFonts.manrope(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFadc893),
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    Text(
+                      "History",
+                      style: GoogleFonts.manrope(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFFadc893).withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: sageDark.withValues(alpha: 0.2),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.05),
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      _buildCareLogItem(
+                        icon: Icons.camera_outdoor,
+                        title: "Last Scan",
+                        subtitle: "Diagnosis: Excellent health",
+                        date: "Oct 24, 2023",
+                        sageDark: sageDark,
+                        healthyGreen: healthyGreen,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Divider(
+                          color: Colors.white.withValues(alpha: 0.05),
+                          height: 1,
+                        ),
+                      ),
+                      _buildCareLogItem(
+                        icon: Icons.local_drink,
+                        title: "Repotted",
+                        subtitle: "Terra cotta, 12\" diameter",
+                        date: "Sept 12, 2023",
+                        sageDark: sageDark,
+                        showIndicator: false,
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Action Buttons
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: sageGreen,
+                      foregroundColor: charcoal,
+                      elevation: 4,
+                      shadowColor: Colors.black.withValues(alpha: 0.3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.photo_camera, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          "Scan Again",
+                          style: GoogleFonts.manrope(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: BorderSide(
+                        color: Colors.white.withValues(alpha: 0.1),
+                      ),
+                      backgroundColor: Colors.white.withValues(alpha: 0.05),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Text(
+                      "Care Guide",
+                      style: GoogleFonts.manrope(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildIconBadge(IconData icon, Color color) {
+  Widget _buildStatCard({
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color sageDark,
+  }) {
     return Container(
-      width: 24,
-      height: 24,
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.4),
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: const Color(0xFF26321A),
-          width: 2,
-        ), // Match card bg
+        color: sageDark.withValues(alpha: 0.3),
+        border: Border.all(color: sageDark.withValues(alpha: 0.5)),
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Icon(icon, size: 12, color: Colors.white),
+      child: Column(
+        children: [
+          Icon(icon, color: Color(0xFFadc893), size: 24),
+          const SizedBox(height: 8),
+          Text(
+            label.toUpperCase(),
+            style: GoogleFonts.manrope(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFadc893).withValues(alpha: 0.6),
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: GoogleFonts.manrope(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCareLogItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required String date,
+    required Color sageDark,
+    Color? healthyGreen,
+    bool showIndicator = true,
+  }) {
+    return Row(
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: sageDark.withValues(alpha: 0.4),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, color: Color(0xFF88a67e), size: 24),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.manrope(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    date,
+                    style: GoogleFonts.manrope(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFFadc893).withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  if (showIndicator) ...[
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: healthyGreen ?? Color(0xFF66b814),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  Expanded(
+                    child: Text(
+                      subtitle,
+                      style: GoogleFonts.manrope(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFFadc893),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -36,9 +36,11 @@ class AppState extends ChangeNotifier with WidgetsBindingObserver {
     if (timezoneChanged && _isWateringReminderEnabled) {
       debugPrint('Rescheduling notifications due to timezone change');
       await NotificationService().cancelNotifications();
-      await NotificationService().scheduleDailyNotification(
-        _wateringReminderTime,
-      );
+      final bool scheduled = await NotificationService()
+          .scheduleDailyNotification(_wateringReminderTime);
+      if (scheduled) {
+        await NotificationService().logPendingNotifications();
+      }
     }
   }
 
@@ -60,10 +62,19 @@ class AppState extends ChangeNotifier with WidgetsBindingObserver {
     if (_isWateringReminderEnabled) {
       // Ensure timezone is up-to-date before scheduling
       await NotificationService().updateTimezone();
-      await NotificationService().requestPermissions();
-      await NotificationService().scheduleDailyNotification(
-        _wateringReminderTime,
-      );
+      final bool permissionsGranted = await NotificationService()
+          .requestPermissions();
+      if (permissionsGranted) {
+        final bool scheduled = await NotificationService()
+            .scheduleDailyNotification(_wateringReminderTime);
+        if (scheduled) {
+          await NotificationService().logPendingNotifications();
+        } else {
+          debugPrint('⚠️ Failed to schedule notification on app startup');
+        }
+      } else {
+        debugPrint('⚠️ Notification permissions not granted');
+      }
     }
 
     notifyListeners();
@@ -89,12 +100,27 @@ class AppState extends ChangeNotifier with WidgetsBindingObserver {
     await prefs.setBool('watering_reminder_enabled', isEnabled);
 
     if (isEnabled) {
-      await NotificationService().requestPermissions();
-      await NotificationService().scheduleDailyNotification(
-        _wateringReminderTime,
-      );
+      final bool permissionsGranted = await NotificationService()
+          .requestPermissions();
+      if (permissionsGranted) {
+        final bool scheduled = await NotificationService()
+            .scheduleDailyNotification(_wateringReminderTime);
+        if (scheduled) {
+          debugPrint('✓ Watering reminder enabled and scheduled');
+          await NotificationService().logPendingNotifications();
+        } else {
+          debugPrint('⚠️ Failed to schedule watering reminder');
+          // Revert the toggle if scheduling failed
+          _isWateringReminderEnabled = false;
+        }
+      } else {
+        debugPrint('⚠️ Notification permissions denied');
+        // Revert the toggle if permissions denied
+        _isWateringReminderEnabled = false;
+      }
     } else {
       await NotificationService().cancelNotifications();
+      debugPrint('✓ Watering reminder disabled');
     }
     notifyListeners();
   }
@@ -108,7 +134,16 @@ class AppState extends ChangeNotifier with WidgetsBindingObserver {
     if (_isWateringReminderEnabled) {
       // Reschedule with new time
       await NotificationService().cancelNotifications();
-      await NotificationService().scheduleDailyNotification(newTime);
+      final bool scheduled = await NotificationService()
+          .scheduleDailyNotification(newTime);
+      if (scheduled) {
+        debugPrint(
+          '✓ Watering reminder time updated to ${newTime.hour}:${newTime.minute.toString().padLeft(2, '0')}',
+        );
+        await NotificationService().logPendingNotifications();
+      } else {
+        debugPrint('⚠️ Failed to reschedule with new time');
+      }
     }
     notifyListeners();
   }

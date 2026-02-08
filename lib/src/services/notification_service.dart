@@ -71,33 +71,69 @@ class NotificationService {
     return false;
   }
 
-  Future<void> requestPermissions() async {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.requestNotificationsPermission();
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.requestExactAlarmsPermission();
+  Future<bool> requestPermissions() async {
+    try {
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+          flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >();
+
+      if (androidImplementation == null) {
+        debugPrint('Android implementation not available');
+        return false;
+      }
+
+      // Request notification permission
+      final bool? notificationPermission = await androidImplementation
+          .requestNotificationsPermission();
+      debugPrint('Notification permission granted: $notificationPermission');
+
+      // Request exact alarm permission
+      final bool? exactAlarmPermission = await androidImplementation
+          .requestExactAlarmsPermission();
+      debugPrint('Exact alarm permission granted: $exactAlarmPermission');
+
+      final bool permissionsGranted =
+          (notificationPermission ?? false) && (exactAlarmPermission ?? false);
+
+      debugPrint('All permissions granted: $permissionsGranted');
+      return permissionsGranted;
+    } catch (e) {
+      debugPrint('Error requesting permissions: $e');
+      return false;
+    }
   }
 
-  Future<void> scheduleDailyNotification(TimeOfDay time) async {
+  Future<bool> scheduleDailyNotification(TimeOfDay time) async {
     try {
+      // Verify timezone is initialized
+      if (tz.local.name.isEmpty) {
+        debugPrint('Timezone not initialized, initializing now...');
+        await updateTimezone();
+      }
+
+      final tz.TZDateTime scheduledTime = _nextInstanceOfTime(time);
+      final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+
+      debugPrint('Current time: $now');
+      debugPrint('Scheduling daily notification for: $scheduledTime');
+      debugPrint('Timezone: ${tz.local.name}');
+
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Watering Reminder',
-        'Time to water your plants! 🌿',
-        _nextInstanceOfTime(time),
+        'Time to check your garden! 🌿',
+        scheduledTime,
         const NotificationDetails(
           android: AndroidNotificationDetails(
-            'watering_channel_v3', // Bumped to v3 to force channel update
+            'watering_channel_v3',
             'Watering Reminders',
-            channelDescription: 'Daily reminders to water your plants',
+            channelDescription: 'Daily reminders to check your plants',
             importance: Importance.max,
             priority: Priority.high,
+            playSound: true,
+            enableVibration: true,
           ),
           iOS: DarwinNotificationDetails(),
         ),
@@ -106,14 +142,84 @@ class NotificationService {
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
       );
-      debugPrint('Notification scheduled successfully');
+
+      debugPrint(
+        '✓ Daily notification scheduled successfully at $scheduledTime',
+      );
+      return true;
     } catch (e) {
-      debugPrint('Error scheduling notification: $e');
+      debugPrint('✗ Error scheduling daily notification: $e');
+      return false;
     }
+  }
+
+  Future<void> schedulePlantWatering(
+    String id,
+    String plantName,
+    DateTime scheduledDate,
+  ) async {
+    try {
+      // Use hash of ID for notification ID (needs int)
+      final int notificationId = id.hashCode;
+      final tz.TZDateTime tzDate = tz.TZDateTime.from(scheduledDate, tz.local);
+
+      // Don't schedule if in the past
+      if (tzDate.isBefore(tz.TZDateTime.now(tz.local))) {
+        debugPrint('Skipping past notification for $plantName');
+        return;
+      }
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        notificationId,
+        'Watering Time! 💧',
+        'It\'s time to water your $plantName!',
+        tzDate,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'plant_watering_channel',
+            'Plant Care',
+            channelDescription: 'Specific watering reminders for each plant',
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
+          iOS: DarwinNotificationDetails(),
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+      );
+      debugPrint('Scheduled notification for $plantName at $tzDate');
+    } catch (e) {
+      debugPrint('Error scheduling plant notification: $e');
+    }
+  }
+
+  Future<void> cancelPlantNotification(String id) async {
+    await flutterLocalNotificationsPlugin.cancel(id.hashCode);
   }
 
   Future<void> cancelNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  Future<void> logPendingNotifications() async {
+    try {
+      final List<PendingNotificationRequest> pendingNotifications =
+          await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+      debugPrint(
+        '=== Pending Notifications (${pendingNotifications.length}) ===',
+      );
+      for (final notification in pendingNotifications) {
+        debugPrint(
+          'ID: ${notification.id}, Title: ${notification.title}, '
+          'Body: ${notification.body}',
+        );
+      }
+      debugPrint('==============================');
+    } catch (e) {
+      debugPrint('Error getting pending notifications: $e');
+    }
   }
 
   tz.TZDateTime _nextInstanceOfTime(TimeOfDay time) {
@@ -129,9 +235,6 @@ class NotificationService {
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    debugPrint(
-      'Scheduling notification for: $scheduledDate (Local Timezone: ${tz.local.name})',
-    );
     return scheduledDate;
   }
 }

@@ -6,6 +6,9 @@ class ScanResult {
   final String solution;
   final DateTime timestamp;
   final double confidence;
+  final String healthStatus;
+  final int wateringFrequency; // In days. 0 = no reminder
+  final DateTime? nextWateringDate;
 
   ScanResult({
     required this.id,
@@ -15,6 +18,9 @@ class ScanResult {
     required this.solution,
     required this.timestamp,
     this.confidence = 0.0,
+    this.healthStatus = 'Unknown',
+    this.wateringFrequency = 0,
+    this.nextWateringDate,
   });
 
   // Convert to Map for storage
@@ -27,6 +33,9 @@ class ScanResult {
       'solution': solution,
       'timestamp': timestamp.toIso8601String(),
       'confidence': confidence,
+      'healthStatus': healthStatus,
+      'wateringFrequency': wateringFrequency,
+      'nextWateringDate': nextWateringDate?.toIso8601String(),
     };
   }
 
@@ -40,6 +49,11 @@ class ScanResult {
       solution: map['solution'],
       timestamp: DateTime.parse(map['timestamp']),
       confidence: map['confidence'] ?? 0.0,
+      healthStatus: map['healthStatus'] ?? 'Unknown',
+      wateringFrequency: map['wateringFrequency'] ?? 0,
+      nextWateringDate: map['nextWateringDate'] != null
+          ? DateTime.parse(map['nextWateringDate'])
+          : null,
     );
   }
 }

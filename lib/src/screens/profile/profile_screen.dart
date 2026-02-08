@@ -99,186 +99,126 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "My Profile",
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: theme.canvasColor,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: theme.dividerColor.withValues(alpha: 0.1),
+              ),
+            ),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              size: 20,
+              color: theme.iconTheme.color,
+            ),
+          ),
+        ),
+        actions: [
+          GestureDetector(
+            onTap: _toggleEdit,
+            child: Container(
+              margin: const EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: theme.canvasColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: theme.dividerColor.withValues(alpha: 0.1),
+                ),
+              ),
+              child: Icon(
+                _isEditing ? Icons.check : Icons.edit,
+                size: 20,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+        ],
+        centerTitle: true,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
-        padding:
-            EdgeInsets.zero, // Handle padding in children for full width header
         child: Column(
           children: [
-            // Header Section
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.bottomCenter,
-              children: [
-                // Background
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                        top: 60,
-                        left: 20,
-                        right: 20,
-                        bottom: 80, // Space for the floating profile pic
-                      ),
+            const SizedBox(height: 20),
+            // Profile Image
+            Center(
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.15),
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(32),
-                          bottomRight: Radius.circular(32),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () => Navigator.pop(context),
-                                child: Container(
-                                  width: 44,
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    color: theme.canvasColor,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                        blurRadius: 10,
-                                        offset: const Offset(0, 4),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.arrow_back_ios_new,
-                                    size: 20,
-                                    color: theme.iconTheme.color,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "My Profile",
-                                style: theme.textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.onSurface,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: _toggleEdit,
-                                child: Container(
-                                  width: 44,
-                                  height: 44,
-                                  decoration: BoxDecoration(
-                                    color: theme.canvasColor,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                        blurRadius: 10,
-                                        offset: const Offset(0, 4),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    _isEditing ? Icons.check : Icons.edit,
-                                    size: 20,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColors.primary, width: 4),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
                           ),
                         ],
+                      ),
+                      child: Consumer<UserProvider>(
+                        builder: (context, userProvider, child) {
+                          return CircleAvatar(
+                            radius: 60,
+                            backgroundImage: userProvider.imagePath != null
+                                ? FileImage(File(userProvider.imagePath!))
+                                      as ImageProvider
+                                : const CachedNetworkImageProvider(
+                                    "https://lh3.googleusercontent.com/aida-public/AB6AXuDpvVdv6n8FlYj_VMozhWL7_emJqNQIFF7-g3niPpDvKMuwcgjTgYu5UN-m0ZnsnHWkKb0rgEruhDZbNNt1dHkfEGqth1pC2WCzv73FF9wvSLRp6eXz64LfbWM4jhDRXioOHx50-HuCpTTxkCJoiSM_Ayi__WBQv3Vs8KCkEUSdP5ZNTl9DUFNXpaekxj962mUmvDufOpxz7zUwAfcj2jUrE8FSS-4sH_Pz1jJg-Dk7iZgv95q0XR80IzZMHsbaGD1mSyrGifF6-H8",
+                                  ),
+                          );
+                        },
                       ),
                     ),
-                    const SizedBox(height: 60),
-                  ],
-                ),
-
-                // Profile Image & Info
-                Positioned(
-                  bottom: 0,
-                  child: Column(
-                    children: [
-                      Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          GestureDetector(
-                            onTap: _pickImage,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.primary,
-                                  width: 4,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.primary.withValues(
-                                      alpha: 0.3,
-                                    ),
-                                    blurRadius: 20,
-                                    offset: const Offset(0, 10),
-                                  ),
-                                ],
-                              ),
-                              child: Consumer<UserProvider>(
-                                builder: (context, userProvider, child) {
-                                  return CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage:
-                                        userProvider.imagePath != null
-                                        ? FileImage(
-                                                File(userProvider.imagePath!),
-                                              )
-                                              as ImageProvider
-                                        : const CachedNetworkImageProvider(
-                                            "https://lh3.googleusercontent.com/aida-public/AB6AXuDpvVdv6n8FlYj_VMozhWL7_emJqNQIFF7-g3niPpDvKMuwcgjTgYu5UN-m0ZnsnHWkKb0rgEruhDZbNNt1dHkfEGqth1pC2WCzv73FF9wvSLRp6eXz64LfbWM4jhDRXioOHx50-HuCpTTxkCJoiSM_Ayi__WBQv3Vs8KCkEUSdP5ZNTl9DUFNXpaekxj962mUmvDufOpxz7zUwAfcj2jUrE8FSS-4sH_Pz1jJg-Dk7iZgv95q0XR80IzZMHsbaGD1mSyrGifF6-H8",
-                                          ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          if (_isEditing)
-                            GestureDetector(
-                              onTap: _pickImage,
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: theme.scaffoldBackgroundColor,
-                                    width: 4,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 8,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ],
                   ),
-                ),
-              ],
+                  if (_isEditing)
+                    GestureDetector(
+                      onTap: _pickImage,
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: theme.scaffoldBackgroundColor,
+                            width: 4,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
-
-            const SizedBox(height: 10), // Reduced space since Stack grew
+            const SizedBox(height: 20),
             // Name and Badge
             _isEditing
                 ? Padding(
@@ -424,6 +364,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: 40),
           ],
         ),

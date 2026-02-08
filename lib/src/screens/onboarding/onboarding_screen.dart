@@ -6,6 +6,7 @@ import '../../theme/app_theme.dart';
 import 'widgets/onboarding_page_1.dart';
 import 'widgets/onboarding_page_2.dart';
 import 'widgets/onboarding_page_3.dart';
+import 'widgets/onboarding_page_4.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -23,7 +24,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _onNext() {
-    if (_currentPage < 2) {
+    if (_currentPage < 3) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -53,8 +54,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Skip button only on Page 1 and 2
-                  if (_currentPage < 2)
+                  // Skip button only on Page 1, 2, and 3
+                  if (_currentPage < 3)
                     TextButton(
                       onPressed: _onSkip,
                       style: TextButton.styleFrom(
@@ -95,6 +96,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   OnboardingPage1(),
                   OnboardingPage2(),
                   OnboardingPage3(),
+                  OnboardingPage4(),
                 ],
               ),
             ),
@@ -107,7 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   // Page Indicators
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(3, (index) {
+                    children: List.generate(4, (index) {
                       bool isActive = _currentPage == index;
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
@@ -145,7 +147,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            _currentPage == 2 ? "Get Started" : "Next",
+                            _currentPage == 3 ? "Get Started" : "Next",
                             style: GoogleFonts.mPlusRounded1c(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
 import '../../providers/garden_provider.dart';
 import '../diagnosis/diagnosis_screen.dart';
+import '../scanner/scanner_screen.dart';
 
 class GardenScreen extends StatefulWidget {
   const GardenScreen({super.key});
@@ -57,20 +58,54 @@ class _GardenScreenState extends State<GardenScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.local_florist_outlined,
-                    size: 64,
-                    color: Colors.grey[400],
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.add_a_photo_outlined,
+                      size: 48,
+                      color: AppColors.primary,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   Text(
-                    "Your garden is empty",
-                    style: TextStyle(color: Colors.grey[600], fontSize: 18),
+                    "Add your first plant",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Scan a plant to add it here!",
-                    style: TextStyle(color: Colors.grey),
+                  Text(
+                    "Snap a photo to identify and\ncare for your plants",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ScannerScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.camera_alt_rounded),
+                    label: const Text("Scan Now"),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -242,6 +277,27 @@ class _GardenScreenState extends State<GardenScreen> {
                                     fontSize: 12,
                                   ),
                                 ),
+                                if (scan.nextWateringDate != null) ...[
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.water_drop,
+                                        size: 12,
+                                        color: Colors.blue[400],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "Water: ${_formatDate(scan.nextWateringDate!)}",
+                                        style: TextStyle(
+                                          color: Colors.blue[400],
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ],
                             ),
                           ),

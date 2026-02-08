@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
@@ -7,8 +8,9 @@ import '../scanner/scanner_screen.dart';
 import '../settings/settings_screen.dart';
 import '../profile/profile_screen.dart';
 import '../../providers/garden_provider.dart';
-import '../../models/scan_result.dart';
+
 import '../../models/plant.dart';
+import '../../models/scan_result.dart';
 import '../diagnosis/diagnosis_screen.dart';
 import 'plan_care_screen.dart';
 
@@ -23,56 +25,30 @@ class _HomeScreenState extends State<HomeScreen> {
   String _searchQuery = "";
   PlantStatus? _selectedStatusFilter;
 
-  final List<Map<String, dynamic>> _allPlants = [
-    {
-      "name": "Monstera",
-      "scientific": "Monstera Deliciosa",
-      "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuAuSSTIBKebfo5SYuAFS6Fu0J78G1Rs77i8_EhWX9WfEQBXqR_trCzhX-dE-_8HPlYLkjBzRUO5ESLTQcYfONGrdy-DO7-Q-yJy8k2TTrL_ZSjTix1FRuhKZTeCXHxZEU-IzzCcDybjEpq_-gQ_EAq_O8BBgJLrSkPfjBuON9nAEJyw6x1W0pDMM6WqYHUO4kvSN6zdJ8V3vjXC0AL98V5qH09gmkBEaSWGOfLy38AzNfGpF5_9q5qpZ5W1LKdTKMndNFSwlFDX88k",
-      "status": PlantStatus.healthy,
-    },
-    {
-      "name": "Snake Plant",
-      "scientific": "Sansevieria",
-      "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuBSU7CjUD8Sm6E8h_7qtu7Z_8x5_gf5i2mb9uAY6PAt4a64u4fIErgAo18-Rys1MJiYtjEy9mAH6Fk5m5v3TrZCoi2gz9_vabc2tXg4nypSmiHZ7QLGxmixqqpxWbL6ZYBxkWltcuYgYRDtXCXd4mTTLKVyNf8Vhp5B3pncTRFUle6HHrZBj_rWo-MYw1F0a912ie1pckMbbVH6C0G4vw095NF964tjUphMC9-sqvx-KgyY3uoNoXyuBnjNmC2Gu2kzqH1wAOp-Znc",
-      "status": PlantStatus.thirsty,
-    },
-    {
-      "name": "Fiddle Leaf",
-      "scientific": "Ficus Lyrata",
-      "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuDj1mCITgOfHg9Pm7oQPC5-rRI6HwZDIn7waA9C3gHSR8I0RUn-Tpq60kG_r_fIT9jdw_zR3ze9WGY1XWXBiLObfBDKCaIzpa6GInzIvwEz1DIZOxrZf7denhy-IAB1ng9OVlgscm_eC4PNhjtIx8-ZiyINiSlPMjBgDXB59MN60dkRWY_7FGTJfhrXdlOIuK3qnQ6bx6OOUlpqDNzPFSkA3d0XCuTHbJLnnITiG0EpdNVoVaMqbQJxfAfAhEaYLLssud0-InHuuF8",
-      "status": PlantStatus.actionNeeded,
-    },
-    {
-      "name": "Golden Pothos",
-      "scientific": "Epipremnum",
-      "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuBOcpB-IKf8dTD9jxI6VlaaBRo5EpHrrOnWoUp32H4Zz1LdoxVSHiyXnKNo-LBEZk5M1abNAY9f3AOCAOTzp2ev3H4U6udNhEhELuASlzBrX-NNoCun7MAN9IP8_4UL3RKR06r259akpmQFMg99WhNw4fz27k9X3YfHbSgYDggX5oI43fS3RBQ2abAOKuoqG6Wf0MSJ8aprHctoQ8l_GU2J5hon4tUSz5pxkUhwmRazBLJDpOh6Y6Smb8noZ8gYauBakK29G45Q4O4",
-      "status": PlantStatus.healthy,
-    },
-    {
-      "name": "Rubber Plant",
-      "scientific": "Ficus Elastica",
-      "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuBdbY4GinnpYtDXyjmsJIPaYGifQ25GC7PQp3D14mtNFDwB90EBWAu4Zf4uXD4QmF77xMQ5CCzRu-naChBKuok8zgAHQrY5C8YPE1PGbtAmawkjgLTx8uvMsjGonpcdQZJkr7AmBKWS5sRv8F5jso-95L-JyWCFTBcNiKUXd5uvIad5_2cjT7NqSEwRhVvseEc82Qf6viP-EzJT_sOmT6qz5EDUVUsdU9e0DOHAuck5xlTiOG8-Cgi3jv27SKQcqbARLCHsT8kfbzs",
-      "status": PlantStatus.healthy,
-    },
-    {
-      "name": "ZZ Plant",
-      "scientific": "Zamioculcas",
-      "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuBYaT82JT-0tcH5ltzYeLMN2yebi27T8UwJCdjzuk3bO72XHu7MWyH-FGPO-_KjqaVTdlU2T0upadSXwUTz31B4-muAPumd-lFQQSvhSEw8HVu8DxeyMEvU_UzdsdFuy-nbn2V22jfe7TVNWYVK_a1FfiqjoOdgeb-G2rXFWDwCPcBdF3n_JS1uLJYPf6PJTulLJcIwqZeW5-umycniglGAZhrA-MdUsgJ8sg9_bYit9G58X65YyAEzIRHmTTo2SfAGhOh9kohtxl0",
-      "status": PlantStatus.healthy,
-    },
-  ];
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Update greeting every minute
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   String get _greeting {
     final hour = DateTime.now().hour;
+    if (hour < 5) return 'Good night';
     if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 16) return 'Good afternoon';
+    if (hour < 21) return 'Good evening';
+    return 'Good night';
   }
 
   @override
@@ -81,38 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final gardenProvider = Provider.of<GardenProvider>(context);
     final userPlants = gardenProvider.scans;
 
-    // Combine with demo plants if needed, or just use userPlants
-    // For now, let's prepend user plants to the demo list for a hybrid view,
-    // or strictly use userPlants if nonempty?
-    // Plan: Show user plants first, then demo plants.
-
-    // Convert demo plants to ScanResult like objects for unified list
-    List<ScanResult> allDisplayPlants = [
-      ...userPlants,
-      // Convert demo map to ScanResult
-      ..._allPlants.map(
-        (p) => ScanResult(
-          id: "demo_${p['name']}",
-          imagePath: p['image'],
-          plantName: p['name'], // Using name as title
-          problem: p['status'] == PlantStatus.healthy
-              ? 'Healthy'
-              : 'Needs Action',
-          solution: "This is a demo plant.",
-          timestamp: DateTime.now().subtract(const Duration(days: 365)), // Old
-          confidence: 1.0,
-        ),
-      ),
-    ];
-
-    final plants = allDisplayPlants.where((plant) {
+    final plants = userPlants.where((plant) {
       final name = plant.plantName.toLowerCase();
       // final scientific = plant.scientificName ... (ScanResult doesn't have scientific yet)
       final query = _searchQuery.toLowerCase();
       final matchesSearch = name.contains(query);
 
       if (_selectedStatusFilter != null) {
-        final status = _mapProblemToStatus(plant.problem);
+        final status = _mapToPlantStatus(plant);
         return matchesSearch && status == _selectedStatusFilter;
       }
       return matchesSearch;
@@ -249,30 +201,92 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               // Grid
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 160),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 24,
-                    crossAxisSpacing: 20,
-                    childAspectRatio: 0.7, // Taller cards
+              if (plants.isEmpty)
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 100),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 120,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.add_a_photo_outlined,
+                              size: 48,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            "Add your first plant",
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "Snap a photo to identify and\ncare for your plants",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const ScannerScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.camera_alt_rounded),
+                            label: const Text("Scan Now"),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32,
+                                vertical: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final plant = plants[index];
+                )
+              else
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(24, 8, 24, 160),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 24,
+                          crossAxisSpacing: 20,
+                          childAspectRatio: 0.7, // Taller cards
+                        ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final plant = plants[index];
 
-                    // Parse name if it contains scientific name in brackets
-                    String displayName = plant.plantName;
-                    String displayScientific = "";
+                      // Parse name if it contains scientific name in brackets
+                      String displayName = plant.plantName;
+                      String displayScientific = "";
 
-                    if (plant.id.startsWith("demo_")) {
-                      displayScientific =
-                          _allPlants.firstWhere(
-                            (element) => element['name'] == plant.plantName,
-                            orElse: () => {'scientific': ''},
-                          )['scientific'] ??
-                          "";
-                    } else {
                       // Try to parse "Common (Scientific)"
                       final match = RegExp(
                         r'^(.*)\s+\((.*)\)$',
@@ -287,28 +301,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         // or maybe the problem?
                         displayScientific = plant.problem;
                       }
-                    }
 
-                    return PlantCard(
-                      name: displayName,
-                      scientificName: displayScientific,
-                      imageUrl: plant.imagePath,
-                      status: _mapProblemToStatus(plant.problem),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DiagnosisScreen(
-                              scanResult: plant,
-                              isHistoryMode: true,
+                      return PlantCard(
+                        name: displayName,
+                        scientificName: displayScientific,
+                        imageUrl: plant.imagePath,
+                        status: _mapToPlantStatus(plant),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DiagnosisScreen(
+                                scanResult: plant,
+                                isHistoryMode: true,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }, childCount: plants.length),
+                          );
+                        },
+                      );
+                    }, childCount: plants.length),
+                  ),
                 ),
-              ),
             ],
           ),
 
@@ -608,15 +621,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  PlantStatus _mapProblemToStatus(String problem) {
-    final lower = problem.toLowerCase();
-    if (lower == 'healthy') return PlantStatus.healthy;
-    if (lower.contains('thirsty') ||
-        lower.contains('water') ||
-        lower.contains('dry') ||
-        lower.contains('dehydrated')) {
+  PlantStatus _mapToPlantStatus(ScanResult plant) {
+    // 1. Check explicit health status
+    final statusLower = plant.healthStatus.toLowerCase();
+    if (statusLower == 'healthy') return PlantStatus.healthy;
+
+    // 2. Check keywords in diagnosis for "Thirsty"
+    final problemLower = plant.problem.toLowerCase();
+    if (problemLower.contains('thirsty') ||
+        problemLower.contains('water') ||
+        problemLower.contains('dry') ||
+        problemLower.contains('dehydrated')) {
       return PlantStatus.thirsty;
     }
+
+    // 3. Default to Action Needed for Needs Attention/Critical/Error
     return PlantStatus.actionNeeded;
   }
 }

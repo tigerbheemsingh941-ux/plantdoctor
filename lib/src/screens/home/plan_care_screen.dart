@@ -74,9 +74,33 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("Plan Care"),
+        title: Text(
+          "Plan Care",
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
+              ),
+            ),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              size: 20,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
       body: Column(
@@ -174,24 +198,93 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
                             const SizedBox(height: 30),
                           ],
                           Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.search,
-                                  size: 64,
-                                  color: Colors.grey.withValues(alpha: 0.5),
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  "Search for a plant to see care details",
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 16,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Gradient Card with Icon
+                                  Container(
+                                    width: 140,
+                                    height: 140,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.green.shade400,
+                                          Colors.teal.shade400,
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.green.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                          blurRadius: 20,
+                                          offset: const Offset(0, 10),
+                                        ),
+                                      ],
+                                    ),
+                                    child: const Icon(
+                                      Icons.eco_outlined,
+                                      size: 70,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 24),
-                              ],
+                                  const SizedBox(height: 32),
+                                  // Title
+                                  Text(
+                                    "Discover Plant Care",
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: -0.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  // Subtitle
+                                  Text(
+                                    "Search for any plant to learn about\nwatering, sunlight, and care tips",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.grey[500],
+                                      fontSize: 16,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 40),
+                                  // Feature Cards
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      _buildFeatureCard(
+                                        icon: Icons.water_drop_outlined,
+                                        label: "Water\nSchedule",
+                                        color: Colors.blue,
+                                      ),
+                                      _buildFeatureCard(
+                                        icon: Icons.wb_sunny_outlined,
+                                        label: "Sunlight\nNeeds",
+                                        color: Colors.orange,
+                                      ),
+                                      _buildFeatureCard(
+                                        icon: Icons.spa_outlined,
+                                        label: "Care\nTips",
+                                        color: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 24),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -260,6 +353,38 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
                         );
                       },
                     ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureCard({
+    required IconData icon,
+    required String label,
+    required Color color,
+  }) {
+    return Container(
+      width: 96,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 36, color: color),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              height: 1.2,
             ),
           ),
         ],

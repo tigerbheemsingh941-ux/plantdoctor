@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
-import '../../models/scan_result.dart';
-import '../../services/garden_service.dart';
+import '../../providers/garden_provider.dart';
 import '../diagnosis/diagnosis_screen.dart';
 
 class GardenScreen extends StatefulWidget {
@@ -13,27 +13,24 @@ class GardenScreen extends StatefulWidget {
 }
 
 class _GardenScreenState extends State<GardenScreen> {
-  final GardenService _gardenService = GardenService();
-  late Future<List<ScanResult>> _scansFuture;
-
   @override
   void initState() {
     super.initState();
-    _loadScans();
-  }
-
-  void _loadScans() {
-    setState(() {
-      _scansFuture = _gardenService.getScans();
+    // Refresh scans when screen opens
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GardenProvider>(context, listen: false).loadScans();
     });
   }
 
-  Future<void> _deleteScan(String id) async {
-    await _gardenService.deleteScan(id);
-    _loadScans();
+  Future<void> _handleDelete(String id) async {
+    final gardenProvider = Provider.of<GardenProvider>(context, listen: false);
+    await gardenProvider.deleteScan(id);
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Plant removed from garden")),
+        const SnackBar(
+          content: Text("Plant removed from garden"),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     }
   }
@@ -47,18 +44,13 @@ class _GardenScreenState extends State<GardenScreen> {
         elevation: 0,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
       ),
-      body: FutureBuilder<List<ScanResult>>(
-        future: _scansFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: Consumer<GardenProvider>(
+        builder: (context, gardenProvider, child) {
+          if (gardenProvider.isLoading && gardenProvider.scans.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          }
-
-          final scans = snapshot.data ?? [];
+          final scans = gardenProvider.scans;
 
           if (scans.isEmpty) {
             return Center(
@@ -143,7 +135,7 @@ class _GardenScreenState extends State<GardenScreen> {
                     ],
                   ),
                 ),
-                onDismissed: (_) => _deleteScan(scan.id),
+                onDismissed: (_) => _handleDelete(scan.id),
                 child: Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -170,19 +162,39 @@ class _GardenScreenState extends State<GardenScreen> {
                           // Thumbnail
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.file(
-                              File(scan.imagePath),
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Container(
+                            child: scan.imagePath.startsWith('http')
+                                ? Image.network(
+                                    scan.imagePath,
                                     width: 80,
                                     height: 80,
-                                    color: Colors.grey[300],
-                                    child: const Icon(Icons.broken_image),
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                              width: 80,
+                                              height: 80,
+                                              color: Colors.grey[300],
+                                              child: const Icon(
+                                                Icons.broken_image,
+                                              ),
+                                            ),
+                                  )
+                                : Image.file(
+                                    File(scan.imagePath),
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                              width: 80,
+                                              height: 80,
+                                              color: Colors.grey[300],
+                                              child: const Icon(
+                                                Icons.broken_image,
+                                              ),
+                                            ),
                                   ),
-                            ),
                           ),
                           const SizedBox(width: 16),
 
@@ -249,7 +261,6 @@ class _GardenScreenState extends State<GardenScreen> {
   }
 
   String _formatDate(DateTime date) {
-    // Simple formatter, no extra dependency needed for this basic display
     return "${date.day}/${date.month}/${date.year}";
   }
 

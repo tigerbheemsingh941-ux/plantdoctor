@@ -7,12 +7,13 @@ import 'package:image/image.dart';
 
 import '../models/scan_result.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DiagnosisService {
   final _uuid = const Uuid();
 
   // API Endpoint not needed for SDK
-  static const String _apiKey = 'AIzaSyAipzb42EiN9ejheiP-z1RZD-eZBz8El50';
+  String get _apiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
 
   Future<ScanResult> analyzeImage(String imagePath) async {
     try {
@@ -128,7 +129,8 @@ Rules:
         imagePath: imagePath,
         plantName: "Error",
         problem: "Could not analyze",
-        solution: "Please check your internet connection and try again.",
+        solution:
+            "Please check your internet connection and try again. (Error: $e)",
         timestamp: DateTime.now(),
         confidence: 0.0,
       );

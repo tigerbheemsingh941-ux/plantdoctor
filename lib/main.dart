@@ -11,11 +11,13 @@ import 'src/services/notification_service.dart';
 import 'src/providers/user_plant_provider.dart';
 
 import 'package:camera/camera.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 late List<CameraDescription> cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   try {
     cameras = await availableCameras();
   } on CameraException catch (e) {

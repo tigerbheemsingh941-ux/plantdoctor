@@ -32,9 +32,9 @@ class SettingsScreen extends StatelessWidget {
           _buildSectionHeader(context, "SUPPORT"),
           const SizedBox(height: 10),
           _buildSupportSection(context),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           _buildLogoutButton(context),
-          const SizedBox(height: 40),
+          const SizedBox(height: 100),
         ],
       ),
     );

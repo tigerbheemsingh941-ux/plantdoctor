@@ -38,14 +38,18 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
               ),
             ),
             if (widget.plant['scientific'] != null)
-              Text(
-                widget.plant['scientific'],
-                style: GoogleFonts.mPlusRounded1c(
-                  fontSize: 14,
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.7),
-                  fontWeight: FontWeight.w400,
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  widget.plant['scientific'],
+                  style: GoogleFonts.mPlusRounded1c(
+                    fontSize: 13,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.55),
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 0.3,
+                  ),
                 ),
               ),
           ],
@@ -63,22 +67,35 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (widget.plant['description'] != null)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32, 20, 32, 10),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 18,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.04),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    width: 1,
+                  ),
+                ),
                 child: Text(
                   widget.plant['description'],
                   textAlign: TextAlign.center,
                   style: GoogleFonts.mPlusRounded1c(
-                    fontSize: 16,
+                    fontSize: 14.5,
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurface.withValues(alpha: 0.8),
-                    height: 1.5,
-                    letterSpacing: 0.2,
+                    ).colorScheme.onSurface.withValues(alpha: 0.75),
+                    height: 1.7,
+                    letterSpacing: 0.15,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
 
             if (details != null) ...[
               // Light Section
@@ -184,7 +201,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
     final isExpanded = _expandedSections["Warning"] ?? false;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      margin: const EdgeInsets.fromLTRB(20, 8, 20, 24),
       decoration: BoxDecoration(
         color: Colors.amber.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),

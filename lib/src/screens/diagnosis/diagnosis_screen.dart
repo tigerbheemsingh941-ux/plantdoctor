@@ -24,7 +24,10 @@ class DiagnosisScreen extends StatefulWidget {
 }
 
 class _DiagnosisScreenState extends State<DiagnosisScreen> {
-  int _selectedFrequency = 2; // Default to every 2 days
+  int _selectedFrequency = 3; // Default to every 3 days
+  int _selectedFertilizingFrequency = 14; // Default to every 14 days
+  int _selectedPruningFrequency = 30; // Default to every 30 days
+  int _selectedMistingFrequency = 1; // Default to every day
 
   @override
   Widget build(BuildContext context) {
@@ -313,87 +316,250 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // Watering Schedule (Only in "Add" mode)
+                      // Care Reminders (Only in "Add" mode)
                       if (!widget.isHistoryMode) ...[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.water_drop_rounded,
-                                  color: Colors.blue[400],
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  "Watering Schedule",
-                                  style: Theme.of(context).textTheme.titleMedium
-                                      ?.copyWith(fontWeight: FontWeight.bold),
-                                ),
+                        // Enhanced Section Header
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                AppColors.primary.withValues(alpha: 0.1),
+                                AppColors.primary.withValues(alpha: 0.05),
                               ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
-                            const SizedBox(height: 12),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Theme.of(
-                                  context,
-                                ).inputDecorationTheme.fillColor,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: Colors.grey.withValues(alpha: 0.2),
-                                ),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<int>(
-                                  value: _selectedFrequency,
-                                  isExpanded: true,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: 1,
-                                      child: Text("Every day"),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 2,
-                                      child: Text("Every 2 days"),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 3,
-                                      child: Text("Every 3 days"),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 5,
-                                      child: Text("Every 5 days"),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 7,
-                                      child: Text("Every week"),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: AppColors.primary.withValues(alpha: 0.2),
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.3,
+                                      ),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 2),
                                     ),
                                   ],
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      setState(() {
-                                        _selectedFrequency = value;
-                                      });
-                                    }
-                                  },
+                                ),
+                                child: Icon(
+                                  Icons.notifications_active_rounded,
+                                  color: Colors.white,
+                                  size: 22,
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              "We'll remind you to water this plant.",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Theme.of(context).hintColor,
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Care Reminders",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 0.3,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      "Set reminders for plant care activities",
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Theme.of(
+                                          context,
+                                        ).hintColor.withValues(alpha: 0.8),
+                                        letterSpacing: 0.1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Compact Grid Layout for All Reminders
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardTheme.color,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.grey.withValues(alpha: 0.15),
                             ),
-                          ],
+                          ),
+                          child: Column(
+                            children: [
+                              // Watering
+                              _buildCompactReminder(
+                                context,
+                                icon: Icons.water_drop_rounded,
+                                color: AppColors.primary,
+                                label: "Watering",
+                                value: _selectedFrequency,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: 0,
+                                    child: Text("Off"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 1,
+                                    child: Text("Daily"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 2,
+                                    child: Text("2 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 3,
+                                    child: Text("3 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 5,
+                                    child: Text("5 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 7,
+                                    child: Text("Weekly"),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(() => _selectedFrequency = value);
+                                  }
+                                },
+                              ),
+                              const Divider(height: 24),
+
+                              // Fertilizing
+                              _buildCompactReminder(
+                                context,
+                                icon: Icons.eco_rounded,
+                                color: AppColors.primary,
+                                label: "Fertilizing",
+                                value: _selectedFertilizingFrequency,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: 0,
+                                    child: Text("Off"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 7,
+                                    child: Text("7 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 14,
+                                    child: Text("14 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 21,
+                                    child: Text("21 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 30,
+                                    child: Text("30 days"),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(
+                                      () =>
+                                          _selectedFertilizingFrequency = value,
+                                    );
+                                  }
+                                },
+                              ),
+                              const Divider(height: 24),
+
+                              // Pruning
+                              _buildCompactReminder(
+                                context,
+                                icon: Icons.content_cut_rounded,
+                                color: AppColors.primary,
+                                label: "Pruning",
+                                value: _selectedPruningFrequency,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: 0,
+                                    child: Text("Off"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 14,
+                                    child: Text("14 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 30,
+                                    child: Text("30 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 60,
+                                    child: Text("60 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 90,
+                                    child: Text("90 days"),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(
+                                      () => _selectedPruningFrequency = value,
+                                    );
+                                  }
+                                },
+                              ),
+                              const Divider(height: 24),
+
+                              // Misting
+                              _buildCompactReminder(
+                                context,
+                                icon: Icons.shower_rounded,
+                                color: AppColors.primary,
+                                label: "Misting",
+                                value: _selectedMistingFrequency,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: 0,
+                                    child: Text("Off"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 1,
+                                    child: Text("Daily"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 2,
+                                    child: Text("2 days"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 3,
+                                    child: Text("3 days"),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(
+                                      () => _selectedMistingFrequency = value,
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 32),
                       ],
@@ -407,9 +573,48 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                             onPressed: () async {
                               // 1. Prepare Data
                               final now = DateTime.now();
-                              final nextWatering = now.add(
-                                Duration(days: _selectedFrequency),
-                              );
+
+                              // Schedule all reminders for 9:00 AM on their target days
+                              final nextWatering = _selectedFrequency > 0
+                                  ? DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day + _selectedFrequency,
+                                      9, // 9:00 AM
+                                      0, // 0 minutes
+                                    )
+                                  : null;
+
+                              final nextFertilizing =
+                                  _selectedFertilizingFrequency > 0
+                                  ? DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day + _selectedFertilizingFrequency,
+                                      9,
+                                      0,
+                                    )
+                                  : null;
+
+                              final nextPruning = _selectedPruningFrequency > 0
+                                  ? DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day + _selectedPruningFrequency,
+                                      9,
+                                      0,
+                                    )
+                                  : null;
+
+                              final nextMisting = _selectedMistingFrequency > 0
+                                  ? DateTime(
+                                      now.year,
+                                      now.month,
+                                      now.day + _selectedMistingFrequency,
+                                      9,
+                                      0,
+                                    )
+                                  : null;
 
                               final newPlant = ScanResult(
                                 id: widget.scanResult.id,
@@ -421,6 +626,13 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                                 confidence: widget.scanResult.confidence,
                                 wateringFrequency: _selectedFrequency,
                                 nextWateringDate: nextWatering,
+                                fertilizingFrequency:
+                                    _selectedFertilizingFrequency,
+                                nextFertilizingDate: nextFertilizing,
+                                pruningFrequency: _selectedPruningFrequency,
+                                nextPruningDate: nextPruning,
+                                mistingFrequency: _selectedMistingFrequency,
+                                nextMistingDate: nextMisting,
                               );
 
                               // 2. Save to Garden
@@ -429,12 +641,41 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                                 listen: false,
                               ).addScan(newPlant);
 
-                              // 3. Schedule Notification
-                              await NotificationService().schedulePlantWatering(
-                                newPlant.id,
-                                newPlant.plantName,
-                                nextWatering,
-                              );
+                              // 3. Schedule Notifications at 9:00 AM local time
+                              final notificationService = NotificationService();
+
+                              if (nextWatering != null) {
+                                await notificationService.schedulePlantWatering(
+                                  newPlant.id,
+                                  newPlant.plantName,
+                                  nextWatering,
+                                );
+                              }
+
+                              if (nextFertilizing != null) {
+                                await notificationService
+                                    .schedulePlantFertilizing(
+                                      newPlant.id,
+                                      newPlant.plantName,
+                                      nextFertilizing,
+                                    );
+                              }
+
+                              if (nextPruning != null) {
+                                await notificationService.schedulePlantPruning(
+                                  newPlant.id,
+                                  newPlant.plantName,
+                                  nextPruning,
+                                );
+                              }
+
+                              if (nextMisting != null) {
+                                await notificationService.schedulePlantMisting(
+                                  newPlant.id,
+                                  newPlant.plantName,
+                                  nextMisting,
+                                );
+                              }
 
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -548,5 +789,97 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     if (confidence > 0.8) return Colors.green;
     if (confidence > 0.5) return AppColors.accent;
     return Colors.red;
+  }
+
+  Widget _buildCompactReminder(
+    BuildContext context, {
+    required IconData icon,
+    required Color color,
+    required String label,
+    required int value,
+    required List<DropdownMenuItem<int>> items,
+    required ValueChanged<int?> onChanged,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          // Icon with gradient background
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  color.withValues(alpha: 0.2),
+                  color.withValues(alpha: 0.1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
+            ),
+            child: Icon(icon, size: 20, color: color),
+          ),
+          const SizedBox(width: 14),
+          // Label
+          Expanded(
+            flex: 5,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.2,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          // Dropdown with enhanced styling
+          Expanded(
+            flex: 5,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey[850]
+                    : Colors.grey[100],
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: Colors.grey.withValues(alpha: 0.2),
+                  width: 1.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                  value: value,
+                  isExpanded: true,
+                  isDense: true,
+                  icon: Icon(Icons.arrow_drop_down, size: 24, color: color),
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
+                  dropdownColor: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey[850]
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  items: items,
+                  onChanged: onChanged,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

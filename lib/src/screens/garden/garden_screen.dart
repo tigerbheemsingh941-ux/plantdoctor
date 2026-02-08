@@ -298,6 +298,69 @@ class _GardenScreenState extends State<GardenScreen> {
                                     ],
                                   ),
                                 ],
+                                if (scan.nextFertilizingDate != null) ...[
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.eco,
+                                        size: 12,
+                                        color: Colors.green[600],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "Fertilize: ${_formatDate(scan.nextFertilizingDate!)}",
+                                        style: TextStyle(
+                                          color: Colors.green[600],
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                if (scan.nextPruningDate != null) ...[
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.content_cut,
+                                        size: 12,
+                                        color: Colors.orange[700],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "Prune: ${_formatDate(scan.nextPruningDate!)}",
+                                        style: TextStyle(
+                                          color: Colors.orange[700],
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                if (scan.nextMistingDate != null) ...[
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.water,
+                                        size: 12,
+                                        color: Colors.lightBlue[400],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "Mist: ${_formatDate(scan.nextMistingDate!)}",
+                                        style: TextStyle(
+                                          color: Colors.lightBlue[400],
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ],
                             ),
                           ),

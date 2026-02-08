@@ -17,8 +17,14 @@ class PlanCareScreen extends StatefulWidget {
 
 class _PlanCareScreenState extends State<PlanCareScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   final RecentSearchService _recentSearchService = RecentSearchService();
   List<String> _recentSearches = [];
+
+  // Lazy loading state
+  static const int _itemsPerPage = 5;
+  int _displayedItemCount = _itemsPerPage;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
@@ -29,6 +35,7 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
     });
     _loadRecentSearches();
     _searchController.addListener(_onSearchChanged);
+    _scrollController.addListener(_onScroll);
   }
 
   Future<void> _loadRecentSearches() async {
@@ -41,12 +48,41 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   void _onSearchChanged() {
-    // Just trigger rebuild, filtering happens in build
-    setState(() {});
+    // Reset pagination when search changes
+    setState(() {
+      _displayedItemCount = _itemsPerPage;
+    });
+  }
+
+  void _onScroll() {
+    if (_isLoadingMore) return;
+
+    // Check if user has scrolled near the bottom (80% of the way)
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent * 0.8) {
+      _loadMoreItems();
+    }
+  }
+
+  void _loadMoreItems() {
+    setState(() {
+      _isLoadingMore = true;
+    });
+
+    // Simulate a small delay for smoother UX
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) {
+        setState(() {
+          _displayedItemCount += _itemsPerPage;
+          _isLoadingMore = false;
+        });
+      }
+    });
   }
 
   @override
@@ -279,9 +315,33 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
                       },
                     )
                   : ListView.builder(
+                      controller: _scrollController,
                       padding: const EdgeInsets.only(top: 8, bottom: 20),
-                      itemCount: filteredPlants.length,
+                      itemCount: _displayedItemCount < filteredPlants.length
+                          ? _displayedItemCount +
+                                1 // +1 for loading indicator
+                          : filteredPlants.length,
                       itemBuilder: (context, index) {
+                        // Show loading indicator at the end
+                        if (index == _displayedItemCount &&
+                            _displayedItemCount < filteredPlants.length) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Center(
+                              child: _isLoadingMore
+                                  ? CircularProgressIndicator(
+                                      color: AppColors.primary,
+                                    )
+                                  : const SizedBox.shrink(),
+                            ),
+                          );
+                        }
+
+                        // Don't render items beyond what we want to display
+                        if (index >= _displayedItemCount) {
+                          return const SizedBox.shrink();
+                        }
+
                         final plant = filteredPlants[index];
                         return Container(
                           margin: const EdgeInsets.only(bottom: 12),
@@ -309,7 +369,6 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
                                 style: TextStyle(
                                   color: Colors.grey[400],
                                   fontSize: 14,
-                                  fontStyle: FontStyle.italic,
                                 ),
                               ),
                             ),

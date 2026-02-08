@@ -8,6 +8,12 @@ class ScanResult {
   final double confidence;
   final int wateringFrequency; // In days. 0 = no reminder
   final DateTime? nextWateringDate;
+  final int fertilizingFrequency; // In days. 0 = no reminder
+  final DateTime? nextFertilizingDate;
+  final int pruningFrequency; // In days. 0 = no reminder
+  final DateTime? nextPruningDate;
+  final int mistingFrequency; // In days. 0 = no reminder
+  final DateTime? nextMistingDate;
 
   ScanResult({
     required this.id,
@@ -19,6 +25,12 @@ class ScanResult {
     this.confidence = 0.0,
     this.wateringFrequency = 0,
     this.nextWateringDate,
+    this.fertilizingFrequency = 0,
+    this.nextFertilizingDate,
+    this.pruningFrequency = 0,
+    this.nextPruningDate,
+    this.mistingFrequency = 0,
+    this.nextMistingDate,
   });
 
   // Convert to Map for storage
@@ -33,6 +45,12 @@ class ScanResult {
       'confidence': confidence,
       'wateringFrequency': wateringFrequency,
       'nextWateringDate': nextWateringDate?.toIso8601String(),
+      'fertilizingFrequency': fertilizingFrequency,
+      'nextFertilizingDate': nextFertilizingDate?.toIso8601String(),
+      'pruningFrequency': pruningFrequency,
+      'nextPruningDate': nextPruningDate?.toIso8601String(),
+      'mistingFrequency': mistingFrequency,
+      'nextMistingDate': nextMistingDate?.toIso8601String(),
     };
   }
 
@@ -49,6 +67,18 @@ class ScanResult {
       wateringFrequency: map['wateringFrequency'] ?? 0,
       nextWateringDate: map['nextWateringDate'] != null
           ? DateTime.parse(map['nextWateringDate'])
+          : null,
+      fertilizingFrequency: map['fertilizingFrequency'] ?? 0,
+      nextFertilizingDate: map['nextFertilizingDate'] != null
+          ? DateTime.parse(map['nextFertilizingDate'])
+          : null,
+      pruningFrequency: map['pruningFrequency'] ?? 0,
+      nextPruningDate: map['nextPruningDate'] != null
+          ? DateTime.parse(map['nextPruningDate'])
+          : null,
+      mistingFrequency: map['mistingFrequency'] ?? 0,
+      nextMistingDate: map['nextMistingDate'] != null
+          ? DateTime.parse(map['nextMistingDate'])
           : null,
     );
   }

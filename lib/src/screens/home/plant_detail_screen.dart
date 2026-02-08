@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PlantDetailScreen extends StatefulWidget {
   final Map<String, dynamic> plant;
@@ -25,7 +26,29 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("Plant Detail"),
+        title: Column(
+          children: [
+            Text(
+              widget.plant['name'] ?? 'Plant Detail',
+              style: GoogleFonts.mPlusRounded1c(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            if (widget.plant['scientific'] != null)
+              Text(
+                widget.plant['scientific'],
+                style: GoogleFonts.mPlusRounded1c(
+                  fontSize: 14,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.7),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+          ],
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -38,96 +61,25 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 10),
-            // Rounded Floating Image Card with Name Overlay
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(32),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Hero(
-                        tag: 'plant-image-${widget.plant['name']}',
-                        child: Image.network(
-                          widget.plant['image'] ?? '',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                                color: Colors.grey[300],
-                                child: const Icon(
-                                  Icons.broken_image,
-                                  color: Colors.grey,
-                                  size: 40,
-                                ),
-                              ),
-                        ),
-                      ),
-                      // Dark Gradient for Text Visibility
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withValues(alpha: 0.5),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Name Overlay
-                      Positioned(
-                        bottom: 20,
-                        left: 20,
-                        right: 20,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.plant['name'] ?? '',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: -0.4,
-                              ),
-                            ),
-                            if (widget.plant['scientific'] != null)
-                              Text(
-                                widget.plant['scientific'],
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.95),
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
+            if (widget.plant['description'] != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32, 20, 32, 10),
+                child: Text(
+                  widget.plant['description'],
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.mPlusRounded1c(
+                    fontSize: 16,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.8),
+                    height: 1.5,
+                    letterSpacing: 0.2,
                   ),
                 ),
               ),
-            ),
             const SizedBox(height: 10),
 
             if (details != null) ...[
-              const SizedBox(height: 20),
               // Light Section
               if (_hasAny(details, ['light_ideal', 'light_low', 'light_avoid']))
                 _buildSection(
@@ -231,37 +183,37 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
     final isExpanded = _expandedSections["Warning"] ?? false;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.amber.shade50,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.amber.shade200),
+        color: Colors.amber.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.amber.withValues(alpha: 0.3)),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           onTap: () => _toggleSection("Warning"),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.amber.shade100,
+                        color: Colors.amber.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        Icons.error_outline_rounded,
-                        color: Colors.amber[800],
-                        size: 18,
+                        Icons.warning_amber_rounded,
+                        color: Colors.amberAccent,
+                        size: 20,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,20 +221,22 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                           Text(
                             "Warning",
                             style: TextStyle(
-                              color: Colors.amber[900],
-                              fontSize: 13,
+                              color: Colors.amberAccent,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           if (!isExpanded) ...[
-                            const SizedBox(height: 2),
+                            const SizedBox(height: 4),
                             Text(
                               warning,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Colors.amber[900],
-                                fontSize: 12,
+                                color: Colors.amberAccent.withValues(
+                                  alpha: 0.9,
+                                ),
+                                fontSize: 13,
                               ),
                             ),
                           ],
@@ -291,19 +245,19 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                     ),
                     Icon(
                       isExpanded ? Icons.expand_less : Icons.expand_more,
-                      color: Colors.amber[800],
-                      size: 20,
+                      color: Colors.amberAccent,
+                      size: 24,
                     ),
                   ],
                 ),
                 if (isExpanded) ...[
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   Text(
                     warning,
                     style: TextStyle(
-                      color: Colors.amber[900],
-                      fontSize: 13,
-                      height: 1.4,
+                      color: Colors.amberAccent.withValues(alpha: 0.95),
+                      fontSize: 14,
+                      height: 1.5,
                     ),
                   ),
                 ],
@@ -320,46 +274,53 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
     final isExpanded = _expandedSections["Common Issues"] ?? false;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
         color: Theme.of(context).cardTheme.color,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: Theme.of(context).dividerColor.withValues(alpha: 0.05),
+          color: Theme.of(context).dividerColor.withValues(alpha: 0.08),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
           onTap: () => _toggleSection("Common Issues"),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                padding: const EdgeInsets.all(20),
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.teal.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.teal.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Icon(
                         Icons.pest_control_rounded,
-                        color: Colors.teal,
-                        size: 20,
+                        color: Colors.tealAccent,
+                        size: 24,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Text(
                         "Common Issues",
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: -0.2,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.3,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
@@ -368,8 +329,8 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                       isExpanded ? Icons.expand_less : Icons.expand_more,
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withValues(alpha: 0.4),
-                      size: 20,
+                      ).colorScheme.onSurface.withValues(alpha: 0.5),
+                      size: 24,
                     ),
                   ],
                 ),
@@ -377,17 +338,20 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
               if (isExpanded) ...[
                 Container(
                   height: 1,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  color: Colors.teal.withValues(alpha: 0.1),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  color: Colors.teal.withValues(alpha: 0.15),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(20),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Theme.of(
                         context,
                       ).scaffoldBackgroundColor.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.teal.withValues(alpha: 0.1),
+                      ),
                     ),
                     child: Table(
                       columnWidths: const {
@@ -438,8 +402,8 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
         text,
         style: TextStyle(
           fontSize: 13,
-          fontWeight: FontWeight.w600,
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+          fontWeight: FontWeight.w700,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.9),
         ),
       ),
     );
@@ -456,11 +420,11 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
         text,
         style: TextStyle(
           fontSize: 14,
-          height: 1.4,
+          height: 1.5,
           fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
           color: Theme.of(
             context,
-          ).colorScheme.onSurface.withValues(alpha: isBold ? 1.0 : 0.95),
+          ).colorScheme.onSurface.withValues(alpha: isBold ? 1.0 : 0.8),
         ),
       ),
     );
@@ -510,23 +474,23 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
     final isExpanded = _expandedSections[title] ?? false;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
         color: Theme.of(context).cardTheme.color,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 15,
+            offset: const Offset(0, 6),
           ),
         ],
         border: Border.all(
-          color: Theme.of(context).dividerColor.withValues(alpha: 0.05),
+          color: Theme.of(context).dividerColor.withValues(alpha: 0.08),
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -535,25 +499,25 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                  padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: effectiveColor.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12),
+                          color: effectiveColor.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        child: Icon(icon, color: effectiveColor, size: 20),
+                        child: Icon(icon, color: effectiveColor, size: 24),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: Text(
                           title,
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -0.2,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.3,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
@@ -562,8 +526,8 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                         isExpanded ? Icons.expand_less : Icons.expand_more,
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.4),
-                        size: 20,
+                        ).colorScheme.onSurface.withValues(alpha: 0.5),
+                        size: 24,
                       ),
                     ],
                   ),
@@ -571,43 +535,43 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
                 if (isExpanded) ...[
                   Container(
                     height: 1,
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    color: effectiveColor.withValues(alpha: 0.1),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    color: effectiveColor.withValues(alpha: 0.15),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: items.map((item) {
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 12),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 8),
+                                padding: const EdgeInsets.only(top: 9),
                                 child: Container(
                                   width: 6,
                                   height: 6,
                                   decoration: BoxDecoration(
                                     color: effectiveColor.withValues(
-                                      alpha: 0.7,
+                                      alpha: 0.8,
                                     ),
                                     shape: BoxShape.circle,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 14),
                               Expanded(
                                 child: Text(
                                   item,
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    height: 1.5,
+                                    fontSize: 15,
+                                    height: 1.6,
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSurface
-                                        .withValues(alpha: 0.95),
+                                        .withValues(alpha: 0.9),
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),

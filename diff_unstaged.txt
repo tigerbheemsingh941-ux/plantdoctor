@@ -1,0 +1,1856 @@
+diff --git a/lib/src/data/plant_data.dart b/lib/src/data/plant_data.dart
+index 29dbc66..778aed9 100644
+--- a/lib/src/data/plant_data.dart
++++ b/lib/src/data/plant_data.dart
+@@ -4,6 +4,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Money Plant",
+     "scientific": "Epipremnum Aureum",
++    "description":
++        "A popular houseplant known for its heart-shaped leaves and air-purifying qualities. It brings good luck and prosperity to your home.",
+     "image":
+         "https://lh3.googleusercontent.com/aida-public/AB6AXuBOcpB-IKf8dTD9jxI6VlaaBRo5EpHrrOnWoUp32H4Zz1LdoxVSHiyXnKNo-LBEZk5M1abNAY9f3AOCAOTzp2ev3H4U6udNhEhELuASlzBrX-NNoCun7MAN9IP8_4UL3RKR06r259akpmQFMg99WhNw4fz27k9X3YfHbSgYDggX5oI43fS3RBQ2abAOKuoqG6Wf0MSJ8aprHctoQ8l_GU2J5hon4tUSz5pxkUhwmRazBLJDpOh6Y6Smb8noZ8gYauBakK29G45Q4O4",
+     "status": PlantStatus.healthy,
+@@ -39,6 +41,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Snake Plant",
+     "scientific": "Sansevieria",
++    "description":
++        "A hardy plant with upright, sword-like leaves. It's excellent for improving indoor air quality and tolerates low light potentially better than any other plant.",
+     "image":
+         "https://lh3.googleusercontent.com/aida-public/AB6AXuBSU7CjUD8Sm6E8h_7qtu7Z_8x5_gf5i2mb9uAY6PAt4a64u4fIErgAo18-Rys1MJiYtjEy9mAH6Fk5m5v3TrZCoi2gz9_vabc2tXg4nypSmiHZ7QLGxmixqqpxWbL6ZYBxkWltcuYgYRDtXCXd4mTTLKVyNf8Vhp5B3pncTRFUle6HHrZBj_rWo-MYw1F0a912ie1pckMbbVH6C0G4vw095NF964tjUphMC9-sqvx-KgyY3uoNoXyuBnjNmC2Gu2kzqH1wAOp-Znc",
+     "status": PlantStatus.healthy,
+@@ -68,6 +72,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "ZZ Plant",
+     "scientific": "Zamioculcas Zamiifolia",
++    "description":
++        "With its waxy, emerald green leaves, the ZZ plant is stylish and incredibly easy to care for, thriving in low light and needing little water.",
+     "image":
+         "https://images.unsplash.com/photo-1632207691143-643e2a9a9361?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -99,6 +105,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Monstera Deliciosa",
+     "scientific": "Swiss Cheese Plant",
++    "description":
++        "Famous for its large, split leaves, this tropical beauty adds a dramatic jungle touch to any room. It loves bright, indirect light.",
+     "image":
+         "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -131,6 +139,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Spider Plant",
+     "scientific": "Chlorophytum Comosum",
++    "description":
++        "An adaptable plant with arching leaves and baby plantlets. It's safe for pets, great for hanging baskets, and very easy to propagate.",
+     "image":
+         "https://images.unsplash.com/photo-1572688484279-06b53a3eb26c?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -161,6 +171,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Peace Lily",
+     "scientific": "Spathiphyllum",
++    "description":
++        "Elegant white blooms and dark green leaves make this a favorite. It signals when it's thirsty by drooping and perks right back up after watering.",
+     "image":
+         "https://images.unsplash.com/photo-1593691509543-c55ce32e01b5?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -190,6 +202,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Fiddle Leaf Fig",
+     "scientific": "Ficus Lyrata",
++    "description":
++        "A stunning statement plant with large, violin-shaped leaves. It loves bright light and adds impressive height and structure to your space.",
+     "image":
+         "https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -217,6 +231,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Aloe Vera",
+     "scientific": "Aloe Barbadensis Miller",
++    "description":
++        "A medicinal succulent with thick, fleshy leaves containing soothing gel. It loves sunny spots and requires minimal watering.",
+     "image":
+         "https://images.unsplash.com/photo-1596547610057-0a25691bcbed?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -243,6 +259,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Rubber Plant",
+     "scientific": "Ficus Elastica",
++    "description":
++        "Features glossy, dark leaves that can grow into an impressive tree. It's a robust and attractive indoor plant that makes a bold statement.",
+     "image":
+         "https://images.unsplash.com/photo-1592150621744-aca64f48394a?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -271,6 +289,8 @@ List<Map<String, dynamic>> get demoPlants => [
+   {
+     "name": "Succulents",
+     "scientific": "Crassulaceae / Various",
++    "description":
++        "A diverse group of water-storing plants in various shapes and colors. Perfect for sunny windowsills and those who want low maintenance greenery.",
+     "image":
+         "https://images.unsplash.com/photo-1459156212016-c812468e2115?q=80&w=1000&auto=format&fit=crop",
+     "status": PlantStatus.healthy,
+@@ -296,4 +316,780 @@ List<Map<String, dynamic>> get demoPlants => [
+           "Toxicity varies by species; research specific types for pets.",
+     },
+   },
++  {
++    "name": "Jade Plant",
++    "scientific": "Crassula ovata",
++    "description":
++        "A resilient succulent with thick, woody stems and oval-shaped leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright direct to indirect sun.",
++      "light_low": "Can tolerate some shade but may grow leggy.",
++      "light_avoid": "Low light for extended periods.",
++      "water_step1": "Check if soil is completely dry.",
++      "water_step2": "Water thoroughly until it drains.",
++      "water_step3": "Empty saucer immediately.",
++      "water_frequency": "Every 2-3 weeks, less in winter.",
++      "soil_type": "Well-draining succulent mix.",
++      "pot_type": "Terracotta or clay pot for drainage.",
++      "maintenance_cleaning": "Wipe dust from leaves.",
++      "maintenance_support": "Prune to shape as it grows top-heavy.",
++      "maintenance_pruning": "Trim leggy branches.",
++      "troubleshooting":
++          "Shriveling: Thirsty (Water it).\nSquishy/Yellow: Root rot (Let dry/Repot).\nDropping leaves: Low light (Move to sun).",
++      "warning_note": "Toxic to dogs and cats.",
++    },
++  },
++  {
++    "name": "Areca Palm",
++    "scientific": "Dypsis lutescens",
++    "description": "Feathery fronds that add a tropical touch to any room.",
++    "image":
++        "https://images.unsplash.com/photo-1628108422634-8da04043236e?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates lower light but grows slower.",
++      "light_avoid": "Direct hot sun (scorches leaves).",
++      "water_step1": "Check top inch of soil.",
++      "water_step2": "Water if dry to touch.",
++      "water_step3": "Ensure drainage.",
++      "water_frequency": "Every 1-2 weeks; keep moist but not soggy.",
++      "soil_type": "Peat-based potting mix.",
++      "pot_type": "Standard pot with good drainage.",
++      "maintenance_cleaning": "Spray fronds to remove dust.",
++      "maintenance_support": "Remove brown or yellow fronds.",
++      "maintenance_pruning": "Trim brown tips with shears.",
++      "troubleshooting":
++          "Brown tips: Dry air (Mist/Humidify).\nYellow leaves: Underwatering (Check soil).\nSpeckles: Mites (Wash leaves).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Chinese Evergreen",
++    "scientific": "Aglaonema",
++    "description": "Attractive variegated foliage and easy to care for.",
++    "image":
++        "https://images.unsplash.com/photo-1616627546686-3f1a265691a3?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Low to medium indirect light.",
++      "light_low": "Excellent for low light.",
++      "light_avoid": "Direct sun (burns leaves).",
++      "water_step1": "Allow soil to dry partially.",
++      "water_step2": "Water moderately.",
++      "water_step3": "Do not overwater.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Well-draining potting soil.",
++      "pot_type": "Standard pot.",
++      "maintenance_cleaning": "Wipe leaves with damp cloth.",
++      "maintenance_support": "None usually needed.",
++      "maintenance_pruning": "Remove dead leaves at base.",
++      "troubleshooting":
++          "Curled leaves: Dry/Too much light (Move/Water).\nYellowing/Mushy: Overwatered (Let dry).\nBrown tips: Fluoride in water (Use distilled water).",
++      "warning_note": "Toxic to dogs and cats.",
++    },
++  },
++  {
++    "name": "Dracaena (Corn Plant)",
++    "scientific": "Dracaena fragrans",
++    "description": "Tall, corn-like leaves on woody stems.",
++    "image":
++        "https://images.unsplash.com/photo-1596720800806-218901de47b2?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect to low light.",
++      "light_low": "Tolerates shade well.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Check top inch of soil.",
++      "water_step2": "Water when dry.",
++      "water_step3": "Ensure good drainage.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Loose, well-draining mix.",
++      "pot_type": "Deep pot for roots.",
++      "maintenance_cleaning": "Dust leaves regularly.",
++      "maintenance_support": "Stake tall stems if needed.",
++      "maintenance_pruning": "Trim brown tips.",
++      "troubleshooting":
++          "Brown tips: Inconsistent water/Fluoride (Use filtered water).\nYellow leaves: Overwatering (Reduce water).\nDrooping: Root rot or cold (Check roots/Temp).",
++      "warning_note": "Toxic to pets.",
++    },
++  },
++  {
++    "name": "Anthurium",
++    "scientific": "Anthurium andraeanum",
++    "description": "Known for its waxy, bright red 'flowers' (spathes).",
++    "image":
++        "https://images.unsplash.com/photo-1598287532395-5d518206d289?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Will survive but flower less.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Check top inch of soil.",
++      "water_step2": "Water when dry to touch.",
++      "water_step3": "Keep humid.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Coarse, well-draining orchid mix.",
++      "pot_type": "Pot with drainage.",
++      "maintenance_cleaning": "Wipe shiny leaves.",
++      "maintenance_support": "Remove spent flowers.",
++      "maintenance_pruning": "Trim yellow leaves.",
++      "troubleshooting":
++          "No flowers: Low light (Move to brighter spot).\nBrown leaf tips: Dry air (Mist).\nYellow leaves: Overwatering (Check soil).",
++      "warning_note": "Toxic to pets if ingested.",
++    },
++  },
++  {
++    "name": "Boston Fern",
++    "scientific": "Nephrolepis exaltata",
++    "description": "Classic fern with arching, feathery fronds.",
++    "image":
++        "https://images.unsplash.com/photo-1624599763750-2e4313f89551?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates some shade.",
++      "light_avoid": "Direct sun and drafts.",
++      "water_step1": "Keep soil consistently moist.",
++      "water_step2": "Do not let dry out.",
++      "water_step3": "Mist often.",
++      "water_frequency": "Weekly or more often.",
++      "soil_type": "Rich, peat-based mix.",
++      "pot_type": "Hanging basket or standard pot.",
++      "maintenance_cleaning": "Mist to clean.",
++      "maintenance_support": "Remove brown fronds.",
++      "maintenance_pruning": "Trim dead growth.",
++      "troubleshooting":
++          "Yellowing/Dropping: Dry air/Low water (Mist/Water).\nBrown tips: Low humidity (Use pebble tray).\nPale fronds: Needs fertilizer (Feed lightly).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Prayer Plant",
++    "scientific": "Maranta leuconeura",
++    "description": "Leaves fold up at night like hands in prayer.",
++    "image":
++        "https://images.unsplash.com/photo-1616627581179-840939ca6be8?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Low to medium indirect light.",
++      "light_low": "Good for lower light.",
++      "light_avoid": "Direct sun (fades patterns).",
++      "water_step1": "Keep soil moist but not soggy.",
++      "water_step2": "Use warm water.",
++      "water_step3": "Mist leaves.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Well-draining, peat-rich mix.",
++      "pot_type": "Wide, shallow pot.",
++      "maintenance_cleaning": "Wipe leaves gently.",
++      "maintenance_support": "None.",
++      "maintenance_pruning": "Trim to encourage bushiness.",
++      "troubleshooting":
++          "Curling leaves: Too bright/Dry (Move/Mist).\nBrown tips: Low humidity (Increase humidity).\nWashed out: Too much sun (Move to shade).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Calathea",
++    "scientific": "Calathea (Goeppertia)",
++    "description": "Stunning patterned leaves, often with purple undersides.",
++    "image":
++        "https://images.unsplash.com/photo-1612368739673-9ef0d1997bd0?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Medium indirect light.",
++      "light_low": "Tolerates low light.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Keep soil moist.",
++      "water_step2": "Use distilled/rain water.",
++      "water_step3": "Does not like drying out.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Peat-based, moisture-retentive.",
++      "pot_type": "Standard pot.",
++      "maintenance_cleaning": "Wipe leaves often.",
++      "maintenance_support": "Remove yellow leaves.",
++      "maintenance_pruning": "Trim brown edges.",
++      "troubleshooting":
++          "Crispy edges: Tap water/Dry air (Switch water/Mist).\nCurling: Thirsty or cold (Check soil/Temp).\nFading: Too much light (Move).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Bird of Paradise",
++    "scientific": "Strelitzia reginae",
++    "description": "Large, banana-like leaves and exotic flowers.",
++    "image":
++        "https://images.unsplash.com/photo-1545145803-34e85949d528?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright direct or indirect light.",
++      "light_low": "Will not thrive in shade.",
++      "light_avoid": "Dark corners.",
++      "water_step1": "Allow soil to dry slightly.",
++      "water_step2": "Water generously.",
++      "water_step3": "Ensure drainage.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Rich, loamy soil.",
++      "pot_type": "Large, stable pot.",
++      "maintenance_cleaning": "Dust large leaves.",
++      "maintenance_support": "Remove old leaves.",
++      "maintenance_pruning": "Trim split leaves.",
++      "troubleshooting":
++          "Split leaves: Normal (Wind/Age).\nCurling: Thirsty (Water).\nNo flowers: Not enough light (Move to sun).",
++      "warning_note": "Toxic to pets.",
++    },
++  },
++  {
++    "name": "English Ivy",
++    "scientific": "Hedera helix",
++    "description": "Vigorous trailing vine with lobed leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1623861214300-47e192a688b1?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Medium to bright indirect light.",
++      "light_low": "Tolerates low light.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Surface soil should dry.",
++      "water_step2": "Water thoroughly.",
++      "water_step3": "Prefers cooler temps.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Standard potting mix.",
++      "pot_type": "Hanging basket or climbing support.",
++      "maintenance_cleaning": "Shower foliage occasionally.",
++      "maintenance_support": "Train on trellis if desired.",
++      "maintenance_pruning": "Trim to manage growth.",
++      "troubleshooting":
++          "Spider mites: Webs (Wash/Treat).\nDry/Crispy: Hot/Dry air (Mist/Move Cooler).\nLeggy: Low light (Move brighter).",
++      "warning_note": "Toxic to pets and humans.",
++    },
++  },
++  {
++    "name": "String of Pearls",
++    "scientific": "Curio rowleyanus",
++    "description": "Unique trailing succulent with pea-shaped leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1596547609652-9cf5d8d71321?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light; some direct sun.",
++      "light_low": "Will shrivel in low light.",
++      "light_avoid": "Dark shade.",
++      "water_step1": "Soil must be bone dry.",
++      "water_step2": "Water deeply but infrequently.",
++      "water_step3": "Needs good airflow.",
++      "water_frequency": "Every 2-4 weeks.",
++      "soil_type": "Gritty cactus mix.",
++      "pot_type": "Shallow hanging pot.",
++      "maintenance_cleaning": "None.",
++      "maintenance_support": "Handle gently (pearls fall easily).",
++      "maintenance_pruning": "Trim straggly strands.",
++      "troubleshooting":
++          "Mushy pearls: Overwatering (Stop watering).\nShriveled: Thirsty (Water).\nFlat pearls: Needs more light (Move to window).",
++      "warning_note": "Toxic to humans and pets.",
++    },
++  },
++  {
++    "name": "Philodendron Heartleaf",
++    "scientific": "Philodendron hederaceum",
++    "description": "Fast-growing vine with heart-shaped leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1600411833196-7c1f6b1a8b90?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Medium indirect light.",
++      "light_low": "Tolerates low light well.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Top inch of soil dry.",
++      "water_step2": "Water thoroughly.",
++      "water_step3": "Empty saucer.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Standard potting mix.",
++      "pot_type": "Hanging or climbing pot.",
++      "maintenance_cleaning": "Wipe leaves.",
++      "maintenance_support": "Can climb moss pole.",
++      "maintenance_pruning": "Trim to bush out.",
++      "troubleshooting":
++          "Yellow leaves: Overwatering (Check soil).\nBrown tips: Irregular watering (Be consistent).\nLeggy: Low light (Move brighter).",
++      "warning_note": "Toxic to pets.",
++    },
++  },
++  {
++    "name": "Croton",
++    "scientific": "Codiaeum variegatum",
++    "description": "Vibrant, colorful leaves in red, orange, and yellow.",
++    "image":
++        "https://images.unsplash.com/photo-1609142621730-db3293839541?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright direct or indirect light.",
++      "light_low": "Colors will fade in shade.",
++      "light_avoid": "Low light.",
++      "water_step1": "Keep soil evenly moist.",
++      "water_step2": "Water when top drying slightly.",
++      "water_step3": "High humidity needed.",
++      "water_frequency": "Weekly.",
++      "soil_type": "Rich, well-draining soil.",
++      "pot_type": "Standard pot.",
++      "maintenance_cleaning": "Wipe leaves often.",
++      "maintenance_support": "Protect from drafts.",
++      "maintenance_pruning": "Trim top to bush.",
++      "troubleshooting":
++          "Leaf drop: Moved/Drafts (Stabilize environment).\nFading color: Low light (More sun).\nDrooping: Thirsty (Water).",
++      "warning_note": "Toxic to pets and humans.",
++    },
++  },
++  {
++    "name": "African Violet",
++    "scientific": "Saintpaulia ionantha",
++    "description": "Compact plant with fuzzy leaves and purple/pink flowers.",
++    "image":
++        "https://images.unsplash.com/photo-1596720800806-218901de47b2?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Will not bloom in dark.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Keep soil slightly moist.",
++      "water_step2": "Water from bottom.",
++      "water_step3": "Avoid water on leaves.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "African Violet mix.",
++      "pot_type": "Self-watering pot usually good.",
++      "maintenance_cleaning": "Use soft brush on leaves.",
++      "maintenance_support": "Deadhead spent blooms.",
++      "maintenance_pruning": "Remove old outer leaves.",
++      "troubleshooting":
++          "Spots on leaves: Cold water/Water on leaves (Bottom water).\nNo blooms: Low light (Move brighter).\nCrown rot: Overwatering (Let dry).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Bamboo Palm",
++    "scientific": "Chamaedorea seifrizii",
++    "description": "Clumping palm with reed-like stems.",
++    "image":
++        "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates shade.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Keep moist but not wet.",
++      "water_step2": "Water when surface dry.",
++      "water_step3": "Ensuring drainage.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Peat-based mix.",
++      "pot_type": "Standard pot.",
++      "maintenance_cleaning": "Shower to remove dust/mites.",
++      "maintenance_support": "Remove brown fronds.",
++      "maintenance_pruning": "Do not prune stems.",
++      "troubleshooting":
++          "Brown tips: Dry air (Mist).\nYellowing: Overwatering (Check soil).\nWebs under leaves: Spider mites (Wash/Treat).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Cast Iron Plant",
++    "scientific": "Aspidistra elatior",
++    "description": "Nearly indestructible plant with dark green leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1629156476229-250882e37f2d?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Low to medium light.",
++      "light_low": "Thrives in shade.",
++      "light_avoid": "Direct sun (bleaches leaves).",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Water moderately.",
++      "water_step3": "Forgives neglect.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Standard potting mix.",
++      "pot_type": "Standard pot.",
++      "maintenance_cleaning": "Wipe large leaves.",
++      "maintenance_support": "None.",
++      "maintenance_pruning": "Remove ragged leaves at base.",
++      "troubleshooting":
++          "Brown tips: Nutrients/Water (Flush soil).\nYellow leaves: Old age/Overwatering (Check soil).\nSplit leaves: Physical damage (Normal).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Christmas Cactus",
++    "scientific": "Schlumbergera",
++    "description": "Trailing cactus that blooms in winter.",
++    "image":
++        "https://images.unsplash.com/photo-1608973686884-0b7012574676?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates lower light.",
++      "light_avoid": "Direct summer sun.",
++      "water_step1": "Keep slightly moist.",
++      "water_step2": "Water when top inch dry.",
++      "water_step3": "Increase humidity for buds.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Rich, well-draining mix.",
++      "pot_type": "Hanging or standard pot.",
++      "maintenance_cleaning": "Wipe segments.",
++      "maintenance_support": "Deadhead spent blooms.",
++      "maintenance_pruning": "Twist off segments to shape.",
++      "troubleshooting":
++          "Bud drop: Drafts/Moved (Do not move in bloom).\nRed leaves: Too much sun (Move to shade).\nWilting: Rot or Dry (Check soil).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Ponytail Palm",
++    "scientific": "Beaucarnea recurvata",
++    "description": "Bulbous trunk with curly, grass-like leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1616627988031-f912e383a7db?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright direct light.",
++      "light_low": "Grows very slowly in low light.",
++      "light_avoid": "Dark spots.",
++      "water_step1": "Allow soil to expire completely.",
++      "water_step2": "Bulb stores water.",
++      "water_step3": "Water rarely.",
++      "water_frequency": "Every 3-4 weeks.",
++      "soil_type": "Cactus/Succulent mix.",
++      "pot_type": "Clay pot.",
++      "maintenance_cleaning": "Dust leaves.",
++      "maintenance_support": "None.",
++      "maintenance_pruning": "Trim brown tips.",
++      "troubleshooting":
++          "Mushy stem: Overwatering (Deadly - stop watering).\nBrown tips: Dry air (Mist).\nPale leaves: Low light (Move to sun).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Air Plants",
++    "scientific": "Tillandsia",
++    "description": "Epiphytes that grow without soil.",
++    "image":
++        "https://images.unsplash.com/photo-1596720800806-218901de47b2?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright filtered light.",
++      "light_low": "Will rot in dark.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Soak in water for 20-30 mins.",
++      "water_step2": "Shake off excess water.",
++      "water_step3": "Dry upside down completely.",
++      "water_frequency": "Soak weekly; mist in between.",
++      "soil_type": "None (No soil).",
++      "pot_type": "Mounted or in glass.",
++      "maintenance_cleaning": "None.",
++      "maintenance_support": "Trim roots (only for anchor).",
++      "maintenance_pruning": "Trim brown tips.",
++      "troubleshooting":
++          "Rotting base: Trapped water (Ensure drying).\nDried/Curled: Thirsty (Soak overnight).\nBrown tips: Dry air (Mist more).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Yucca Cane",
++    "scientific": "Yucca elephantipes",
++    "description": "Sword-like leaves on a woody trunk.",
++    "image":
++        "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright direct or indirect light.",
++      "light_low": "Tolerates some shade.",
++      "light_avoid": "Low light.",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Drought tolerant.",
++      "water_step3": "Do not overwater.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Well-draining mix.",
++      "pot_type": "Heavy pot (top heavy).",
++      "maintenance_cleaning": "Wipe leaves.",
++      "maintenance_support": "Stake if needed.",
++      "maintenance_pruning": "Remove dead lower leaves.",
++      "troubleshooting":
++          "Yellow leaves: Overwatering (Check roots).\nBrown spots: Fungal (Improve airflow).\nDrooping: Low light (Move brighter).",
++      "warning_note": "Toxic to dogs and cats.",
++    },
++  },
++  {
++    "name": "Money Tree",
++    "scientific": "Pachira aquatica",
++    "description": "Tree with braided trunk and lucky 5-leaf clusters.",
++    "image":
++        "https://images.unsplash.com/photo-1628108422634-8da04043236e?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates medium light.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Allow top 2-3 inches to dry.",
++      "water_step2": "Water thoroughly.",
++      "water_step3": "Ensure drainage.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Well-draining, sandy peat mix.",
++      "pot_type": "Standard pot with holes.",
++      "maintenance_cleaning": "Wipe leaves.",
++      "maintenance_support": "Maintain braid as it grows.",
++      "maintenance_pruning": "Prune to maintain shape.",
++      "troubleshooting":
++          "Yellow leaves: Overwatering (Let dry).\nLeaf drop: Drafts/Moved (Stabilize).\nBrown edges: Dry air (Mist).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Orchid",
++    "scientific": "Phalaenopsis",
++    "description": "Elegant, long-lasting blooms on a tall spike.",
++    "image":
++        "https://images.unsplash.com/photo-1598287532395-5d518206d289?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Will not bloom.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Soak roots for 10-15 mins.",
++      "water_step2": "Drain completely.",
++      "water_step3": "Never wet the crown.",
++      "water_frequency": "Every 1-2 weeks (when roots gray).",
++      "soil_type": "Orchid bark mix (no soil).",
++      "pot_type": "Clear pot with holes.",
++      "maintenance_cleaning": "Wipe leaves gently.",
++      "maintenance_support": "Stake flower spikes.",
++      "maintenance_pruning": "Trim spent spike (above node).",
++      "troubleshooting":
++          "Wrinkled leaves: Thirsty (Soak).\nYellow leaves: Root rot/Old age (Check roots).\nBud blast: Drafts/Temp change (Stabilize).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Peperomia",
++    "scientific": "Peperomia (various)",
++    "description": "Compact plant with fleshy, textured leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1624599763750-2e4313f89551?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Medium to bright indirect light.",
++      "light_low": "Tolerates fluorescent light.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Water sparingly.",
++      "water_step3": "Sensitive to overwatering.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Well-draining mix.",
++      "pot_type": "Small pot.",
++      "maintenance_cleaning": "Wipe leaves.",
++      "maintenance_support": "None.",
++      "maintenance_pruning": "Trim to shape.",
++      "troubleshooting":
++          "Dropping leaves: Cold/Overwatering (Check soil).\nScabs on leaves: Edema (Reduce water).\nDull leaves: Low light (Move brighter).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Begonia",
++    "scientific": "Begonia (Rex/Cane)",
++    "description": "Sought after for colorful, patterned foliage.",
++    "image":
++        "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Leggy in low light.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Keep soil slightly moist.",
++      "water_step2": "Allow top inch to dry.",
++      "water_step3": "Avoid wet leaves.",
++      "water_frequency": "Weekly.",
++      "soil_type": "Light, airy mix.",
++      "pot_type": "Standard pot.",
++      "maintenance_cleaning": "Brush off dust.",
++      "maintenance_support": "Stake cane types.",
++      "maintenance_pruning": "Pinch back tips.",
++      "troubleshooting":
++          "Powdery mildew: Wet leaves (Improve airflow).\nCrispy edges: Low humidity (Use pebble tray).\nDropping: Overwatering (Check soil).",
++      "warning_note": "Toxic to pets.",
++    },
++  },
++  {
++    "name": "Burro's Tail",
++    "scientific": "Sedum morganianum",
++    "description": "Trailing succulent with delicate, overlapping leaves.",
++    "image":
++        "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright direct/indirect light.",
++      "light_low": "Will get leggy/pale.",
++      "light_avoid": "Low light.",
++      "water_step1": "Soil must be dry.",
++      "water_step2": "Water thoroughly.",
++      "water_step3": "Drain well.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Cactus mix.",
++      "pot_type": "Hanging pot.",
++      "maintenance_cleaning": "None (fragile).",
++      "maintenance_support": "Be very gentle.",
++      "maintenance_pruning": "Plant fallen 'beans'.",
++      "troubleshooting":
++          "Falling leaves: Normal handling/Overwatering (Don't touch).\nShriveled: Thirsty (Water).\nMushy: Rot (Stop watering).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Haworthia",
++    "scientific": "Haworthia",
++    "description": "Small, zebra-striped succulent rosettes.",
++    "image":
++        "https://images.unsplash.com/photo-1596547609652-9cf5d8d71321?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates lower light than most succulents.",
++      "light_avoid": "Direct hot sun.",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Water lightly.",
++      "water_step3": "Drain well.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Succulent mix.",
++      "pot_type": "Small, shallow pot.",
++      "maintenance_cleaning": "Brush dust off.",
++      "maintenance_support": "None.",
++      "maintenance_pruning": "Remove dead bottom leaves.",
++      "troubleshooting":
++          "Red leaves: Sun stress (Move to shade).\nMushy: Overwatering (Let dry).\nShriveled: Underwatered (Water).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Sago Palm",
++    "scientific": "Cycas revoluta",
++    "description": "Ancient cycad with stiff, feathery fronds.",
++    "image":
++        "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect to direct light.",
++      "light_low": "Grows very slowly.",
++      "light_avoid": "Deep shade.",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Water deeply.",
++      "water_step3": "Do not overwater.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Sandy, well-draining soil.",
++      "pot_type": "Sturdy pot.",
++      "maintenance_cleaning": "Hose down foliage.",
++      "maintenance_support": "None.",
++      "maintenance_pruning": "Remove only completely brown fronds.",
++      "troubleshooting":
++          "Yellow leaves: Overwatering/Nutrient deficiency (Check soil/Feed).\nScale: Insects (Treat immediately).\nBrown tips: Dry air (Mist).",
++      "warning_note": "Highly toxic/Fatal to pets.",
++    },
++  },
++  {
++    "name": "Majesty Palm",
++    "scientific": "Ravenea rivularis",
++    "description": "Regal palm that loves humidity and moisture.",
++    "image":
++        "https://images.unsplash.com/photo-1628108422634-8da04043236e?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Will decline.",
++      "light_avoid": "Direct hot sun/Darkness.",
++      "water_step1": "Keep soil consistently moist.",
++      "water_step2": "Do not let dry out fully.",
++      "water_step3": "Humidity is key.",
++      "water_frequency": "Weekly (or more).",
++      "soil_type": "Acidic, peat-based mix.",
++      "pot_type": "Pot with drainage.",
++      "maintenance_cleaning": "Mist/Shower often.",
++      "maintenance_support": "Remove brown fronds.",
++      "maintenance_pruning": "Trim brown tips.",
++      "troubleshooting":
++          "Brown fronds: Dry soil/Air (Water more/Humidify).\nYellowing: Nutrient deficiency/Overwatering (Feed/Check).\nSpider mites: Dry air (Mist/Wash).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Umbrella Tree",
++    "scientific": "Schefflera",
++    "description": "Umbrella-like leaflets on long stems.",
++    "image":
++        "https://images.unsplash.com/photo-1616627988031-f912e383a7db?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Tolerates medium light.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Soak thoroughy.",
++      "water_step3": "Drain well.",
++      "water_frequency": "Every 1-2 weeks.",
++      "soil_type": "Standard potting mix.",
++      "pot_type": "Standard heavy pot.",
++      "maintenance_cleaning": "Wipe leaves.",
++      "maintenance_support": "Rotate for even growth.",
++      "maintenance_pruning": "Prune to shape/control height.",
++      "troubleshooting":
++          "Leaf drop: Overwatering/Drafts (Check soil/Move).\nLeggy: Low light (Move brighter).\nStickiness: Scale/Aphids (Treat).",
++      "warning_note": "Toxic to dogs and cats.",
++    },
++  },
++  {
++    "name": "Wax Plant",
++    "scientific": "Hoya",
++    "description": "Vining plant with thick waxy leaves and star flowers.",
++    "image":
++        "https://images.unsplash.com/photo-1623861214300-47e192a688b1?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Will not bloom.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Allow soil to dry.",
++      "water_step2": "Water deeply.",
++      "water_step3": "Drought tolerant.",
++      "water_frequency": "Every 2-3 weeks.",
++      "soil_type": "Orchid/Succulent mix.",
++      "pot_type": "Hanging or trellis.",
++      "maintenance_cleaning": "Wipe leaves.",
++      "maintenance_support": "Train on support.",
++      "maintenance_pruning": "Do not remove flower spurs.",
++      "troubleshooting":
++          "Wrinkled leaves: Thirsty (Soak).\nNo blooms: Young plant/Low light (Wait/More light).\nYellowing: Wet feet (Repot).",
++      "warning_note": "Non-toxic to pets.",
++    },
++  },
++  {
++    "name": "Asparagus Fern",
++    "scientific": "Asparagus setaceus",
++    "description": "Feathery foliage; fuzzy but prickly stems.",
++    "image":
++        "https://images.unsplash.com/photo-1624599763750-2e4313f89551?q=80&w=600&auto=format&fit=crop",
++    "status": PlantStatus.healthy,
++    "details": {
++      "light_ideal": "Bright indirect light.",
++      "light_low": "Yellows in shade.",
++      "light_avoid": "Direct sun.",
++      "water_step1": "Keep nicely moist.",
++      "water_step2": "Do not let dry out.",
++      "water_step3": "Mist often.",
++      "water_frequency": "Weekly.",
++      "soil_type": "Rich potting mix.",
++      "pot_type": "Hanging or standard.",
++      "maintenance_cleaning": "Mist.",
++      "maintenance_support": "Trim wild stems.",
++      "maintenance_pruning": "Cut back old yellow stems.",
++      "troubleshooting":
++          "Yellow needles: Dry/Dark (Water/Move).\nBrown stems: Old age/Drought (Trim).\nShedding: Dry air (Humidify).",
++      "warning_note": "Toxic to dogs and cats.",
++    },
++  },
+ ];
+diff --git a/lib/src/screens/home/plan_care_screen.dart b/lib/src/screens/home/plan_care_screen.dart
+index 4982f82..5f852d7 100644
+--- a/lib/src/screens/home/plan_care_screen.dart
++++ b/lib/src/screens/home/plan_care_screen.dart
+@@ -1,12 +1,7 @@
+ import 'package:flutter/material.dart';
+ 
+-import 'widgets/plant_card.dart';
+-import 'widgets/add_plant_card.dart';
+-import 'widgets/add_plant_dialog.dart';
+-
+ import 'plant_detail_screen.dart';
+ import '../../data/plant_data.dart';
+-import '../../models/plant.dart';
+ 
+ import '../../data/plant_repository.dart';
+ 
+@@ -18,35 +13,49 @@ class PlanCareScreen extends StatefulWidget {
+ }
+ 
+ class _PlanCareScreenState extends State<PlanCareScreen> {
+-  List<Map<String, dynamic>> _plants = [];
++  // Original full list of plants (hidden by default)
++  List<Map<String, dynamic>> _allPlants = [];
++  // Filtered list to display based on search
++  List<Map<String, dynamic>> _filteredPlants = [];
++
+   final PlantRepository _plantRepository = PlantRepository();
++  final TextEditingController _searchController = TextEditingController();
+ 
+   @override
+   void initState() {
+     super.initState();
+     _loadPlants();
++    _searchController.addListener(_onSearchChanged);
+   }
+ 
+-  Future<void> _loadPlants() async {
+-    final userPlants = await _plantRepository.loadUserPlants();
++  @override
++  void dispose() {
++    _searchController.dispose();
++    super.dispose();
++  }
++
++  void _onSearchChanged() {
++    final query = _searchController.text.toLowerCase();
+     setState(() {
+-      _plants = [...userPlants, ...demoPlants];
++      if (query.isEmpty) {
++        // If search is empty, show nothing (or just the Add Plant card if desired)
++        _filteredPlants = [];
++      } else {
++        _filteredPlants = _allPlants.where((plant) {
++          final name = plant['name'].toString().toLowerCase();
++          final scientific = plant['scientific'].toString().toLowerCase();
++          return name.contains(query) || scientific.contains(query);
++        }).toList();
++      }
+     });
+   }
+ 
+-  Future<void> _addPlant(String name, String imagePath) async {
+-    final newPlant = {
+-      "name": name,
+-      "scientific": "Custom Plant",
+-      "image": imagePath,
+-      "status": PlantStatus.healthy,
+-      "details": {"light_ideal": "Custom care details not yet added."},
+-    };
+-
+-    await _plantRepository.saveUserPlant(newPlant);
+-
++  Future<void> _loadPlants() async {
++    final userPlants = await _plantRepository.loadUserPlants();
+     setState(() {
+-      _plants.insert(0, newPlant);
++      _allPlants = [...userPlants, ...demoPlants];
++      // Initially empty, or could key off a saved search
++      _filteredPlants = [];
+     });
+   }
+ 
+@@ -55,54 +64,122 @@ class _PlanCareScreenState extends State<PlanCareScreen> {
+     return Scaffold(
+       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+       appBar: AppBar(
+-        title: const Text("Plant Care"),
++        title: const Text("Plan Care"),
+         centerTitle: true,
+         backgroundColor: Colors.transparent,
+         elevation: 0,
+       ),
+-      body: Padding(
+-        padding: const EdgeInsets.all(16.0),
+-        child: GridView.builder(
+-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+-            crossAxisCount: 2,
+-            crossAxisSpacing: 16,
+-            mainAxisSpacing: 16,
+-            childAspectRatio: 0.75,
++      body: Column(
++        children: [
++          // Search Bar
++          Padding(
++            padding: const EdgeInsets.all(16.0),
++            child: TextField(
++              controller: _searchController,
++              decoration: InputDecoration(
++                hintText: 'Search for a plant...',
++                prefixIcon: const Icon(Icons.search),
++                filled: true,
++                fillColor: Theme.of(context).cardColor,
++                border: OutlineInputBorder(
++                  borderRadius: BorderRadius.circular(12),
++                  borderSide: BorderSide.none,
++                ),
++                contentPadding: const EdgeInsets.symmetric(
++                  horizontal: 16,
++                  vertical: 14,
++                ),
++              ),
++            ),
+           ),
+-          itemCount: _plants.length + 1, // +1 for the Add Plant card
+-          itemBuilder: (context, index) {
+-            if (index == 0) {
+-              return AddPlantCard(
+-                onTap: () {
+-                  showDialog(
+-                    context: context,
+-                    builder: (context) => AddPlantDialog(
+-                      onAdd: (name, imagePath) {
+-                        _addPlant(name, imagePath);
++
++          // Plant List (Grid)
++          Expanded(
++            child: Padding(
++              padding: const EdgeInsets.symmetric(horizontal: 16.0),
++              child: _filteredPlants.isEmpty && _searchController.text.isEmpty
++                  ? Center(
++                      child: Column(
++                        mainAxisAlignment: MainAxisAlignment.center,
++                        children: [
++                          Icon(
++                            Icons.search,
++                            size: 64,
++                            color: Colors.grey.withValues(alpha: 0.5),
++                          ),
++                          const SizedBox(height: 16),
++                          Text(
++                            "Search for a plant to see care details",
++                            style: TextStyle(
++                              color: Colors.grey[600],
++                              fontSize: 16,
++                            ),
++                          ),
++                          const SizedBox(height: 24),
++                        ],
++                      ),
++                    )
++                  : ListView.builder(
++                      padding: const EdgeInsets.only(top: 8, bottom: 20),
++                      itemCount: _filteredPlants.length,
++                      itemBuilder: (context, index) {
++                        final plant = _filteredPlants[index];
++                        return Container(
++                          margin: const EdgeInsets.only(bottom: 12),
++                          decoration: BoxDecoration(
++                            color: Theme.of(context).cardColor,
++                            borderRadius: BorderRadius.circular(16),
++                            boxShadow: [
++                              BoxShadow(
++                                color: Colors.black.withValues(alpha: 0.05),
++                                blurRadius: 10,
++                                offset: const Offset(0, 4),
++                              ),
++                            ],
++                          ),
++                          child: ListTile(
++                            contentPadding: const EdgeInsets.symmetric(
++                              horizontal: 16,
++                              vertical: 8,
++                            ),
++                            title: Text(
++                              plant['name'],
++                              style: const TextStyle(
++                                fontWeight: FontWeight.bold,
++                                fontSize: 18,
++                              ),
++                            ),
++                            subtitle: Padding(
++                              padding: const EdgeInsets.only(top: 4.0),
++                              child: Text(
++                                plant['scientific'],
++                                style: TextStyle(
++                                  color: Colors.grey[400],
++                                  fontSize: 14,
++                                  fontStyle: FontStyle.italic,
++                                ),
++                              ),
++                            ),
++                            trailing: Icon(
++                              Icons.chevron_right,
++                              color: Theme.of(context).primaryColor,
++                            ),
++                            onTap: () {
++                              Navigator.push(
++                                context,
++                                MaterialPageRoute(
++                                  builder: (context) =>
++                                      PlantDetailScreen(plant: plant),
++                                ),
++                              );
++                            },
++                          ),
++                        );
+                       },
+                     ),
+-                  );
+-                },
+-              );
+-            }
+-
+-            final plant = _plants[index - 1];
+-            return PlantCard(
+-              name: plant['name'],
+-              scientificName: plant['scientific'],
+-              imageUrl: plant['image'],
+-              status: plant['status'],
+-              onTap: () {
+-                Navigator.push(
+-                  context,
+-                  MaterialPageRoute(
+-                    builder: (context) => PlantDetailScreen(plant: plant),
+-                  ),
+-                );
+-              },
+-            );
+-          },
+-        ),
++            ),
++          ),
++        ],
+       ),
+     );
+   }
+diff --git a/lib/src/screens/home/plant_detail_screen.dart b/lib/src/screens/home/plant_detail_screen.dart
+index c2e501a..02ebf14 100644
+--- a/lib/src/screens/home/plant_detail_screen.dart
++++ b/lib/src/screens/home/plant_detail_screen.dart
+@@ -1,4 +1,5 @@
+ import 'package:flutter/material.dart';
++import 'package:google_fonts/google_fonts.dart';
+ 
+ class PlantDetailScreen extends StatefulWidget {
+   final Map<String, dynamic> plant;
+@@ -25,7 +26,29 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+     return Scaffold(
+       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+       appBar: AppBar(
+-        title: const Text("Plant Detail"),
++        title: Column(
++          children: [
++            Text(
++              widget.plant['name'] ?? 'Plant Detail',
++              style: GoogleFonts.mPlusRounded1c(
++                fontWeight: FontWeight.bold,
++                fontSize: 22,
++                color: Theme.of(context).colorScheme.onSurface,
++              ),
++            ),
++            if (widget.plant['scientific'] != null)
++              Text(
++                widget.plant['scientific'],
++                style: GoogleFonts.mPlusRounded1c(
++                  fontSize: 14,
++                  color: Theme.of(
++                    context,
++                  ).colorScheme.onSurface.withValues(alpha: 0.7),
++                  fontWeight: FontWeight.w400,
++                ),
++              ),
++          ],
++        ),
+         centerTitle: true,
+         backgroundColor: Colors.transparent,
+         elevation: 0,
+@@ -38,96 +61,25 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.stretch,
+           children: [
+-            const SizedBox(height: 10),
+-            // Rounded Floating Image Card with Name Overlay
+-            Padding(
+-              padding: const EdgeInsets.symmetric(horizontal: 20),
+-              child: Container(
+-                height: 250,
+-                decoration: BoxDecoration(
+-                  borderRadius: BorderRadius.circular(32),
+-                  boxShadow: [
+-                    BoxShadow(
+-                      color: Colors.black.withValues(alpha: 0.1),
+-                      blurRadius: 15,
+-                      offset: const Offset(0, 8),
+-                    ),
+-                  ],
+-                ),
+-                child: ClipRRect(
+-                  borderRadius: BorderRadius.circular(32),
+-                  child: Stack(
+-                    fit: StackFit.expand,
+-                    children: [
+-                      Hero(
+-                        tag: 'plant-image-${widget.plant['name']}',
+-                        child: Image.network(
+-                          widget.plant['image'] ?? '',
+-                          fit: BoxFit.cover,
+-                          errorBuilder: (context, error, stackTrace) =>
+-                              Container(
+-                                color: Colors.grey[300],
+-                                child: const Icon(
+-                                  Icons.broken_image,
+-                                  color: Colors.grey,
+-                                  size: 40,
+-                                ),
+-                              ),
+-                        ),
+-                      ),
+-                      // Dark Gradient for Text Visibility
+-                      Positioned.fill(
+-                        child: Container(
+-                          decoration: BoxDecoration(
+-                            gradient: LinearGradient(
+-                              begin: Alignment.topCenter,
+-                              end: Alignment.bottomCenter,
+-                              colors: [
+-                                Colors.transparent,
+-                                Colors.black.withValues(alpha: 0.5),
+-                              ],
+-                            ),
+-                          ),
+-                        ),
+-                      ),
+-                      // Name Overlay
+-                      Positioned(
+-                        bottom: 20,
+-                        left: 20,
+-                        right: 20,
+-                        child: Column(
+-                          crossAxisAlignment: CrossAxisAlignment.start,
+-                          children: [
+-                            Text(
+-                              widget.plant['name'] ?? '',
+-                              style: TextStyle(
+-                                color: Colors.white,
+-                                fontSize: 28,
+-                                fontWeight: FontWeight.bold,
+-                                letterSpacing: -0.4,
+-                              ),
+-                            ),
+-                            if (widget.plant['scientific'] != null)
+-                              Text(
+-                                widget.plant['scientific'],
+-                                style: TextStyle(
+-                                  color: Colors.white.withValues(alpha: 0.95),
+-                                  fontSize: 15,
+-                                  fontStyle: FontStyle.italic,
+-                                ),
+-                              ),
+-                          ],
+-                        ),
+-                      ),
+-                    ],
++            if (widget.plant['description'] != null)
++              Padding(
++                padding: const EdgeInsets.fromLTRB(32, 20, 32, 10),
++                child: Text(
++                  widget.plant['description'],
++                  textAlign: TextAlign.center,
++                  style: GoogleFonts.mPlusRounded1c(
++                    fontSize: 16,
++                    color: Theme.of(
++                      context,
++                    ).colorScheme.onSurface.withValues(alpha: 0.8),
++                    height: 1.5,
++                    letterSpacing: 0.2,
+                   ),
+                 ),
+               ),
+-            ),
+             const SizedBox(height: 10),
+ 
+             if (details != null) ...[
+-              const SizedBox(height: 20),
+               // Light Section
+               if (_hasAny(details, ['light_ideal', 'light_low', 'light_avoid']))
+                 _buildSection(
+@@ -231,37 +183,37 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+     final isExpanded = _expandedSections["Warning"] ?? false;
+ 
+     return Container(
+-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
++      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+       decoration: BoxDecoration(
+-        color: Colors.amber.shade50,
+-        borderRadius: BorderRadius.circular(16),
+-        border: Border.all(color: Colors.amber.shade200),
++        color: Colors.amber.withValues(alpha: 0.1),
++        borderRadius: BorderRadius.circular(20),
++        border: Border.all(color: Colors.amber.withValues(alpha: 0.3)),
+       ),
+       child: Material(
+         color: Colors.transparent,
+         child: InkWell(
+-          borderRadius: BorderRadius.circular(16),
++          borderRadius: BorderRadius.circular(20),
+           onTap: () => _toggleSection("Warning"),
+           child: Padding(
+-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
++            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+             child: Column(
+               children: [
+                 Row(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Container(
+-                      padding: const EdgeInsets.all(6),
++                      padding: const EdgeInsets.all(8),
+                       decoration: BoxDecoration(
+-                        color: Colors.amber.shade100,
++                        color: Colors.amber.withValues(alpha: 0.2),
+                         shape: BoxShape.circle,
+                       ),
+                       child: Icon(
+-                        Icons.error_outline_rounded,
+-                        color: Colors.amber[800],
+-                        size: 18,
++                        Icons.warning_amber_rounded,
++                        color: Colors.amberAccent,
++                        size: 20,
+                       ),
+                     ),
+-                    const SizedBox(width: 12),
++                    const SizedBox(width: 16),
+                     Expanded(
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+@@ -269,20 +221,22 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                           Text(
+                             "Warning",
+                             style: TextStyle(
+-                              color: Colors.amber[900],
+-                              fontSize: 13,
++                              color: Colors.amberAccent,
++                              fontSize: 16,
+                               fontWeight: FontWeight.bold,
+                             ),
+                           ),
+                           if (!isExpanded) ...[
+-                            const SizedBox(height: 2),
++                            const SizedBox(height: 4),
+                             Text(
+                               warning,
+                               maxLines: 1,
+                               overflow: TextOverflow.ellipsis,
+                               style: TextStyle(
+-                                color: Colors.amber[900],
+-                                fontSize: 12,
++                                color: Colors.amberAccent.withValues(
++                                  alpha: 0.9,
++                                ),
++                                fontSize: 13,
+                               ),
+                             ),
+                           ],
+@@ -291,19 +245,19 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                     ),
+                     Icon(
+                       isExpanded ? Icons.expand_less : Icons.expand_more,
+-                      color: Colors.amber[800],
+-                      size: 20,
++                      color: Colors.amberAccent,
++                      size: 24,
+                     ),
+                   ],
+                 ),
+                 if (isExpanded) ...[
+-                  const SizedBox(height: 10),
++                  const SizedBox(height: 12),
+                   Text(
+                     warning,
+                     style: TextStyle(
+-                      color: Colors.amber[900],
+-                      fontSize: 13,
+-                      height: 1.4,
++                      color: Colors.amberAccent.withValues(alpha: 0.95),
++                      fontSize: 14,
++                      height: 1.5,
+                     ),
+                   ),
+                 ],
+@@ -320,46 +274,53 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+     final isExpanded = _expandedSections["Common Issues"] ?? false;
+ 
+     return Container(
+-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
++      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+       decoration: BoxDecoration(
+         color: Theme.of(context).cardTheme.color,
+-        borderRadius: BorderRadius.circular(20),
++        borderRadius: BorderRadius.circular(24),
+         border: Border.all(
+-          color: Theme.of(context).dividerColor.withValues(alpha: 0.05),
++          color: Theme.of(context).dividerColor.withValues(alpha: 0.08),
+         ),
++        boxShadow: [
++          BoxShadow(
++            color: Colors.black.withValues(alpha: 0.05),
++            blurRadius: 10,
++            offset: const Offset(0, 4),
++          ),
++        ],
+       ),
+       child: Material(
+         color: Colors.transparent,
+         child: InkWell(
+-          borderRadius: BorderRadius.circular(20),
++          borderRadius: BorderRadius.circular(24),
+           onTap: () => _toggleSection("Common Issues"),
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Padding(
+-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
++                padding: const EdgeInsets.all(20),
+                 child: Row(
+                   children: [
+                     Container(
+-                      padding: const EdgeInsets.all(10),
++                      padding: const EdgeInsets.all(12),
+                       decoration: BoxDecoration(
+-                        color: Colors.teal.withValues(alpha: 0.1),
+-                        borderRadius: BorderRadius.circular(12),
++                        color: Colors.teal.withValues(alpha: 0.15),
++                        borderRadius: BorderRadius.circular(16),
+                       ),
+                       child: const Icon(
+                         Icons.pest_control_rounded,
+-                        color: Colors.teal,
+-                        size: 20,
++                        color: Colors.tealAccent,
++                        size: 24,
+                       ),
+                     ),
+-                    const SizedBox(width: 12),
++                    const SizedBox(width: 16),
+                     Expanded(
+                       child: Text(
+                         "Common Issues",
+                         style: TextStyle(
+-                          fontSize: 16,
+-                          fontWeight: FontWeight.w700,
+-                          letterSpacing: -0.2,
++                          fontSize: 17,
++                          fontWeight: FontWeight.bold,
++                          letterSpacing: -0.3,
+                           color: Theme.of(context).colorScheme.onSurface,
+                         ),
+                       ),
+@@ -368,8 +329,8 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                       isExpanded ? Icons.expand_less : Icons.expand_more,
+                       color: Theme.of(
+                         context,
+-                      ).colorScheme.onSurface.withValues(alpha: 0.4),
+-                      size: 20,
++                      ).colorScheme.onSurface.withValues(alpha: 0.5),
++                      size: 24,
+                     ),
+                   ],
+                 ),
+@@ -377,17 +338,20 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+               if (isExpanded) ...[
+                 Container(
+                   height: 1,
+-                  margin: const EdgeInsets.symmetric(horizontal: 16),
+-                  color: Colors.teal.withValues(alpha: 0.1),
++                  margin: const EdgeInsets.symmetric(horizontal: 20),
++                  color: Colors.teal.withValues(alpha: 0.15),
+                 ),
+                 Padding(
+-                  padding: const EdgeInsets.all(16),
++                  padding: const EdgeInsets.all(20),
+                   child: Container(
+                     decoration: BoxDecoration(
+                       color: Theme.of(
+                         context,
+                       ).scaffoldBackgroundColor.withValues(alpha: 0.5),
+-                      borderRadius: BorderRadius.circular(12),
++                      borderRadius: BorderRadius.circular(16),
++                      border: Border.all(
++                        color: Colors.teal.withValues(alpha: 0.1),
++                      ),
+                     ),
+                     child: Table(
+                       columnWidths: const {
+@@ -438,8 +402,8 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+         text,
+         style: TextStyle(
+           fontSize: 13,
+-          fontWeight: FontWeight.w600,
+-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
++          fontWeight: FontWeight.w700,
++          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.9),
+         ),
+       ),
+     );
+@@ -456,11 +420,11 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+         text,
+         style: TextStyle(
+           fontSize: 14,
+-          height: 1.4,
++          height: 1.5,
+           fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
+           color: Theme.of(
+             context,
+-          ).colorScheme.onSurface.withValues(alpha: isBold ? 1.0 : 0.95),
++          ).colorScheme.onSurface.withValues(alpha: isBold ? 1.0 : 0.8),
+         ),
+       ),
+     );
+@@ -510,23 +474,23 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+     final isExpanded = _expandedSections[title] ?? false;
+ 
+     return Container(
+-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
++      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+       decoration: BoxDecoration(
+         color: Theme.of(context).cardTheme.color,
+-        borderRadius: BorderRadius.circular(20),
++        borderRadius: BorderRadius.circular(24),
+         boxShadow: [
+           BoxShadow(
+-            color: Colors.black.withValues(alpha: 0.04),
+-            blurRadius: 20,
+-            offset: const Offset(0, 8),
++            color: Colors.black.withValues(alpha: 0.06),
++            blurRadius: 15,
++            offset: const Offset(0, 6),
+           ),
+         ],
+         border: Border.all(
+-          color: Theme.of(context).dividerColor.withValues(alpha: 0.05),
++          color: Theme.of(context).dividerColor.withValues(alpha: 0.08),
+         ),
+       ),
+       child: ClipRRect(
+-        borderRadius: BorderRadius.circular(20),
++        borderRadius: BorderRadius.circular(24),
+         child: Material(
+           color: Colors.transparent,
+           child: InkWell(
+@@ -535,25 +499,25 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Padding(
+-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
++                  padding: const EdgeInsets.all(20),
+                   child: Row(
+                     children: [
+                       Container(
+-                        padding: const EdgeInsets.all(10),
++                        padding: const EdgeInsets.all(12),
+                         decoration: BoxDecoration(
+-                          color: effectiveColor.withValues(alpha: 0.1),
+-                          borderRadius: BorderRadius.circular(12),
++                          color: effectiveColor.withValues(alpha: 0.15),
++                          borderRadius: BorderRadius.circular(16),
+                         ),
+-                        child: Icon(icon, color: effectiveColor, size: 20),
++                        child: Icon(icon, color: effectiveColor, size: 24),
+                       ),
+-                      const SizedBox(width: 12),
++                      const SizedBox(width: 16),
+                       Expanded(
+                         child: Text(
+                           title,
+                           style: TextStyle(
+-                            fontSize: 16,
+-                            fontWeight: FontWeight.w700,
+-                            letterSpacing: -0.2,
++                            fontSize: 17,
++                            fontWeight: FontWeight.bold,
++                            letterSpacing: -0.3,
+                             color: Theme.of(context).colorScheme.onSurface,
+                           ),
+                         ),
+@@ -562,8 +526,8 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                         isExpanded ? Icons.expand_less : Icons.expand_more,
+                         color: Theme.of(
+                           context,
+-                        ).colorScheme.onSurface.withValues(alpha: 0.4),
+-                        size: 20,
++                        ).colorScheme.onSurface.withValues(alpha: 0.5),
++                        size: 24,
+                       ),
+                     ],
+                   ),
+@@ -571,43 +535,43 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                 if (isExpanded) ...[
+                   Container(
+                     height: 1,
+-                    margin: const EdgeInsets.symmetric(horizontal: 16),
+-                    color: effectiveColor.withValues(alpha: 0.1),
++                    margin: const EdgeInsets.symmetric(horizontal: 20),
++                    color: effectiveColor.withValues(alpha: 0.15),
+                   ),
+                   Padding(
+-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
++                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: items.map((item) {
+                         return Padding(
+-                          padding: const EdgeInsets.only(bottom: 10),
++                          padding: const EdgeInsets.only(bottom: 12),
+                           child: Row(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Padding(
+-                                padding: const EdgeInsets.only(top: 8),
++                                padding: const EdgeInsets.only(top: 9),
+                                 child: Container(
+                                   width: 6,
+                                   height: 6,
+                                   decoration: BoxDecoration(
+                                     color: effectiveColor.withValues(
+-                                      alpha: 0.7,
++                                      alpha: 0.8,
+                                     ),
+                                     shape: BoxShape.circle,
+                                   ),
+                                 ),
+                               ),
+-                              const SizedBox(width: 12),
++                              const SizedBox(width: 14),
+                               Expanded(
+                                 child: Text(
+                                   item,
+                                   style: TextStyle(
+-                                    fontSize: 14,
+-                                    height: 1.5,
++                                    fontSize: 15,
++                                    height: 1.6,
+                                     color: Theme.of(context)
+                                         .colorScheme
+                                         .onSurface
+-                                        .withValues(alpha: 0.95),
++                                        .withValues(alpha: 0.9),
+                                     fontWeight: FontWeight.w400,
+                                   ),
+                                 ),
+diff --git a/lib/src/screens/onboarding/onboarding_screen.dart b/lib/src/screens/onboarding/onboarding_screen.dart
+index f2bcc31..1e9b5dc 100644
+--- a/lib/src/screens/onboarding/onboarding_screen.dart
++++ b/lib/src/screens/onboarding/onboarding_screen.dart
+@@ -1,4 +1,5 @@
+ import 'package:flutter/material.dart';
++import 'package:google_fonts/google_fonts.dart';
+ import 'package:provider/provider.dart';
+ import '../../providers/app_state.dart';
+ import '../../theme/app_theme.dart';
+@@ -66,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
+                       ),
+                       child: Text(
+                         "Skip",
+-                        style: TextStyle(
++                        style: GoogleFonts.mPlusRounded1c(
+                           fontSize: 16,
+                           fontWeight: FontWeight.bold,
+                           color: isDark
+@@ -145,8 +146,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
+                         children: [
+                           Text(
+                             _currentPage == 2 ? "Get Started" : "Next",
+-                            style: TextStyle(
+-                              // Changed to Nunito
++                            style: GoogleFonts.mPlusRounded1c(
+                               fontSize: 18,
+                               fontWeight: FontWeight.bold,
+                               color: Colors.white,
+diff --git a/lib/src/screens/onboarding/widgets/onboarding_page_1.dart b/lib/src/screens/onboarding/widgets/onboarding_page_1.dart
+index 6c2c4a4..225469a 100644
+--- a/lib/src/screens/onboarding/widgets/onboarding_page_1.dart
++++ b/lib/src/screens/onboarding/widgets/onboarding_page_1.dart
+@@ -1,4 +1,5 @@
+ import 'package:flutter/material.dart';
++import 'package:google_fonts/google_fonts.dart';
+ import 'package:cached_network_image/cached_network_image.dart';
+ import '../../../theme/app_theme.dart';
+ 
+@@ -87,7 +88,7 @@ class OnboardingPage1 extends StatelessWidget {
+                     Text(
+                       "One Photo,\nOne Answer",
+                       textAlign: TextAlign.center,
+-                      style: TextStyle(
++                      style: GoogleFonts.mPlusRounded1c(
+                         fontSize: 32,
+                         fontWeight: FontWeight.w800,
+                         height: 1.1,
+@@ -112,7 +113,7 @@ class OnboardingPage1 extends StatelessWidget {
+                           ],
+                         ),
+                         textAlign: TextAlign.center,
+-                        style: TextStyle(
++                        style: GoogleFonts.mPlusRounded1c(
+                           fontSize: 16,
+                           fontWeight: FontWeight.w600,
+                           height: 1.625,
+diff --git a/lib/src/screens/onboarding/widgets/onboarding_page_2.dart b/lib/src/screens/onboarding/widgets/onboarding_page_2.dart
+index 0d6c068..21a6595 100644
+--- a/lib/src/screens/onboarding/widgets/onboarding_page_2.dart
++++ b/lib/src/screens/onboarding/widgets/onboarding_page_2.dart
+@@ -1,4 +1,5 @@
+ import 'package:flutter/material.dart';
++import 'package:google_fonts/google_fonts.dart';
+ import 'package:cached_network_image/cached_network_image.dart';
+ import '../../../theme/app_theme.dart';
+ 
+@@ -67,7 +68,7 @@ class OnboardingPage2 extends StatelessWidget {
+                     Text(
+                       "Snap a Photo",
+                       textAlign: TextAlign.center,
+-                      style: TextStyle(
++                      style: GoogleFonts.mPlusRounded1c(
+                         fontSize: 32,
+                         fontWeight: FontWeight.w800, // Extra bold for headlines
+                         height: 1.1,
+@@ -94,7 +95,7 @@ class OnboardingPage2 extends StatelessWidget {
+                           ],
+                         ),
+                         textAlign: TextAlign.center,
+-                        style: TextStyle(
++                        style: GoogleFonts.mPlusRounded1c(
+                           fontSize: 16,
+                           fontWeight: FontWeight.w600,
+                           height: 1.625,
+diff --git a/lib/src/screens/onboarding/widgets/onboarding_page_3.dart b/lib/src/screens/onboarding/widgets/onboarding_page_3.dart
+index 3d709b5..0b60c7e 100644
+--- a/lib/src/screens/onboarding/widgets/onboarding_page_3.dart
++++ b/lib/src/screens/onboarding/widgets/onboarding_page_3.dart
+@@ -1,4 +1,5 @@
+ import 'package:flutter/material.dart';
++import 'package:google_fonts/google_fonts.dart';
+ import '../../../theme/app_theme.dart';
+ 
+ class OnboardingPage3 extends StatelessWidget {
+@@ -95,7 +96,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                         const SizedBox(width: 6),
+                                         Text(
+                                           "HEALTHY",
+-                                          style: TextStyle(
++                                          style: GoogleFonts.mPlusRounded1c(
+                                             color: const Color(0xFF1A2211),
+                                             fontSize: 12,
+                                             fontWeight: FontWeight.bold,
+@@ -118,7 +119,7 @@ class OnboardingPage3 extends StatelessWidget {
+                               children: [
+                                 Text(
+                                   "DIAGNOSIS RESULT",
+-                                  style: TextStyle(
++                                  style: GoogleFonts.mPlusRounded1c(
+                                     color: AppColors
+                                         .onboardingAccent, // Light Sage for contrast
+                                     fontSize: 11, // Slightly smaller
+@@ -129,7 +130,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                 const SizedBox(height: 4),
+                                 Text(
+                                   "Lush Monstera",
+-                                  style: TextStyle(
++                                  style: GoogleFonts.mPlusRounded1c(
+                                     color: Colors.white,
+                                     fontSize: 20,
+                                     fontWeight: FontWeight.w800,
+@@ -139,7 +140,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                 const SizedBox(height: 12),
+                                 Text(
+                                   "No pests or diseases detected. Your plant is thriving in its current environment.",
+-                                  style: TextStyle(
++                                  style: GoogleFonts.mPlusRounded1c(
+                                     color: textAccentColor,
+                                     fontSize: 14,
+                                     height: 1.5,
+@@ -180,7 +181,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                       ),
+                                       child: Text(
+                                         "View Guide",
+-                                        style: TextStyle(
++                                        style: GoogleFonts.mPlusRounded1c(
+                                           color: const Color(
+                                             0xFF1A2211,
+                                           ), // Dark text for contrast
+@@ -218,7 +219,7 @@ class OnboardingPage3 extends StatelessWidget {
+                     Text(
+                       "Instant Diagnosis",
+                       textAlign: TextAlign.center,
+-                      style: TextStyle(
++                      style: GoogleFonts.mPlusRounded1c(
+                         color: Theme.of(context).brightness == Brightness.dark
+                             ? Colors.white
+                             : Colors.black,
+@@ -234,14 +235,12 @@ class OnboardingPage3 extends StatelessWidget {
+                       child: Text(
+                         "Get clear, simple advice to keep your plants happy and healthy every day.",
+                         textAlign: TextAlign.center,
+-                        style: TextStyle(
++                        style: GoogleFonts.mPlusRounded1c(
+                           color: Theme.of(context).brightness == Brightness.dark
+                               ? textAccentColor
+-                              : const Color(
+-                                  0xFF4B5563,
+-                                ), // Match Page 1 color style
++                              : const Color(0xFF4B5563),
+                           fontSize: 16,
+-                          height: 1.625, // Match Page 1 line height
++                          height: 1.625,
+                           fontWeight: FontWeight.w600,
+                         ),
+                       ),
+diff --git a/lib/src/theme/app_theme.dart b/lib/src/theme/app_theme.dart
+index 1e5c1f5..1b84215 100644
+--- a/lib/src/theme/app_theme.dart
++++ b/lib/src/theme/app_theme.dart
+@@ -30,6 +30,7 @@ class AppTheme {
+     return ThemeData(
+       useMaterial3: true,
+       brightness: Brightness.light,
++      fontFamily: GoogleFonts.mPlusRounded1c().fontFamily,
+       colorScheme: ColorScheme.fromSeed(
+         seedColor: AppColors.primary,
+         brightness: Brightness.light,
+@@ -74,12 +75,12 @@ class AppTheme {
+             bodyColor: AppColors.textLight,
+             displayColor: AppColors.textLight,
+           ),
+-      appBarTheme: const AppBarTheme(
++      appBarTheme: AppBarTheme(
+         backgroundColor: AppColors.backgroundLight,
+         elevation: 0,
+         centerTitle: true,
+-        iconTheme: IconThemeData(color: AppColors.textLight),
+-        titleTextStyle: TextStyle(
++        iconTheme: const IconThemeData(color: AppColors.textLight),
++        titleTextStyle: GoogleFonts.mPlusRounded1c(
+           color: AppColors.textLight,
+           fontSize: 20,
+           fontWeight: FontWeight.bold,
+@@ -92,6 +93,7 @@ class AppTheme {
+     return ThemeData(
+       useMaterial3: true,
+       brightness: Brightness.dark,
++      fontFamily: GoogleFonts.mPlusRounded1c().fontFamily,
+       colorScheme: ColorScheme.fromSeed(
+         seedColor: AppColors.primary,
+         brightness: Brightness.dark,
+@@ -132,12 +134,12 @@ class AppTheme {
+       textTheme: GoogleFonts.mPlusRounded1cTextTheme(
+         ThemeData.dark().textTheme,
+       ).apply(bodyColor: AppColors.textDark, displayColor: AppColors.textDark),
+-      appBarTheme: const AppBarTheme(
++      appBarTheme: AppBarTheme(
+         backgroundColor: AppColors.backgroundDark,
+         elevation: 0,
+         centerTitle: true,
+-        iconTheme: IconThemeData(color: AppColors.textDark),
+-        titleTextStyle: TextStyle(
++        iconTheme: const IconThemeData(color: AppColors.textDark),
++        titleTextStyle: GoogleFonts.mPlusRounded1c(
+           color: AppColors.textDark,
+           fontSize: 20,
+           fontWeight: FontWeight.bold,

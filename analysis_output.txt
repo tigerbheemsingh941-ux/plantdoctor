@@ -1,7 +1,0 @@
-Analyzing plant_detail_screen.dart...                           
-
-  error - A value of type 'Type' can't be assigned to a parameter of type 'FontWeight?' in a const constructor - lib\src\screens\home\plant_detail_screen.dart:214:19 - const_constructor_param_type_mismatch
-  error - The argument type 'Type' can't be assigned to the parameter type 'FontWeight?'.  - lib\src\screens\home\plant_detail_screen.dart:214:31 - argument_type_not_assignable
-  error - Expected to find ',' - lib\src\screens\home\plant_detail_screen.dart:214:41 - expected_token
-  error - Too many positional arguments: 0 expected, but 1 found - lib\src\screens\home\plant_detail_screen.dart:214:41 - extra_positional_arguments_could_be_named
-

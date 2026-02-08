@@ -8,6 +8,7 @@ import 'src/theme/app_theme.dart';
 import 'src/screens/onboarding/onboarding_screen.dart';
 import 'src/screens/home/home_screen.dart';
 import 'src/services/notification_service.dart';
+import 'src/providers/user_plant_provider.dart';
 
 import 'package:camera/camera.dart';
 
@@ -28,6 +29,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => AppState()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => GardenProvider()),
+        ChangeNotifierProvider(create: (_) => UserPlantProvider()),
       ],
       child: const PlantDoctorApp(),
     ),

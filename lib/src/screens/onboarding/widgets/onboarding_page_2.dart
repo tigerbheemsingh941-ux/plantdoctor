@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../theme/app_theme.dart';
 
@@ -67,7 +68,7 @@ class OnboardingPage2 extends StatelessWidget {
                     Text(
                       "Snap a Photo",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.mPlusRounded1c(
                         fontSize: 32,
                         fontWeight: FontWeight.w800, // Extra bold for headlines
                         height: 1.1,
@@ -94,7 +95,7 @@ class OnboardingPage2 extends StatelessWidget {
                           ],
                         ),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: GoogleFonts.mPlusRounded1c(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           height: 1.625,

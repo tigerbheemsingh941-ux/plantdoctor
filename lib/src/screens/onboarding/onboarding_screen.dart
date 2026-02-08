@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../providers/app_state.dart';
 import '../../theme/app_theme.dart';
@@ -66,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       child: Text(
                         "Skip",
-                        style: TextStyle(
+                        style: GoogleFonts.mPlusRounded1c(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: isDark
@@ -145,8 +146,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: [
                           Text(
                             _currentPage == 2 ? "Get Started" : "Next",
-                            style: TextStyle(
-                              // Changed to Nunito
+                            style: GoogleFonts.mPlusRounded1c(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

@@ -51,6 +51,7 @@ dependencies:
   http: ^1.6.0
   flutter_timezone: 3.0.1
   geolocator: ^14.0.2
+  geocoding: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -94,5 +95,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-  assets:
-    - assets/optimized/
+

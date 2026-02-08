@@ -2,14 +2,32 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class WeatherService {
   Future<Map<String, dynamic>> fetchCurrentWeather() async {
     try {
       final position = await _determinePosition();
 
+      // Get location name
+      String locationName = "Unknown Location";
+      try {
+        List<Placemark> placemarks = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+        if (placemarks.isNotEmpty) {
+          locationName =
+              placemarks.first.locality ??
+              placemarks.first.subAdministrativeArea ??
+              "Unknown Location";
+        }
+      } catch (e) {
+        debugPrint("Error getting placemark: $e");
+      }
+
       final url = Uri.parse(
-        'https://api.open-meteo.com/v1/forecast?latitude=${position.latitude}&longitude=${position.longitude}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto',
+        'https://api.open-meteo.com/v1/forecast?latitude=${position.latitude}&longitude=${position.longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=auto',
       );
 
       final response = await http.get(url);
@@ -17,19 +35,31 @@ class WeatherService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final current = data['current'];
+        final daily = data['daily'];
 
         return {
           'temp': current['temperature_2m'].round(),
           'code': current['weather_code'],
+          'humidity': current['relative_humidity_2m'],
+          'windSpeed': current['wind_speed_10m'],
+          'maxTemp': daily['temperature_2m_max'][0].round(),
+          'minTemp': daily['temperature_2m_min'][0].round(),
+          'location': locationName,
         };
       } else {
         throw Exception('Failed to load weather');
       }
     } catch (e) {
       debugPrint("Weather Error: $e");
-      // Return fallback data (maybe clear sky, or a specific error code?)
-      // For now, keep fallback behavior but maybe we can signal error
-      return {'temp': '--', 'code': 0};
+      return {
+        'temp': '--',
+        'code': 0,
+        'humidity': '--',
+        'windSpeed': '--',
+        'maxTemp': '--',
+        'minTemp': '--',
+        'location': 'Location Error',
+      };
     }
   }
 

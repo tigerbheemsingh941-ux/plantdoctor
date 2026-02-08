@@ -30,6 +30,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: GoogleFonts.mPlusRounded1c().fontFamily,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
         brightness: Brightness.light,
@@ -74,12 +75,12 @@ class AppTheme {
             bodyColor: AppColors.textLight,
             displayColor: AppColors.textLight,
           ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.backgroundLight,
         elevation: 0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: AppColors.textLight),
-        titleTextStyle: TextStyle(
+        iconTheme: const IconThemeData(color: AppColors.textLight),
+        titleTextStyle: GoogleFonts.mPlusRounded1c(
           color: AppColors.textLight,
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -92,6 +93,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      fontFamily: GoogleFonts.mPlusRounded1c().fontFamily,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
         brightness: Brightness.dark,
@@ -132,12 +134,12 @@ class AppTheme {
       textTheme: GoogleFonts.mPlusRounded1cTextTheme(
         ThemeData.dark().textTheme,
       ).apply(bodyColor: AppColors.textDark, displayColor: AppColors.textDark),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.backgroundDark,
         elevation: 0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: AppColors.textDark),
-        titleTextStyle: TextStyle(
+        iconTheme: const IconThemeData(color: AppColors.textDark),
+        titleTextStyle: GoogleFonts.mPlusRounded1c(
           color: AppColors.textDark,
           fontSize: 20,
           fontWeight: FontWeight.bold,

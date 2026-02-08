@@ -47,5 +47,7 @@
 	<string>We need your location to show local weather conditions for your garden.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to let you upload a profile picture.</string>
 </dict>
 </plist>

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../providers/user_provider.dart';
+import '../../providers/user_plant_provider.dart';
+import '../../providers/garden_provider.dart';
 
 import '../../theme/app_theme.dart';
 
@@ -48,17 +50,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (pickedFile != null) {
         debugPrint("Image picked: ${pickedFile.path}");
         if (mounted) {
-          await Provider.of<UserProvider>(
-            context,
-            listen: false,
-          ).updateImage(pickedFile.path);
-          debugPrint("UserProvider updateImage called");
+          try {
+            await Provider.of<UserProvider>(
+              context,
+              listen: false,
+            ).updateImage(pickedFile.path);
+            debugPrint("UserProvider updateImage called");
+          } catch (e) {
+            debugPrint("Error updating provider: $e");
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Failed to update profile image: $e')),
+              );
+            }
+          }
         }
       } else {
         debugPrint("Image picker cancelled or returned null");
       }
     } catch (e) {
       debugPrint("Error picking image: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error accessing gallery: $e. Check permissions.'),
+          ),
+        );
+      }
     }
   }
 
@@ -92,88 +110,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
               alignment: Alignment.bottomCenter,
               children: [
                 // Background
-                Container(
-                  padding: const EdgeInsets.only(
-                    top: 60,
-                    left: 20,
-                    right: 20,
-                    bottom: 80, // Space for the floating profile pic
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.15),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(32),
-                      bottomRight: Radius.circular(32),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                        top: 60,
+                        left: 20,
+                        right: 20,
+                        bottom: 80, // Space for the floating profile pic
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.15),
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(32),
+                          bottomRight: Radius.circular(32),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: theme.canvasColor,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () => Navigator.pop(context),
+                                child: Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    color: theme.canvasColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.05,
+                                        ),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              child: Icon(
-                                Icons.arrow_back_ios_new,
-                                size: 20,
-                                color: theme.iconTheme.color,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            "My Profile",
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.onSurface,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: _toggleEdit,
-                            child: Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: theme.canvasColor,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 4),
+                                  child: Icon(
+                                    Icons.arrow_back_ios_new,
+                                    size: 20,
+                                    color: theme.iconTheme.color,
                                   ),
-                                ],
+                                ),
                               ),
-                              child: Icon(
-                                _isEditing ? Icons.check : Icons.edit,
-                                size: 20,
-                                color: AppColors.primary,
+                              Text(
+                                "My Profile",
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.onSurface,
+                                ),
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: _toggleEdit,
+                                child: Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    color: theme.canvasColor,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.05,
+                                        ),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    _isEditing ? Icons.check : Icons.edit,
+                                    size: 20,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 60),
+                  ],
                 ),
 
                 // Profile Image & Info
                 Positioned(
-                  bottom: -60,
+                  bottom: 0,
                   child: Column(
                     children: [
                       Stack(
@@ -251,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
 
-            const SizedBox(height: 70), // Space for profile image overlap
+            const SizedBox(height: 10), // Reduced space since Stack grew
             // Name and Badge
             _isEditing
                 ? Padding(
@@ -335,13 +362,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildStatItem(context, "12", "My Plants"),
+                    Consumer<UserPlantProvider>(
+                      builder: (context, plantProvider, _) {
+                        return _buildStatItem(
+                          context,
+                          plantProvider.count.toString(),
+                          "My Plants",
+                        );
+                      },
+                    ),
                     Container(
                       height: 40,
                       width: 1,
                       color: theme.dividerColor.withValues(alpha: 0.5),
                     ),
-                    _buildStatItem(context, "5", "Diagnoses"),
+                    Consumer<GardenProvider>(
+                      builder: (context, gardenProvider, _) {
+                        return _buildStatItem(
+                          context,
+                          gardenProvider.scans.length.toString(),
+                          "Diagnoses",
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

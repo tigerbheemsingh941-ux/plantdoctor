@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -67,7 +68,53 @@ class PlantCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Status Badge removed as per user request
+                  // Status Badge
+                  Positioned(
+                    left: 12,
+                    bottom: 12,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: BackdropFilter(
+                        filter: ui.ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.4),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: _getStatusColor(
+                                status,
+                              ).withValues(alpha: 0.5),
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                _getStatusIcon(status),
+                                color: _getStatusColor(status),
+                                size: 14,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                _getStatusText(status),
+                                style: Theme.of(context).textTheme.labelSmall
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -103,5 +150,38 @@ class PlantCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getStatusColor(PlantStatus status) {
+    switch (status) {
+      case PlantStatus.healthy:
+        return Colors.greenAccent;
+      case PlantStatus.thirsty:
+        return Colors.orangeAccent;
+      case PlantStatus.actionNeeded:
+        return Colors.redAccent;
+    }
+  }
+
+  IconData _getStatusIcon(PlantStatus status) {
+    switch (status) {
+      case PlantStatus.healthy:
+        return Icons.check_circle;
+      case PlantStatus.thirsty:
+        return Icons.water_drop;
+      case PlantStatus.actionNeeded:
+        return Icons.warning_rounded;
+    }
+  }
+
+  String _getStatusText(PlantStatus status) {
+    switch (status) {
+      case PlantStatus.healthy:
+        return "Healthy";
+      case PlantStatus.thirsty:
+        return "Thirsty";
+      case PlantStatus.actionNeeded:
+        return "Action Needed";
+    }
   }
 }

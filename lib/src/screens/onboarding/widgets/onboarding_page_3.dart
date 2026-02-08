@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_theme.dart';
 
 class OnboardingPage3 extends StatelessWidget {
@@ -95,7 +96,7 @@ class OnboardingPage3 extends StatelessWidget {
                                         const SizedBox(width: 6),
                                         Text(
                                           "HEALTHY",
-                                          style: TextStyle(
+                                          style: GoogleFonts.mPlusRounded1c(
                                             color: const Color(0xFF1A2211),
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class OnboardingPage3 extends StatelessWidget {
                               children: [
                                 Text(
                                   "DIAGNOSIS RESULT",
-                                  style: TextStyle(
+                                  style: GoogleFonts.mPlusRounded1c(
                                     color: AppColors
                                         .onboardingAccent, // Light Sage for contrast
                                     fontSize: 11, // Slightly smaller
@@ -129,7 +130,7 @@ class OnboardingPage3 extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   "Lush Monstera",
-                                  style: TextStyle(
+                                  style: GoogleFonts.mPlusRounded1c(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w800,
@@ -139,7 +140,7 @@ class OnboardingPage3 extends StatelessWidget {
                                 const SizedBox(height: 12),
                                 Text(
                                   "No pests or diseases detected. Your plant is thriving in its current environment.",
-                                  style: TextStyle(
+                                  style: GoogleFonts.mPlusRounded1c(
                                     color: textAccentColor,
                                     fontSize: 14,
                                     height: 1.5,
@@ -180,7 +181,7 @@ class OnboardingPage3 extends StatelessWidget {
                                       ),
                                       child: Text(
                                         "View Guide",
-                                        style: TextStyle(
+                                        style: GoogleFonts.mPlusRounded1c(
                                           color: const Color(
                                             0xFF1A2211,
                                           ), // Dark text for contrast
@@ -218,7 +219,7 @@ class OnboardingPage3 extends StatelessWidget {
                     Text(
                       "Instant Diagnosis",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.mPlusRounded1c(
                         color: Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.black,
@@ -234,14 +235,12 @@ class OnboardingPage3 extends StatelessWidget {
                       child: Text(
                         "Get clear, simple advice to keep your plants happy and healthy every day.",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: GoogleFonts.mPlusRounded1c(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? textAccentColor
-                              : const Color(
-                                  0xFF4B5563,
-                                ), // Match Page 1 color style
+                              : const Color(0xFF4B5563),
                           fontSize: 16,
-                          height: 1.625, // Match Page 1 line height
+                          height: 1.625,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

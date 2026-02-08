@@ -1,0 +1,505 @@
+diff --git a/lib/src/data/plant_data.dart b/lib/src/data/plant_data.dart
+index 7e4fa04..29dbc66 100644
+--- a/lib/src/data/plant_data.dart
++++ b/lib/src/data/plant_data.dart
+@@ -61,7 +61,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_support": "Usually self-supporting.",
+       "maintenance_pruning": "Remove any mushy or yellow leaves at the base.",
+       "troubleshooting":
+-          "Mushy Leaves: Overwatering (Let it dry out completely).\nWrinkled Leaves: Thirsty (Give it a good drink).\nBrown Tips: Inconsistent watering or cold drafts.",
++          "Mushy Leaves: Overwatering (Let it dry out completely).\nWrinkled Leaves: Thirsty (Give it a good drink).\nBrown Tips: Inconsistent watering or cold drafts (Water consistently and keep warm).",
+       "warning_note": "Toxic to cats and dogs if ingested.",
+     },
+   },
+@@ -91,7 +91,7 @@ List<Map<String, dynamic>> get demoPlants => [
+           "Generally upright, stems may lean if searching for light.",
+       "maintenance_pruning": "Remove yellow leaves near the base.",
+       "troubleshooting":
+-          "Yellow Leaves: Overwatering is the most common cause.\nDrooping: Can be overwatering or extreme underwatering.\nBrown Tips: Dry air or direct sun.",
++          "Yellow Leaves: Overwatering (Allow soil to dry completely).\nDrooping: Watering issues (Check soil moisture and adjust watering).\nBrown Tips: Dry air or direct sun (Increase humidity; Move to shade).",
+       "warning_note":
+           "All parts of the plant are poisonous if ingested. Keep away from pets and children.",
+     },
+@@ -124,7 +124,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_pruning":
+           "Prune to control size or remove damaged leaves. Air roots can be tucked into the soil.",
+       "troubleshooting":
+-          "Yellowing Leaves: Overwatering or lack of nutrients.\nBrown Tips: Low humidity or dry soil.\nNo Splits: Not enough light.",
++          "Yellowing Leaves: Overwatering or lack of nutrients (Adjust watering; Apply fertilizer).\nBrown Tips: Low humidity or dry soil (Mist leaves; Water if dry).\nNo Splits: Not enough light (Move to brighter location).",
+       "warning_note": "Toxic to pets and humans if ingested.",
+     },
+   },
+@@ -153,7 +153,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_pruning":
+           "Trim brown tips if needed. Cut off plantlets to propagate.",
+       "troubleshooting":
+-          "Brown Tips: Fluoride in water or dry air.\nFading Color: Needs more light.\nLimp Leaves: Thirsty or too hot.",
++          "Brown Tips: Fluoride in water or dry air (Use distilled water; Mist plant).\nFading Color: Needs more light (Move to brighter spot).\nLimp Leaves: Thirsty or too hot (Water plant; Move to cooler spot).",
+       "warning_note":
+           "Non-toxic and safe for pets (though cats may try to eat it like grass).",
+     },
+@@ -183,7 +183,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_pruning":
+           "Cut off spent flowers at the base to encourage new blooms. Remove yellow leaves.",
+       "troubleshooting":
+-          "Drooping: Needs water.\nBrown Tips: Low humidity, over-fertilizing, or tap water chemicals.\nNo Flowers: Needs more light.",
++          "Drooping: Needs water (Water immediately).\nBrown Tips: Low humidity, over-fertilizing, or tap water (Mist leaves; Flush soil; Use filtered water).\nNo Flowers: Needs more light (Move to brighter indirect light).",
+       "warning_note": "Mildly toxic to pets and humans. Keep out of reach.",
+     },
+   },
+@@ -210,7 +210,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_pruning":
+           "Prune top for bushier growth. Remove damaged leaves.",
+       "troubleshooting":
+-          "Dropping Leaves: Drafts, moving the plant, or watering issues.\nBrown Spots: Root rot (overwatering) or dry patches (underwatering).\nSlow Growth: Needs more light or fertilizer.",
++          "Dropping Leaves: Environmental stress (Avoid drafts and moving the plant).\nBrown Spots: Root rot or irregular watering (Ensure drainage; Water consistently).\nSlow Growth: Low light or nutrients (Increase light; Fertilize monthly).",
+       "warning_note": "Toxic to dogs and cats if ingested.",
+     },
+   },
+@@ -235,7 +235,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_pruning":
+           "Harvest outer leaves for gel as needed. Remove dried lower leaves.",
+       "troubleshooting":
+-          "Mushy Leaves: Overwatering (deadly).\nBrown Tips: Underwatered or sunburn.\nThin Leaves: Needs nmore water or light.",
++          "Mushy Leaves: Overwatering (Stop watering; Allow soil to dry).\nBrown Tips: Sunburn or underwatering (Move to shade; Water deeply).\nThin Leaves: Insufficient water or light (Water more often; Increase light).",
+       "warning_note":
+           "Gel is safe externally, but skin can be toxic if ingested by pets.",
+     },
+@@ -263,7 +263,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_pruning":
+           "Prune top to encourage branching. Watch out for milky sap.",
+       "troubleshooting":
+-          "Yellow Leaves: Overwatering.\nLeaf Drop: Changes in light or temperature, or drafts.\nCurling Leaves: Underwatering.",
++          "Yellow Leaves: Overwatering (Reduce watering frequency).\nLeaf Drop: Shock or drafts (Keep environment stable).\nCurling Leaves: Underwatering or heat (Water deeply; Check temperature).",
+       "warning_note":
+           "Sap is toxic and can irritate skin. Toxic to pets if ingested.",
+     },
+@@ -291,7 +291,7 @@ List<Map<String, dynamic>> get demoPlants => [
+       "maintenance_support": "None usually needed.",
+       "maintenance_pruning": "Trim leggy tops and replant them to propagate.",
+       "troubleshooting":
+-          "Mushy/Black: Root rot from overwatering.\nStretching: Not enough light.\nShriveled: Underwatered.",
++          "Mushy/Black: Root rot from overwatering (Cut rot; Replant in dry soil).\nStretching: Low light (Move to direct sunlight).\nShriveled: Underwatered (Water deeply).",
+       "warning_note":
+           "Toxicity varies by species; research specific types for pets.",
+     },
+diff --git a/lib/src/screens/home/home_screen.dart b/lib/src/screens/home/home_screen.dart
+index 346a013..f1b383b 100644
+--- a/lib/src/screens/home/home_screen.dart
++++ b/lib/src/screens/home/home_screen.dart
+@@ -1,5 +1,4 @@
+ import 'package:flutter/material.dart';
+-import 'package:google_fonts/google_fonts.dart';
+ import 'package:provider/provider.dart';
+ import '../../theme/app_theme.dart';
+ import 'widgets/plant_card.dart';
+@@ -162,13 +161,13 @@ class _HomeScreenState extends State<HomeScreen> {
+                           const SizedBox(height: 4),
+                           Text(
+                             "My Garden",
+-                            style: GoogleFonts.playfairDisplay(
+-                              fontSize: 28,
+-                              fontWeight: FontWeight.bold,
+-                              color: Theme.of(
+-                                context,
+-                              ).textTheme.titleLarge?.color,
+-                            ),
++                            style: Theme.of(context).textTheme.headlineMedium
++                                ?.copyWith(
++                                  fontWeight: FontWeight.bold,
++                                  color: Theme.of(
++                                    context,
++                                  ).textTheme.titleLarge?.color,
++                                ),
+                           ),
+                         ],
+                       ),
+@@ -553,11 +552,13 @@ class _HomeScreenState extends State<HomeScreen> {
+                   children: [
+                     Text(
+                       "Filter Plants",
+-                      style: GoogleFonts.playfairDisplay(
+-                        fontSize: 24,
+-                        fontWeight: FontWeight.bold,
+-                        color: Theme.of(context).textTheme.titleLarge?.color,
+-                      ),
++                      style: Theme.of(context).textTheme.headlineSmall
++                          ?.copyWith(
++                            fontWeight: FontWeight.bold,
++                            color: Theme.of(
++                              context,
++                            ).textTheme.titleLarge?.color,
++                          ),
+                     ),
+                     if (_selectedStatusFilter != null)
+                       TextButton(
+diff --git a/lib/src/screens/home/plant_detail_screen.dart b/lib/src/screens/home/plant_detail_screen.dart
+index bbdbf98..c2e501a 100644
+--- a/lib/src/screens/home/plant_detail_screen.dart
++++ b/lib/src/screens/home/plant_detail_screen.dart
+@@ -1,5 +1,4 @@
+ import 'package:flutter/material.dart';
+-import 'package:google_fonts/google_fonts.dart';
+ 
+ class PlantDetailScreen extends StatefulWidget {
+   final Map<String, dynamic> plant;
+@@ -101,7 +100,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                           children: [
+                             Text(
+                               widget.plant['name'] ?? '',
+-                              style: GoogleFonts.outfit(
++                              style: TextStyle(
+                                 color: Colors.white,
+                                 fontSize: 28,
+                                 fontWeight: FontWeight.bold,
+@@ -111,7 +110,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                             if (widget.plant['scientific'] != null)
+                               Text(
+                                 widget.plant['scientific'],
+-                                style: GoogleFonts.outfit(
++                                style: TextStyle(
+                                   color: Colors.white.withValues(alpha: 0.95),
+                                   fontSize: 15,
+                                   fontStyle: FontStyle.italic,
+@@ -357,7 +356,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                     Expanded(
+                       child: Text(
+                         "Common Issues",
+-                        style: GoogleFonts.outfit(
++                        style: TextStyle(
+                           fontSize: 16,
+                           fontWeight: FontWeight.w700,
+                           letterSpacing: -0.2,
+@@ -437,7 +436,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+       padding: const EdgeInsets.all(12),
+       child: Text(
+         text,
+-        style: GoogleFonts.outfit(
++        style: TextStyle(
+           fontSize: 13,
+           fontWeight: FontWeight.w600,
+           color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+@@ -455,7 +454,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+       padding: const EdgeInsets.all(12),
+       child: Text(
+         text,
+-        style: GoogleFonts.outfit(
++        style: TextStyle(
+           fontSize: 14,
+           height: 1.4,
+           fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
+@@ -551,7 +550,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                       Expanded(
+                         child: Text(
+                           title,
+-                          style: GoogleFonts.outfit(
++                          style: TextStyle(
+                             fontSize: 16,
+                             fontWeight: FontWeight.w700,
+                             letterSpacing: -0.2,
+@@ -602,7 +601,7 @@ class _PlantDetailScreenState extends State<PlantDetailScreen> {
+                               Expanded(
+                                 child: Text(
+                                   item,
+-                                  style: GoogleFonts.outfit(
++                                  style: TextStyle(
+                                     fontSize: 14,
+                                     height: 1.5,
+                                     color: Theme.of(context)
+diff --git a/lib/src/screens/onboarding/onboarding_screen.dart b/lib/src/screens/onboarding/onboarding_screen.dart
+index 4036257..f2bcc31 100644
+--- a/lib/src/screens/onboarding/onboarding_screen.dart
++++ b/lib/src/screens/onboarding/onboarding_screen.dart
+@@ -1,6 +1,5 @@
+ import 'package:flutter/material.dart';
+ import 'package:provider/provider.dart';
+-import 'package:google_fonts/google_fonts.dart';
+ import '../../providers/app_state.dart';
+ import '../../theme/app_theme.dart';
+ import 'widgets/onboarding_page_1.dart';
+@@ -67,7 +66,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
+                       ),
+                       child: Text(
+                         "Skip",
+-                        style: GoogleFonts.nunito(
++                        style: TextStyle(
+                           fontSize: 16,
+                           fontWeight: FontWeight.bold,
+                           color: isDark
+@@ -146,7 +145,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
+                         children: [
+                           Text(
+                             _currentPage == 2 ? "Get Started" : "Next",
+-                            style: GoogleFonts.nunito(
++                            style: TextStyle(
+                               // Changed to Nunito
+                               fontSize: 18,
+                               fontWeight: FontWeight.bold,
+diff --git a/lib/src/screens/onboarding/widgets/onboarding_page_1.dart b/lib/src/screens/onboarding/widgets/onboarding_page_1.dart
+index 5ef4789..6c2c4a4 100644
+--- a/lib/src/screens/onboarding/widgets/onboarding_page_1.dart
++++ b/lib/src/screens/onboarding/widgets/onboarding_page_1.dart
+@@ -1,5 +1,4 @@
+ import 'package:flutter/material.dart';
+-import 'package:google_fonts/google_fonts.dart';
+ import 'package:cached_network_image/cached_network_image.dart';
+ import '../../../theme/app_theme.dart';
+ 
+@@ -88,8 +87,7 @@ class OnboardingPage1 extends StatelessWidget {
+                     Text(
+                       "One Photo,\nOne Answer",
+                       textAlign: TextAlign.center,
+-                      style: GoogleFonts.nunito(
+-                        // Changed to Nunito
++                      style: TextStyle(
+                         fontSize: 32,
+                         fontWeight: FontWeight.w800,
+                         height: 1.1,
+@@ -114,7 +112,7 @@ class OnboardingPage1 extends StatelessWidget {
+                           ],
+                         ),
+                         textAlign: TextAlign.center,
+-                        style: GoogleFonts.nunito(
++                        style: TextStyle(
+                           fontSize: 16,
+                           fontWeight: FontWeight.w600,
+                           height: 1.625,
+diff --git a/lib/src/screens/onboarding/widgets/onboarding_page_2.dart b/lib/src/screens/onboarding/widgets/onboarding_page_2.dart
+index 07acd84..0d6c068 100644
+--- a/lib/src/screens/onboarding/widgets/onboarding_page_2.dart
++++ b/lib/src/screens/onboarding/widgets/onboarding_page_2.dart
+@@ -1,5 +1,4 @@
+ import 'package:flutter/material.dart';
+-import 'package:google_fonts/google_fonts.dart';
+ import 'package:cached_network_image/cached_network_image.dart';
+ import '../../../theme/app_theme.dart';
+ 
+@@ -68,7 +67,7 @@ class OnboardingPage2 extends StatelessWidget {
+                     Text(
+                       "Snap a Photo",
+                       textAlign: TextAlign.center,
+-                      style: GoogleFonts.nunito(
++                      style: TextStyle(
+                         fontSize: 32,
+                         fontWeight: FontWeight.w800, // Extra bold for headlines
+                         height: 1.1,
+@@ -95,7 +94,7 @@ class OnboardingPage2 extends StatelessWidget {
+                           ],
+                         ),
+                         textAlign: TextAlign.center,
+-                        style: GoogleFonts.nunito(
++                        style: TextStyle(
+                           fontSize: 16,
+                           fontWeight: FontWeight.w600,
+                           height: 1.625,
+diff --git a/lib/src/screens/onboarding/widgets/onboarding_page_3.dart b/lib/src/screens/onboarding/widgets/onboarding_page_3.dart
+index 9118d5e..3d709b5 100644
+--- a/lib/src/screens/onboarding/widgets/onboarding_page_3.dart
++++ b/lib/src/screens/onboarding/widgets/onboarding_page_3.dart
+@@ -1,5 +1,4 @@
+ import 'package:flutter/material.dart';
+-import 'package:google_fonts/google_fonts.dart';
+ import '../../../theme/app_theme.dart';
+ 
+ class OnboardingPage3 extends StatelessWidget {
+@@ -96,8 +95,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                         const SizedBox(width: 6),
+                                         Text(
+                                           "HEALTHY",
+-                                          style: GoogleFonts.nunito(
+-                                            // Changed to Nunito
++                                          style: TextStyle(
+                                             color: const Color(0xFF1A2211),
+                                             fontSize: 12,
+                                             fontWeight: FontWeight.bold,
+@@ -120,8 +118,7 @@ class OnboardingPage3 extends StatelessWidget {
+                               children: [
+                                 Text(
+                                   "DIAGNOSIS RESULT",
+-                                  style: GoogleFonts.nunito(
+-                                    // Changed to Nunito
++                                  style: TextStyle(
+                                     color: AppColors
+                                         .onboardingAccent, // Light Sage for contrast
+                                     fontSize: 11, // Slightly smaller
+@@ -132,8 +129,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                 const SizedBox(height: 4),
+                                 Text(
+                                   "Lush Monstera",
+-                                  style: GoogleFonts.nunito(
+-                                    // Info header can be stylistic
++                                  style: TextStyle(
+                                     color: Colors.white,
+                                     fontSize: 20,
+                                     fontWeight: FontWeight.w800,
+@@ -143,8 +139,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                 const SizedBox(height: 12),
+                                 Text(
+                                   "No pests or diseases detected. Your plant is thriving in its current environment.",
+-                                  style: GoogleFonts.nunito(
+-                                    // Changed to Nunito
++                                  style: TextStyle(
+                                     color: textAccentColor,
+                                     fontSize: 14,
+                                     height: 1.5,
+@@ -185,8 +180,7 @@ class OnboardingPage3 extends StatelessWidget {
+                                       ),
+                                       child: Text(
+                                         "View Guide",
+-                                        style: GoogleFonts.nunito(
+-                                          // Changed to Nunito
++                                        style: TextStyle(
+                                           color: const Color(
+                                             0xFF1A2211,
+                                           ), // Dark text for contrast
+@@ -224,8 +218,7 @@ class OnboardingPage3 extends StatelessWidget {
+                     Text(
+                       "Instant Diagnosis",
+                       textAlign: TextAlign.center,
+-                      style: GoogleFonts.nunito(
+-                        // Changed to Nunito
++                      style: TextStyle(
+                         color: Theme.of(context).brightness == Brightness.dark
+                             ? Colors.white
+                             : Colors.black,
+@@ -241,8 +234,7 @@ class OnboardingPage3 extends StatelessWidget {
+                       child: Text(
+                         "Get clear, simple advice to keep your plants happy and healthy every day.",
+                         textAlign: TextAlign.center,
+-                        style: GoogleFonts.nunito(
+-                          // Changed to Nunito
++                        style: TextStyle(
+                           color: Theme.of(context).brightness == Brightness.dark
+                               ? textAccentColor
+                               : const Color(
+diff --git a/lib/src/screens/scanner/scanner_screen.dart b/lib/src/screens/scanner/scanner_screen.dart
+index 3de1b91..1fd83e9 100644
+--- a/lib/src/screens/scanner/scanner_screen.dart
++++ b/lib/src/screens/scanner/scanner_screen.dart
+@@ -1,3 +1,4 @@
++import 'dart:io';
+ import 'package:flutter/material.dart';
+ import 'package:camera/camera.dart';
+ import 'package:image_picker/image_picker.dart';
+@@ -23,6 +24,7 @@ class _ScannerScreenState extends State<ScannerScreen>
+   CameraController? _cameraController;
+   bool _isCameraInitialized = false;
+   bool _isScanning = false;
++  File? _capturedImage; // To store the image being analyzed
+   final ImagePicker _picker = ImagePicker();
+   final DiagnosisService _diagnosisService = DiagnosisService();
+ 
+@@ -109,6 +111,9 @@ class _ScannerScreenState extends State<ScannerScreen>
+ 
+     try {
+       final XFile image = await _cameraController!.takePicture();
++      setState(() {
++        _capturedImage = File(image.path);
++      });
+       _processImage(image.path);
+     } catch (e) {
+       debugPrint("Error taking picture: $e");
+@@ -119,6 +124,9 @@ class _ScannerScreenState extends State<ScannerScreen>
+     try {
+       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+       if (image != null) {
++        setState(() {
++          _capturedImage = File(image.path);
++        });
+         _processImage(image.path);
+       }
+     } catch (e) {
+@@ -177,6 +185,7 @@ class _ScannerScreenState extends State<ScannerScreen>
+       if (mounted) {
+         setState(() {
+           _isScanning = false;
++          _capturedImage = null; // Reset image after scanning
+         });
+       }
+     }
+@@ -209,8 +218,12 @@ class _ScannerScreenState extends State<ScannerScreen>
+       backgroundColor: Colors.black,
+       body: Stack(
+         children: [
+-          // 1. Camera Preview
+-          if (_isCameraInitialized && _cameraController != null)
++          // 1. Camera Preview or Captured Image
++          if (_capturedImage != null)
++            Positioned.fill(
++              child: Image.file(_capturedImage!, fit: BoxFit.cover),
++            )
++          else if (_isCameraInitialized && _cameraController != null)
+             Positioned.fill(child: CameraPreview(_cameraController!))
+           else
+             // Fallback/Loading black screen
+@@ -258,7 +271,7 @@ class _ScannerScreenState extends State<ScannerScreen>
+                   _buildCorner(bottom: 0, right: 0),
+ 
+                   // Scanning Beam
+-                  if (!_isScanning) // Only animate when idle? Or always? Let's keep scanning efffect.
++                  if (_isScanning) // Only animate when scanning (processing image)
+                     AnimatedBuilder(
+                       animation: _animation,
+                       builder: (context, child) {
+@@ -299,12 +312,8 @@ class _ScannerScreenState extends State<ScannerScreen>
+                     ),
+ 
+                   // Scanning Indicator Widget if processing
+-                  if (_isScanning)
+-                    const Center(
+-                      child: CircularProgressIndicator(
+-                        color: AppColors.primary,
+-                      ),
+-                    ),
++                  // Removed CircularProgressIndicator to show pure scanning animation
++                  if (_isScanning) const SizedBox.shrink(),
+                 ],
+               ),
+             ),
+diff --git a/lib/src/services/diagnosis_service.dart b/lib/src/services/diagnosis_service.dart
+index 7e8ba15..2c034b8 100644
+--- a/lib/src/services/diagnosis_service.dart
++++ b/lib/src/services/diagnosis_service.dart
+@@ -110,7 +110,10 @@ Rules:
+         id: _uuid.v4(),
+         // Use the resized image path which we know is a valid standard JPG
+         imagePath: resizedImage.path,
+-        plantName: diagnosisData['plant_name'] ?? 'Unknown Plant',
++        plantName: (diagnosisData['plant_name'] ?? 'Unknown Plant')
++            .replaceAll(RegExp(r'\s*\([Nn]/?A\)', caseSensitive: false), '')
++            .replaceAll(RegExp(r'\s*\(\s*\)'), '')
++            .trim(),
+         problem: problem,
+         solution: diagnosisData['advice'] ?? 'No advice available.',
+         timestamp: DateTime.now(),
+diff --git a/lib/src/theme/app_theme.dart b/lib/src/theme/app_theme.dart
+index d599503..1e5c1f5 100644
+--- a/lib/src/theme/app_theme.dart
++++ b/lib/src/theme/app_theme.dart
+@@ -67,10 +67,13 @@ class AppTheme {
+         backgroundColor: AppColors.surfaceLight,
+         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+       ),
+-      textTheme: GoogleFonts.nunitoTextTheme(ThemeData.light().textTheme).apply(
+-        bodyColor: AppColors.textLight,
+-        displayColor: AppColors.textLight,
+-      ),
++      textTheme:
++          GoogleFonts.mPlusRounded1cTextTheme(
++            ThemeData.light().textTheme,
++          ).apply(
++            bodyColor: AppColors.textLight,
++            displayColor: AppColors.textLight,
++          ),
+       appBarTheme: const AppBarTheme(
+         backgroundColor: AppColors.backgroundLight,
+         elevation: 0,
+@@ -126,7 +129,7 @@ class AppTheme {
+         backgroundColor: AppColors.surfaceDark,
+         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+       ),
+-      textTheme: GoogleFonts.nunitoTextTheme(
++      textTheme: GoogleFonts.mPlusRounded1cTextTheme(
+         ThemeData.dark().textTheme,
+       ).apply(bodyColor: AppColors.textDark, displayColor: AppColors.textDark),
+       appBarTheme: const AppBarTheme(
